@@ -35,6 +35,8 @@ def popup_message(text, tab):
 
     pop.pack()
     button = Button(tab, text="Acknowledge", command=destroy)
+    button.after(5000, button.destroy)
+    pop.after(5000,pop.destroy)
     button.pack()
 
 
@@ -49,10 +51,14 @@ def popup_create_student(StudentID, window):
         message = "Hello " + name
         popup_message(message, window)
 
+    def delete_entry(event=None):
+        prompt.delete(0, END)
+
     pop = Toplevel()
     pop.minsize(80, 30)
     prompt = Entry(pop, width=35, borderwidth=2)
     prompt.insert(0, "Enter your name: ")
+    prompt.bind('<ButtonPress>', delete_entry)
 
     prompt.bind('<Return>', student_create)
 
@@ -79,9 +85,15 @@ def main_login_student_operation(window):
             else:
                 popup_message(message, window)
 
+    def delete_entry(event=None):
+        entry.delete(0, END)
+
+    instruction = Label(window, text="Enter Student ID")
+    instruction.pack()
     entry = Entry(window, width=75, borderwidth=2)
     entry.insert(0, "Enter your ID: ")
     entry.bind('<Return>', login)
+    entry.bind('<ButtonPress>',delete_entry)
     entry.pack()
 
 
