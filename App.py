@@ -24,8 +24,14 @@ from Service.data_service import log_into_account
 import Service.admin_svc as asv
 import datetime
 
+def isint(s): # universal check for integer
+    try:
+        int(s)
+        return True
+    except ValueError:
+        return False
 
-def popup_message(text, tab):
+def popup_message(text, tab): # universally callable message-display
     def destroy():
         pop.destroy()
         button.destroy()
@@ -35,12 +41,12 @@ def popup_message(text, tab):
 
     pop.pack()
     button = Button(tab, text="Acknowledge", command=destroy)
-    button.after(5000, button.destroy)
+    button.after(5000, button.destroy) # destroy popup message after 5 seconds
     pop.after(5000,pop.destroy)
     button.pack()
 
 
-def popup_create_student(StudentID, window):
+def popup_create_student(StudentID, window): # add student to mongo
     def student_create(event: object = None):
         name = prompt.get()
         ID = StudentID
@@ -71,7 +77,7 @@ def popup_create_student(StudentID, window):
     proceed.grid(row=1, column=0)
 
 
-def main_login_student_operation(window):
+def main_login_student_operation(window): # login/out student if in mongo
     def login(event: object = None):
         StudentID = entry.get()
         entry.delete(0, END)
@@ -97,7 +103,7 @@ def main_login_student_operation(window):
     entry.pack()
 
 
-def admin_duties(admin):
+def admin_duties(admin): # admin operation
     def whos_in_the_shop(event=None):
         messages = asv.whos_in_the_shop()
         text.delete('1.0', END)
@@ -151,7 +157,7 @@ def build_login_tab(tabStructure):
     main_login_student_operation(login)
 
 
-def Are_you_sure():
+def Are_you_sure(): # simple yes/no for logout-all
     def do_yes():
         asv.logout_all_users()
         question.destroy()
@@ -203,7 +209,7 @@ def build_all_the_tabs(master):
     tabStructure.pack(expand=1, fill='both')
 
 
-class app:
+class app: # constructor for GUI
     def __init__(self, master):
         self.master = master
 
@@ -231,7 +237,7 @@ class app:
         self.statusbar.after(1000, self.update)
 
 
-def main():
+def main(): # run the app
     date = 'Today is: ' + svc.print_day() + ", time: %s:%s" % (
         datetime.datetime.now().hour, datetime.datetime.now().minute)
     root = Tk()
