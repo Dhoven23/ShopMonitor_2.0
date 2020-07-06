@@ -179,7 +179,7 @@ def build_tools_tab(tabStructure):
                    width=13, height=2).grid(row=y, column=x)
 
     tabStructure.add(tools, text="Tools")
-    d[""]
+
 
 def build_all_the_tabs(master):
     tabStructure = ttk.Notebook(master)
