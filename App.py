@@ -22,16 +22,22 @@ import Data.mongo_setup as mongo
 import Service.data_service as svc
 from Service.data_service import log_into_account
 import Service.admin_svc as asv
+from Service.Reports.generate_report import generate
 import datetime
 
-def isint(s): # universal check for integer
+
+
+
+
+def isint(s):  # universal check for integer
     try:
         int(s)
         return True
     except ValueError:
         return False
 
-def popup_message(text, tab): # universally callable message-display
+
+def popup_message(text, tab):  # universally callable message-display
     def destroy():
         pop.destroy()
         button.destroy()
@@ -41,12 +47,12 @@ def popup_message(text, tab): # universally callable message-display
 
     pop.pack()
     button = Button(tab, text="Acknowledge", command=destroy)
-    button.after(5000, button.destroy) # destroy popup message after 5 seconds
-    pop.after(5000,pop.destroy)
+    button.after(5000, button.destroy)  # destroy popup message after 5 seconds
+    pop.after(5000, pop.destroy)
     button.pack()
 
 
-def popup_create_student(StudentID, window): # add student to mongo
+def popup_create_student(StudentID, window):  # add student to mongo
     def student_create(event: object = None):
         name = prompt.get()
         ID = StudentID
@@ -77,7 +83,7 @@ def popup_create_student(StudentID, window): # add student to mongo
     proceed.grid(row=1, column=0)
 
 
-def main_login_student_operation(window): # login/out student if in mongo
+def main_login_student_operation(window):  # login/out student if in mongo
     def login(event: object = None):
         StudentID = entry.get()
         entry.delete(0, END)
@@ -99,11 +105,19 @@ def main_login_student_operation(window): # login/out student if in mongo
     entry = Entry(window, width=75, borderwidth=2)
     entry.insert(0, "Enter your ID: ")
     entry.bind('<Return>', login)
-    entry.bind('<ButtonPress>',delete_entry)
+    entry.bind('<ButtonPress>', delete_entry)
     entry.pack()
 
 
-def admin_duties(admin): # admin operation
+def isadmin():
+    global Master
+    if Master:
+        return True
+    else:
+        return False
+
+
+def admin_duties(admin):  # admin operation
     def whos_in_the_shop(event=None):
         messages = asv.whos_in_the_shop()
         text.delete('1.0', END)
@@ -136,6 +150,7 @@ def admin_duties(admin): # admin operation
         DateField.bind('<Return>', get_date)
         prompt.pack(side=BOTTOM)
 
+
     text = Text(admin, height=7, width=50)
     DateField = Entry(admin, width=50, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=35, command=whos_in_the_shop)
@@ -146,7 +161,7 @@ def admin_duties(admin): # admin operation
     button3.pack()
     text.pack()
     DateField.pack(side=BOTTOM)
-    return None
+
 
 
 def build_login_tab(tabStructure):
@@ -157,7 +172,7 @@ def build_login_tab(tabStructure):
     main_login_student_operation(login)
 
 
-def Are_you_sure(): # simple yes/no for logout-all
+def Are_you_sure():  # simple yes/no for logout-all
     def do_yes():
         asv.logout_all_users()
         question.destroy()
@@ -189,17 +204,20 @@ def build_tools_tab(tabStructure):
     def tool_key(number, event=None):
         print(number)
         pass
+
     d = {}
     tools = ttk.Frame(tabStructure)
     for x in range(1, 6):
         for y in range(1, 6):
-            d["button{0}".format(x*y)] = Button(tools, text=str(x * y), command=lambda: tool_key(x * y),
-                   width=13, height=2).grid(row=y, column=x)
+            d["button{0}".format(x * y)] = Button(tools, text=str(x * y), command=lambda: tool_key(x * y),
+                                                  width=13, height=2).grid(row=y, column=x)
 
     tabStructure.add(tools, text="Tools")
 
 
-def build_all_the_tabs(master):
+def build_all_the_tabs_admin(master):
+
+
     tabStructure = ttk.Notebook(master)
 
     build_login_tab(tabStructure)
@@ -208,13 +226,28 @@ def build_all_the_tabs(master):
 
     tabStructure.pack(expand=1, fill='both')
 
+def build_all_the_tabs(master):
+    tabStructure = ttk.Notebook(master)
 
-class app: # constructor for GUI
+    build_login_tab(tabStructure)
+
+    build_tools_tab(tabStructure)
+
+    tabStructure.pack(expand=1, fill='both')
+
+
+class app:  # constructor for GUI
     def __init__(self, master):
         self.master = master
+        global Master
+        Master = False
 
         def onExit():
             master.quit()
+
+        def LoginAsAdmin():
+            Master = True
+            build_all_the_tabs(master)
 
         master.title("Shop Activity Monitor")
         master.geometry("500x300")
@@ -224,9 +257,11 @@ class app: # constructor for GUI
         fileMenu = Menu(menubar)
         fileMenu.add_command(label="Exit", command=onExit)
         menubar.add_cascade(label="File", menu=fileMenu)
+        fileMenu.add_command(label="Actions", command=generate)
+        menubar.add_cascade(label="Report", menu=fileMenu)
         self.statusbar = Label(master, text="", bd=1, relief=SUNKEN, anchor=W)
         self.statusbar.pack(side=BOTTOM, fill=X)
-        build_all_the_tabs(master)
+        build_all_the_tabs_admin(master)
         self.update()
 
     def update(self):
@@ -237,7 +272,7 @@ class app: # constructor for GUI
         self.statusbar.after(1000, self.update)
 
 
-def main(): # run the app
+def main():  # run the app
     date = 'Today is: ' + svc.print_day() + ", time: %s:%s" % (
         datetime.datetime.now().hour, datetime.datetime.now().minute)
     root = Tk()
@@ -248,5 +283,5 @@ def main(): # run the app
 
 
 if __name__ == '__main__':
-    mongo.global_init()
+    mongo.global_init()  # always include this function call to connect to mongoDB
     main()
