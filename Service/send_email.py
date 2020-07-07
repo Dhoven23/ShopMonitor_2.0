@@ -21,7 +21,7 @@ def main():
     </html>
     """, subtype='html')
 
-    with open('demo.docx', 'rb') as f:
+    with open(f"../Reports/{date.today()}_report.docx", 'rb') as f:
         file_data = f.read()
         file_name = f.name
 

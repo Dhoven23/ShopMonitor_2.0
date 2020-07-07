@@ -24,6 +24,7 @@ from Service.data_service import log_into_account
 import Service.admin_svc as asv
 from Service.Reports.generate_report import generate
 import datetime
+from Service.send_email import send_weekly_report
 
 
 
@@ -257,8 +258,10 @@ class app:  # constructor for GUI
         fileMenu = Menu(menubar)
         fileMenu.add_command(label="Exit", command=onExit)
         menubar.add_cascade(label="File", menu=fileMenu)
-        fileMenu.add_command(label="Actions", command=generate)
-        menubar.add_cascade(label="Report", menu=fileMenu)
+
+        fileMenu.add_command(label="Create Report", command=generate)
+        fileMenu.add_command(label="Send last Report", command=send_weekly_report)
+
         self.statusbar = Label(master, text="", bd=1, relief=SUNKEN, anchor=W)
         self.statusbar.pack(side=BOTTOM, fill=X)
         build_all_the_tabs_admin(master)
