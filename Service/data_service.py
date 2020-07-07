@@ -7,9 +7,6 @@ from Data.signins import Signin
 from Data.day import Day
 
 
-
-
-
 def create_student(studentID: str, name: str):
     student = Student()
     student.name = name
@@ -18,6 +15,7 @@ def create_student(studentID: str, name: str):
     student.save()
 
     return student.name
+
 
 def CreateTool(keyNumber: int, name: str, TrainingLevel: int):
     tool = Tool()
@@ -28,31 +26,26 @@ def CreateTool(keyNumber: int, name: str, TrainingLevel: int):
     return tool.keyNumber
 
 
-
-
-
 def log_into_account(studentID: str):
-        studentID = str(studentID)
-        student = find_student_by_studentID(studentID)
+    studentID = str(studentID)
+    student = find_student_by_studentID(studentID)
 
-        if not student:
-            message = f"No student with ID {studentID}"
-            return message
+    if not student:
+        message = f"No student with ID {studentID}"
+        return message
 
-        SignedIn = student.Is_signedIn
-        if SignedIn == False:
-            message = f"Hello {student.name}"
-            day_login(studentID)
-            student.event()
-            return message
+    SignedIn = student.Is_signedIn
+    if SignedIn == False:
+        message = f"Hello {student.name}"
+        day_login(studentID)
+        student.event()
+        return message
 
-
-
-        if SignedIn == True:
-            message = f" Goodbye {student.name} "
-            day_logout(studentID)
-            student.event()
-            return message
+    if SignedIn == True:
+        message = f" Goodbye {student.name} "
+        day_logout(studentID)
+        student.event()
+        return message
 
 
 def find_student_by_studentID(studentID: str) -> Student:
@@ -68,10 +61,12 @@ def create_day() -> Day:
     day.save()
     return day
 
+
 def find_day(date: str) -> Day:
     day0 = Day.objects(date=date).first()
 
     return day0
+
 
 def print_day():
     day0 = Day.objects(date=str(date.today())).first()
@@ -98,7 +93,6 @@ def day_login(studentID: str):
 
 
 def day_logout(studentID: str):
-
     model = find_day(str(date.today()))
     for signin in model.signins:
         if signin.StudentID == studentID:
@@ -106,4 +100,3 @@ def day_logout(studentID: str):
 
     model.hourly_entry_rmv()
     model.save()
-

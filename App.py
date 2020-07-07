@@ -22,12 +22,9 @@ import Data.mongo_setup as mongo
 import Service.data_service as svc
 from Service.data_service import log_into_account
 import Service.admin_svc as asv
-from Service.Reports.generate_report import generate
+#from Service.Reports.generate_report import generate
 import datetime
-from Service.Reports.send_email import send_weekly_report
-
-
-
+#from Service.Reports.send_email import send_weekly_report
 
 
 def isint(s):  # universal check for integer
@@ -151,7 +148,6 @@ def admin_duties(admin):  # admin operation
         DateField.bind('<Return>', get_date)
         prompt.pack(side=BOTTOM)
 
-
     text = Text(admin, height=7, width=50)
     DateField = Entry(admin, width=50, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=35, command=whos_in_the_shop)
@@ -162,7 +158,6 @@ def admin_duties(admin):  # admin operation
     button3.pack()
     text.pack()
     DateField.pack(side=BOTTOM)
-
 
 
 def build_login_tab(tabStructure):
@@ -206,19 +201,31 @@ def build_tools_tab(tabStructure):
         print(number)
         pass
 
-    d = {}
+
     tools = ttk.Frame(tabStructure)
-    for x in range(1, 6):
-        for y in range(1, 6):
-            d["button{0}".format(x * y)] = Button(tools, text=str(x * y), command=lambda: tool_key(x * y),
-                                                  width=13, height=2).grid(row=x, column=y)
+    # Key1 = Button(tools, text=str(x * y), command=lambda: tool_key(1), width=13, height=2).grid(row=0, column=0)
+    # Key2 = Button(tools, text=str(x * y), command=lambda: tool_key(2), width=13, height=2).grid(row=0, column=1)
+    # Key3 = Button(tools, text=str(x * y), command=lambda: tool_key(3), width=13, height=2).grid(row=0, column=2)
+    # Key4 = Button(tools, text=str(x * y), command=lambda: tool_key(4), width=13, height=2).grid(row=0, column=3)
+    # Key5 = Button(tools, text=str(x * y), command=lambda: tool_key(5), width=13, height=2).grid(row=0, column=4)
+    # Key6 = Button(tools, text=str(x * y), command=lambda: tool_key(6), width=13, height=2).grid(row=1, column=0)
+    # Key7 = Button(tools, text=str(x * y), command=lambda: tool_key(7), width=13, height=2).grid(row=1, column=1)
+    # Key8 = Button(tools, text=str(x * y), command=lambda: tool_key(8), width=13, height=2).grid(row=1, column=2)
+    # Key9 = Button(tools, text=str(x * y), command=lambda: tool_key(9), width=13, height=2).grid(row=1, column=3)
+    # Key10 = Button(tools, text=str(x * y), command=lambda: tool_key(10), width=13, height=2).grid(row=1, column=4)
+    # Key11 = Button(tools, text=str(x * y), command=lambda: tool_key(11), width=13, height=2).grid(row=2, column=0)
+    # Key12 = Button(tools, text=str(x * y), command=lambda: tool_key(12), width=13, height=2).grid(row=2, column=1)
+    # Key13 = Button(tools, text=str(x * y), command=lambda: tool_key(13), width=13, height=2).grid(row=x, column=y)
+    # Key14 = Button(tools, text=str(x * y), command=lambda: tool_key(14), width=13, height=2).grid(row=x, column=y)
+    # Key15 = Button(tools, text=str(x * y), command=lambda: tool_key(15), width=13, height=2).grid(row=x, column=y)
+    # Key16 = Button(tools, text=str(x * y), command=lambda: tool_key(16), width=13, height=2).grid(row=x, column=y)
+
+
 
     tabStructure.add(tools, text="Tools")
 
 
 def build_all_the_tabs_admin(master):
-
-
     tabStructure = ttk.Notebook(master)
 
     build_login_tab(tabStructure)
@@ -226,6 +233,7 @@ def build_all_the_tabs_admin(master):
     build_tools_tab(tabStructure)
 
     tabStructure.pack(expand=1, fill='both')
+
 
 def build_all_the_tabs(master):
     tabStructure = ttk.Notebook(master)
@@ -260,8 +268,8 @@ class app:  # constructor for GUI
         fileMenu.add_command(label="Exit", command=onExit)
         menubar.add_cascade(label="File", menu=fileMenu)
 
-        fileMenu.add_command(label="Create Report", command=generate)
-        fileMenu.add_command(label="Send last Report", command=send_weekly_report)
+        fileMenu.add_command(label="Create Report", command=NONE)
+        fileMenu.add_command(label="Send last Report", command=NONE)
 
         self.statusbar = Label(master, text="", bd=1, relief=SUNKEN, anchor=W)
         self.statusbar.pack(side=BOTTOM, fill=X)
