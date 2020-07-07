@@ -211,7 +211,7 @@ def build_tools_tab(tabStructure):
     for x in range(1, 6):
         for y in range(1, 6):
             d["button{0}".format(x * y)] = Button(tools, text=str(x * y), command=lambda: tool_key(x * y),
-                                                  width=13, height=2).grid(row=y, column=x)
+                                                  width=13, height=2).grid(row=x, column=y)
 
     tabStructure.add(tools, text="Tools")
 
