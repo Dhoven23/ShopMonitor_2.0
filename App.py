@@ -11,8 +11,8 @@
 #
 #   Author: Daniel Hoven (github @DHoven23),
 #   email: Daniel.Hoven@gcu.edu
-#   Version 0.1.0
-#   Date of commit: 6/30/2020
+#   Version 0.1.1
+#   Date of commit: 7/6/2020
 #
 ###############################################################################################
 
@@ -247,6 +247,7 @@ class app:  # constructor for GUI
             master.quit()
 
         def LoginAsAdmin():
+            global Master
             Master = True
             build_all_the_tabs(master)
 
