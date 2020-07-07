@@ -49,7 +49,7 @@ def generate():
 
     document.add_page_break()
 
-    document.save(f"../Service/Reports/{date.today()}_report.docx")
+    document.save(f"Service/Reports/{date.today()}_report.docx")
 
 
 

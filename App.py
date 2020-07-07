@@ -24,7 +24,7 @@ from Service.data_service import log_into_account
 import Service.admin_svc as asv
 from Service.Reports.generate_report import generate
 import datetime
-from Service.send_email import send_weekly_report
+from Service.Reports.send_email import send_weekly_report
 
 
 

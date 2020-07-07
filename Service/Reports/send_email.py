@@ -21,7 +21,7 @@ def main():
     </html>
     """, subtype='html')
 
-    with open(f"../Reports/{date.today()}_report.docx", 'rb') as f:
+    with open(f"Service/Reports/{date.today()}_report.docx", 'rb') as f:
         file_data = f.read()
         file_name = f.name
 
@@ -35,3 +35,4 @@ def main():
 
 def send_weekly_report():
     main()
+
