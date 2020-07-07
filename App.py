@@ -11,7 +11,7 @@
 #
 #   Author: Daniel Hoven (github @DHoven23),
 #   email: Daniel.Hoven@gcu.edu
-#   Version 0.1.1
+#   Version 0.0.2
 #   Date of commit: 7/6/2020
 #
 ###############################################################################################
