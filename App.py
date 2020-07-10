@@ -12,7 +12,7 @@
 #   Author: Daniel Hoven (github @DHoven23),
 #   email: Daniel.Hoven@gcu.edu
 #   Version 0.0.2
-#   Date of commit: 7/6/2020
+#   Date of commit: 7/10/2020
 #
 ###############################################################################################
 
@@ -22,9 +22,9 @@ import Data.mongo_setup as mongo
 import Service.data_service as svc
 from Service.data_service import log_into_account
 import Service.admin_svc as asv
-from Service.Reports.generate_report import generate
+import Service.Reports.generate_report as gen
+import Service.Reports.send_email as send
 import datetime
-from Service.Reports.send_email import send_weekly_report
 
 
 def isint(s):  # universal check for integer
@@ -130,6 +130,8 @@ def admin_duties(admin):  # admin operation
         Are_you_sure()
 
     def who_was_in_the_shop():
+        def delete_entry(event=None):
+            DateField.delete(0, END)
 
         def get_date(event=None):
             prompt.destroy()
@@ -141,21 +143,24 @@ def admin_duties(admin):  # admin operation
                     text.insert(END, message[0:24] + (50 - len(message)) * '.' + message[25:(len(message) + 1)])
             else:
                 text.insert(END,
-                            f"No record exists for {date}, make sure entry has format YYYY-MM-DD. ex: 2020-07-01\n")
+                            f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
 
         DateField.insert(0, 'YYYY-MM-DD')
+        DateField.bind('<ButtonPress>', delete_entry)
         prompt = Label(admin, text="Please enter the day")
         DateField.bind('<Return>', get_date)
         prompt.pack(side=BOTTOM)
 
-    text = Text(admin, height=7, width=50)
+    text = Text(admin, height=6, width=50)
     DateField = Entry(admin, width=50, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=35, command=whos_in_the_shop)
     button2 = Button(admin, text="Signout All", width=35, command=logout_all_users)
     button3 = Button(admin, text="Blame", width=35, command=who_was_in_the_shop)
+    button4 = Button(admin, text="Edit Training", width=35, command=who_was_in_the_shop)
     button1.pack()
     button2.pack()
     button3.pack()
+    button4.pack()
     text.pack()
     DateField.pack(side=BOTTOM)
 
@@ -240,13 +245,19 @@ class app:  # constructor for GUI
         def onExit():
             master.quit()
 
+        def generate():
+            gen.generate()
+
+        def send_weekly_report():
+            send.send_weekly_report()
+
         def LoginAsAdmin():
             global Master
             Master = True
             build_all_the_tabs(master)
 
         master.title("Shop Activity Monitor")
-        master.geometry("500x300")
+        master.geometry("500x320")
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 
