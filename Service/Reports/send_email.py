@@ -36,3 +36,4 @@ def main():
 def send_weekly_report():
     main()
 
+send_weekly_report()

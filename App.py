@@ -27,9 +27,6 @@ import datetime
 from Service.Reports.send_email import send_weekly_report
 
 
-
-
-
 def isint(s):  # universal check for integer
     try:
         int(s)
@@ -89,7 +86,7 @@ def main_login_student_operation(window):  # login/out student if in mongo
         StudentID = entry.get()
         entry.delete(0, END)
         entry.insert(0, "Enter your ID: ")
-        if not len(StudentID) == 8:
+        if not ((len(StudentID) == 8) and isint(StudentID)):
             return
         else:
             message = log_into_account(StudentID)
@@ -151,7 +148,6 @@ def admin_duties(admin):  # admin operation
         DateField.bind('<Return>', get_date)
         prompt.pack(side=BOTTOM)
 
-
     text = Text(admin, height=7, width=50)
     DateField = Entry(admin, width=50, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=35, command=whos_in_the_shop)
@@ -162,7 +158,6 @@ def admin_duties(admin):  # admin operation
     button3.pack()
     text.pack()
     DateField.pack(side=BOTTOM)
-
 
 
 def build_login_tab(tabStructure):
@@ -217,8 +212,6 @@ def build_tools_tab(tabStructure):
 
 
 def build_all_the_tabs_admin(master):
-
-
     tabStructure = ttk.Notebook(master)
 
     build_login_tab(tabStructure)
@@ -226,6 +219,7 @@ def build_all_the_tabs_admin(master):
     build_tools_tab(tabStructure)
 
     tabStructure.pack(expand=1, fill='both')
+
 
 def build_all_the_tabs(master):
     tabStructure = ttk.Notebook(master)
