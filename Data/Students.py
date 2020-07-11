@@ -20,6 +20,10 @@ class Student(mongoengine.Document):
     def event(self):
         self.Is_signedIn = not self.Is_signedIn
         self.save()
+    def train(self, level):
+
+        self.training_Level = level
+        self.save()
 
     # alias to the current document collection. If you plan to edit this class, rename the 'Students' collection
     # to some temporary collection until you are ready to port over all the students in the current collection

@@ -89,11 +89,15 @@ def main_login_student_operation(window):  # login/out student if in mongo
         if not ((len(StudentID) == 8) and isint(StudentID)):
             return
         else:
-            message = log_into_account(StudentID)
+            message, loggedIn = log_into_account(StudentID)
             if message == f"No student with ID {StudentID}":
                 popup_create_student(str(StudentID), window)
             else:
-                popup_message(message, window)
+                if loggedIn:
+                    popup_message(message,window)
+                else:
+                    student = svc.find_student_by_studentID(StudentID)
+                    popup_message(message + f'\n You are a level {student.training_Level} user', window)
 
     def delete_entry(event=None):
         entry.delete(0, END)
@@ -129,6 +133,40 @@ def admin_duties(admin):  # admin operation
     def logout_all_users(event: object = None):
         Are_you_sure()
 
+    def edit_training(event=None):
+
+        def training(event=None):
+            Student = asv.edit_training_level(prompt.get(),train.get())
+            if Student:
+                pop.destroy()
+
+        def delete_name_entry(event=None):
+            prompt.delete(0, END)
+        def delete_train_entry(event=None):
+
+            train.delete(0,END)
+
+
+        pop = Toplevel()
+        pop.minsize(80, 30)
+        prompt = Entry(pop, width=35, borderwidth=2)
+        prompt.insert(0, "Enter Student name: ")
+        prompt.bind('<ButtonPress>', delete_name_entry)
+
+        train = Entry(pop, width=35, borderwidth=2)
+        train.insert(0,"Enter training level: ")
+        train.bind('<ButtonPress>', delete_train_entry)
+
+        train.bind('<Return>', training)
+
+        pop.wm_title("Training")
+
+        prompt.grid(row=2, column=0)
+        train.grid(row=3,column=0)
+        proceed = Button(pop, text="Cancel", fg='red' ,command=pop.destroy)
+        proceed.grid(row=1, column=0)
+
+
     def who_was_in_the_shop():
         def delete_entry(event=None):
             DateField.delete(0, END)
@@ -156,7 +194,7 @@ def admin_duties(admin):  # admin operation
     button1 = Button(admin, text="Who's In the Shop?", width=35, command=whos_in_the_shop)
     button2 = Button(admin, text="Signout All", width=35, command=logout_all_users)
     button3 = Button(admin, text="Blame", width=35, command=who_was_in_the_shop)
-    button4 = Button(admin, text="Edit Training", width=35, command=who_was_in_the_shop)
+    button4 = Button(admin, text="Edit Training", width=35, command=edit_training)
     button1.pack()
     button2.pack()
     button3.pack()
@@ -185,8 +223,8 @@ def Are_you_sure():  # simple yes/no for logout-all
     question.wm_title("Confirm")
 
     prompt = Label(question, text='Are You Sure?')
-    yes = Button(question, text='YES', width=30, command=do_yes)
-    no = Button(question, text='NO', width=30, command=do_no)
+    yes = Button(question, text='YES', width=30, fg='green',command=do_yes)
+    no = Button(question, text='NO', width=30, fg='red',command=do_no)
     prompt.pack()
     yes.pack()
     no.pack()
@@ -282,6 +320,7 @@ class app:  # constructor for GUI
 
 
 def main():  # run the app
+
     date = 'Today is: ' + svc.print_day() + ", time: %s:%s" % (
         datetime.datetime.now().hour, datetime.datetime.now().minute)
     root = Tk()

@@ -48,3 +48,13 @@ def logout_all_users():
             svc.day_logout(student.studentID)
             student.save()
     return True
+
+def edit_training_level(name,value):
+    student = None
+    student = Student.objects(name=name).first()
+
+    if student:
+        student.train(value)
+        return True
+    else:
+        return False

@@ -37,14 +37,14 @@ def log_into_account(studentID: str):
 
         if not student:
             message = f"No student with ID {studentID}"
-            return message
+            return message, False
 
         SignedIn = student.Is_signedIn
         if SignedIn == False:
             message = f"Hello {student.name}"
             day_login(studentID)
             student.event()
-            return message
+            return message, False
 
 
 
@@ -52,7 +52,7 @@ def log_into_account(studentID: str):
             message = f" Goodbye {student.name} "
             day_logout(studentID)
             student.event()
-            return message
+            return message, True
 
 
 def find_student_by_studentID(studentID: str) -> Student:
