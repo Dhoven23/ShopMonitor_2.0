@@ -35,7 +35,7 @@ def who_was_in_the_shop(date):
         for id in IDs:
             found = find_student_by_studentID(id)
 
-            message.append('-> ' + found.name + f'................ {day.signins[i].Login[11:16]} to {day.signins[i].Logout[11:16]}\n')
+            message.append('-> ' + found.name + f'......... {day.signins[i].Login[11:16]} to {day.signins[i].Logout[11:16]}\n')
             i += 1
     return message
 
@@ -58,3 +58,5 @@ def edit_training_level(name,value):
         return True
     else:
         return False
+
+

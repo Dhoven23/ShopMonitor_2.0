@@ -12,7 +12,7 @@ import mongoengine
 class Tool(mongoengine.Document):
     name = mongoengine.StringField(required=True)
     keyNumber = mongoengine.IntField(required=True)
-    TrainingLevel = mongoengine.IntField(required=True)
+
 
     meta = {
         'db_alias': 'core',

@@ -19,11 +19,10 @@ def create_student(studentID: str, name: str):
 
     return student.name
 
-def CreateTool(keyNumber: int, name: str, TrainingLevel: int):
+def CreateTool(keyNumber: int, name: str):
     tool = Tool()
     tool.name = name
     tool.keyNumber = keyNumber
-    tool.TrainingLevel = TrainingLevel
     tool.save()
     return tool.keyNumber
 
@@ -41,7 +40,12 @@ def log_into_account(studentID: str):
 
         SignedIn = student.Is_signedIn
         if SignedIn == False:
-            message = f"Hello {student.name}"
+            message = f"Hello {student.name}, you are cleared to use:\n"
+            for number in student.keys_trained:
+                tool = Tool.objects(keyNumber=number).first()
+                addition = tool.name
+                message = message + '-> ' + addition + '\n'
+
             day_login(studentID)
             student.event()
             return message, False
@@ -107,3 +111,9 @@ def day_logout(studentID: str):
     model.hourly_entry_rmv()
     model.save()
 
+
+def tool_exists(number):
+    if Tool.objects(keyNumber=number):
+        return True
+    else:
+        return False

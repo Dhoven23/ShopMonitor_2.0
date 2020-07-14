@@ -41,12 +41,12 @@ def popup_message(text, tab):  # universally callable message-display
         button.destroy()
 
     message = text
-    pop = Label(tab, text=message)
-
+    pop = Text(tab, height=7, width=70)
+    pop.insert(END,text)
     pop.pack()
     button = Button(tab, text="Acknowledge", command=destroy)
-    button.after(5000, button.destroy)  # destroy popup message after 5 seconds
-    pop.after(5000, pop.destroy)
+    button.after(15000, button.destroy)  # destroy popup message after 5 seconds
+    pop.after(15000, pop.destroy)
     button.pack()
 
 
@@ -94,10 +94,10 @@ def main_login_student_operation(window):  # login/out student if in mongo
                 popup_create_student(str(StudentID), window)
             else:
                 if loggedIn:
-                    popup_message(message,window)
+                    popup_message(message, window)
                 else:
                     student = svc.find_student_by_studentID(StudentID)
-                    popup_message(message + f'\n You are a level {student.training_Level} user', window)
+                    popup_message(message, window)
 
     def delete_entry(event=None):
         entry.delete(0, END)
@@ -119,7 +119,7 @@ def isadmin():
         return False
 
 
-def admin_duties(admin):  # admin operation
+def admin_duties(admin, tabStructure):  # admin operation
     def whos_in_the_shop(event=None):
         messages = asv.whos_in_the_shop()
         text.delete('1.0', END)
@@ -136,16 +136,15 @@ def admin_duties(admin):  # admin operation
     def edit_training(event=None):
 
         def training(event=None):
-            Student = asv.edit_training_level(prompt.get(),train.get())
+            Student = asv.edit_training_level(prompt.get(), train.get())
             if Student:
                 pop.destroy()
 
-        def delete_name_entry(event=None):
+        def delete_name_entry(Event=None):
             prompt.delete(0, END)
+
         def delete_train_entry(event=None):
-
-            train.delete(0,END)
-
+            train.delete(0, END)
 
         pop = Toplevel()
         pop.minsize(80, 30)
@@ -154,7 +153,7 @@ def admin_duties(admin):  # admin operation
         prompt.bind('<ButtonPress>', delete_name_entry)
 
         train = Entry(pop, width=35, borderwidth=2)
-        train.insert(0,"Enter training level: ")
+        train.insert(0, "Enter Tool Number: ")
         train.bind('<ButtonPress>', delete_train_entry)
 
         train.bind('<Return>', training)
@@ -162,10 +161,9 @@ def admin_duties(admin):  # admin operation
         pop.wm_title("Training")
 
         prompt.grid(row=2, column=0)
-        train.grid(row=3,column=0)
-        proceed = Button(pop, text="Cancel", fg='red' ,command=pop.destroy)
+        train.grid(row=3, column=0)
+        proceed = Button(pop, text="Cancel", fg='red', command=pop.destroy)
         proceed.grid(row=1, column=0)
-
 
     def who_was_in_the_shop():
         def delete_entry(event=None):
@@ -178,7 +176,7 @@ def admin_duties(admin):  # admin operation
             text.delete('1.0', END)
             if messages:
                 for message in messages:
-                    text.insert(END, message[0:24] + (50 - len(message)) * '.' + message[25:(len(message) + 1)])
+                    text.insert(END, message[0:24] + (35 - len(message)) * '.' + message[25:(len(message) + 1)])
             else:
                 text.insert(END,
                             f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
@@ -187,20 +185,54 @@ def admin_duties(admin):  # admin operation
         DateField.bind('<ButtonPress>', delete_entry)
         prompt = Label(admin, text="Please enter the day")
         DateField.bind('<Return>', get_date)
-        prompt.pack(side=BOTTOM)
+        prompt.grid(column=0, row=6)
 
-    text = Text(admin, height=6, width=50)
-    DateField = Entry(admin, width=50, borderwidth=3)
-    button1 = Button(admin, text="Who's In the Shop?", width=35, command=whos_in_the_shop)
-    button2 = Button(admin, text="Signout All", width=35, command=logout_all_users)
-    button3 = Button(admin, text="Blame", width=35, command=who_was_in_the_shop)
-    button4 = Button(admin, text="Edit Training", width=35, command=edit_training)
-    button1.pack()
-    button2.pack()
-    button3.pack()
-    button4.pack()
-    text.pack()
-    DateField.pack(side=BOTTOM)
+    def add_tool(event=None):
+
+        def adding_tool(event=None):
+            svc.CreateTool(number.get(), name.get())
+            pop.destroy()
+            build_tools_tab(tabStructure)
+
+        def delete_name_entry(event=None):
+            name.delete(0, END)
+
+        def delete_number_entry(event=None):
+            number.delete(0, END)
+
+        pop = Toplevel()
+        pop.minsize(80, 30)
+        name = Entry(pop, width=35, borderwidth=2)
+        name.insert(0, "Enter Tool Name: ")
+        name.bind('<ButtonPress>', delete_name_entry)
+
+        number = Entry(pop, width=35, borderwidth=2)
+        number.insert(0, "Enter Tool Number: ")
+        number.bind('<ButtonPress>', delete_number_entry)
+
+        number.bind('<Return>', adding_tool)
+
+        pop.wm_title("Tools")
+
+        name.grid(row=2, column=0)
+        number.grid(row=3, column=0)
+        proceed = Button(pop, text="Cancel", fg='red', command=pop.destroy)
+        proceed.grid(row=1, column=0)
+
+    text = Text(admin, height=15, width=45)
+    DateField = Entry(admin, width=25, borderwidth=3)
+    button1 = Button(admin, text="Who's In the Shop?", width=25, command=whos_in_the_shop)
+    button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
+    button3 = Button(admin, text="Blame", width=25, command=who_was_in_the_shop)
+    button4 = Button(admin, text="Edit Training", width=25, command=edit_training)
+    button5 = Button(admin, text="Add Tool", width=25, command=add_tool)
+    button1.grid(column=0, row=1)
+    button2.grid(column=0, row=2)
+    button3.grid(column=0, row=3)
+    button4.grid(column=0, row=4)
+    button5.grid(column=0, row=5)
+    text.grid(column=1, row=1, rowspan=10, columnspan=2)
+    DateField.grid(column=0, row=7)
 
 
 def build_login_tab(tabStructure):
@@ -223,8 +255,8 @@ def Are_you_sure():  # simple yes/no for logout-all
     question.wm_title("Confirm")
 
     prompt = Label(question, text='Are You Sure?')
-    yes = Button(question, text='YES', width=30, fg='green',command=do_yes)
-    no = Button(question, text='NO', width=30, fg='red',command=do_no)
+    yes = Button(question, text='YES', width=30, fg='green', command=do_yes)
+    no = Button(question, text='NO', width=30, fg='red', command=do_no)
     prompt.pack()
     yes.pack()
     no.pack()
@@ -236,22 +268,38 @@ def build_admin_tab(tabStructure):
 
     tabStructure.add(admin, text="admin")
 
-    admin_duties(admin)
+    admin_duties(admin, tabStructure)
+
+
+class ToolButton:
+
+    def __init__(self, master, x, y, number):
+        def Onclick():
+            print(number)
+
+        if svc.tool_exists(number):
+            self.button = Button(master, text=str(number), bg='green', width=10, height=2, command=Onclick)
+            self.button.grid(column=x, row=y)
 
 
 def build_tools_tab(tabStructure):
     def tool_key(number, event=None):
-        print(number)
+
         pass
 
-    d = {}
     tools = ttk.Frame(tabStructure)
-    for x in range(1, 6):
-        for y in range(1, 6):
-            d["button{0}".format(x * y)] = Button(tools, text=str(x * y), command=lambda: tool_key(x * y),
-                                                  width=13, height=2).grid(row=x, column=y)
+    Tool_Buttons_list_function(tools)
 
     tabStructure.add(tools, text="Tools")
+
+
+def Tool_Buttons_list_function(tools):
+    number = 1
+    for y in range(1, 7):
+        for x in range(1, 7):
+            ToolButton.__init__(ToolButton, tools, x, y, number)
+            number += 1
+            print(number)
 
 
 def build_all_the_tabs_admin(master):
