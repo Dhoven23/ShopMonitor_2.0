@@ -11,8 +11,8 @@
 #
 #   Author: Daniel Hoven (github @DHoven23),
 #   email: Daniel.Hoven@gcu.edu
-#   Version 0.0.2
-#   Date of commit: 7/10/2020
+#   Version 0.0.3
+#   Date of commit: 7/15/2020
 #
 ###############################################################################################
 
@@ -25,6 +25,7 @@ import Service.admin_svc as asv
 import Service.Reports.generate_report as gen
 import Service.Reports.send_email as send
 import datetime
+from Data.tool import Tool
 
 
 def isint(s):  # universal check for integer
@@ -50,7 +51,7 @@ def popup_message(text, tab):  # universally callable message-display
     button.pack()
 
 
-def popup_create_student(StudentID, window):  # add student to mongo
+def popup_create_student(StudentID, window, master):  # add student to mongo
     def student_create(event: object = None):
         name = prompt.get()
         ID = StudentID
@@ -65,6 +66,10 @@ def popup_create_student(StudentID, window):  # add student to mongo
         prompt.delete(0, END)
 
     pop = Toplevel()
+    x = master.winfo_x()
+    y = master.winfo_y()
+
+    pop.geometry("+%d+%d" % (x + 130, y + 70))
     pop.minsize(80, 30)
     prompt = Entry(pop, width=35, borderwidth=2)
     prompt.insert(0, "Enter your name: ")
@@ -81,17 +86,17 @@ def popup_create_student(StudentID, window):  # add student to mongo
     proceed.grid(row=1, column=0)
 
 
-def main_login_student_operation(window):  # login/out student if in mongo
+def main_login_student_operation(window, master):  # login/out student if in mongo
     def login(event: object = None):
         StudentID = entry.get()
         entry.delete(0, END)
         entry.insert(0, "Enter your ID: ")
-        if not ((len(StudentID) == 8) and isint(StudentID)):
+        if not ((((len(StudentID) == 8)|(len(StudentID) == 6)) and isint(StudentID))): # check input is 6 or 8 digit number
             return
         else:
             message, loggedIn = log_into_account(StudentID)
             if message == f"No student with ID {StudentID}":
-                popup_create_student(str(StudentID), window)
+                popup_create_student(str(StudentID), window, master)
             else:
                 if loggedIn:
                     popup_message(message, window)
@@ -111,15 +116,10 @@ def main_login_student_operation(window):  # login/out student if in mongo
     entry.pack()
 
 
-def isadmin():
-    global Master
-    if Master:
-        return True
-    else:
-        return False
 
 
-def admin_duties(admin, tabStructure):  # admin operation
+
+def admin_duties(admin, tabStructure, master):  # admin operation
     def whos_in_the_shop(event=None):
         messages = asv.whos_in_the_shop()
         text.delete('1.0', END)
@@ -147,6 +147,10 @@ def admin_duties(admin, tabStructure):  # admin operation
             train.delete(0, END)
 
         pop = Toplevel()
+        x = master.winfo_x()
+        y = master.winfo_y()
+
+        pop.geometry("+%d+%d" % (x + 200, y + 100))
         pop.minsize(80, 30)
         prompt = Entry(pop, width=35, borderwidth=2)
         prompt.insert(0, "Enter Student name: ")
@@ -201,6 +205,10 @@ def admin_duties(admin, tabStructure):  # admin operation
             number.delete(0, END)
 
         pop = Toplevel()
+        x = master.winfo_x()
+        y = master.winfo_y()
+
+        pop.geometry("+%d+%d" % (x + 200, y + 100))
         pop.minsize(80, 30)
         name = Entry(pop, width=35, borderwidth=2)
         name.insert(0, "Enter Tool Name: ")
@@ -235,12 +243,12 @@ def admin_duties(admin, tabStructure):  # admin operation
     DateField.grid(column=0, row=7)
 
 
-def build_login_tab(tabStructure):
+def build_login_tab(tabStructure, master):
     login = ttk.Frame(tabStructure)
 
     tabStructure.add(login, text="login")
 
-    main_login_student_operation(login)
+    main_login_student_operation(login, master)
 
 
 def Are_you_sure():  # simple yes/no for logout-all
@@ -263,19 +271,20 @@ def Are_you_sure():  # simple yes/no for logout-all
     question.geometry('210x75')
 
 
-def build_admin_tab(tabStructure):
+def build_admin_tab(tabStructure, master):
     admin = ttk.Frame(tabStructure)
 
     tabStructure.add(admin, text="admin")
 
-    admin_duties(admin, tabStructure)
+    admin_duties(admin, tabStructure, master)
 
 
 class ToolButton:
 
     def __init__(self, master, x, y, number):
         def Onclick():
-            print(number)
+            tool = Tool.objects(keyNumber = number).first()
+            print(tool.name)
 
         if svc.tool_exists(number):
             self.button = Button(master, text=str(number), bg='green', width=10, height=2, command=Onclick)
@@ -299,27 +308,20 @@ def Tool_Buttons_list_function(tools):
         for x in range(1, 7):
             ToolButton.__init__(ToolButton, tools, x, y, number)
             number += 1
-            print(number)
+
 
 
 def build_all_the_tabs_admin(master):
     tabStructure = ttk.Notebook(master)
 
-    build_login_tab(tabStructure)
-    build_admin_tab(tabStructure)
+    build_login_tab(tabStructure, master)
+    build_admin_tab(tabStructure, master)
     build_tools_tab(tabStructure)
 
     tabStructure.pack(expand=1, fill='both')
 
 
-def build_all_the_tabs(master):
-    tabStructure = ttk.Notebook(master)
 
-    build_login_tab(tabStructure)
-
-    build_tools_tab(tabStructure)
-
-    tabStructure.pack(expand=1, fill='both')
 
 
 class app:  # constructor for GUI
@@ -337,10 +339,7 @@ class app:  # constructor for GUI
         def send_weekly_report():
             send.send_weekly_report()
 
-        def LoginAsAdmin():
-            global Master
-            Master = True
-            build_all_the_tabs(master)
+
 
         master.title("Shop Activity Monitor")
         master.geometry("500x320")
