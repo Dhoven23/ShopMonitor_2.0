@@ -59,7 +59,7 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
         pop.destroy()
 
         student = svc.create_student(ID, str(name))
-        cv2.imshow('profile',student.profile)
+
         svc.log_into_account(StudentID)
         message = "Hello " + name
         popup_message(message, window)
@@ -74,7 +74,7 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     pop.geometry("+%d+%d" % (x + 130, y + 70))
     pop.minsize(80, 30)
     prompt = Entry(pop, width=35, borderwidth=2)
-    capstone = Radiobutton(pop, text = 'Capstone', )
+    capstone = Radiobutton(pop, text='Capstone', )
     prompt.insert(0, "Enter your name: ")
     prompt.bind('<ButtonPress>', delete_entry)
 
@@ -280,12 +280,32 @@ def build_admin_tab(tabStructure, master):
     admin_duties(admin, tabStructure, master)
 
 
+def checkout_tool(keyNumber):
+    def check_training(*args):
+        StudentID = ID.get()
+        student = svc.find_student_by_studentID(StudentID)
+
+        for number in student.keys_trained:
+            if int(number) == int(keyNumber):
+                print("You're good to go")
+                return
+        print('NONONONo')
+
+    checkout = Toplevel()
+    Instruction = Label(checkout, text='Please Enter you StudentID').pack(side=TOP)
+    ID = Entry(checkout, width=35, borderwidth=2)
+    ID.bind('<Return>', check_training)
+    ID.pack()
+
+
+
+
 class ToolButton:
 
     def __init__(self, master, x, y, number):
         def Onclick():
             tool = Tool.objects(keyNumber=number).first()
-            print(tool.name)
+            checkout_tool(tool.keyNumber)
 
         if svc.tool_exists(number):
             self.button = Button(master, text=str(number), bg='green', width=10, height=2, command=Onclick)
@@ -324,8 +344,7 @@ def build_all_the_tabs_admin(master):
 class app:  # constructor for GUI
     def __init__(self, master):
         self.master = master
-        global Master
-        Master = False
+
 
         def onExit():
             master.quit()
