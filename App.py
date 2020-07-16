@@ -9,7 +9,7 @@
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #
-#   Author: Daniel Hoven (github @DHoven23),
+#   Author: Daniel Hoven (github @Dhoven23),
 #   email: Daniel.Hoven@gcu.edu
 #   Version 0.0.3
 #   Date of commit: 7/15/2020
@@ -26,6 +26,7 @@ import Service.Reports.generate_report as gen
 import Service.Reports.send_email as send
 import datetime
 from Data.tool import Tool
+import cv2
 
 
 def isint(s):  # universal check for integer
@@ -43,7 +44,7 @@ def popup_message(text, tab):  # universally callable message-display
 
     message = text
     pop = Text(tab, height=7, width=70)
-    pop.insert(END,text)
+    pop.insert(END, text)
     pop.pack()
     button = Button(tab, text="Acknowledge", command=destroy)
     button.after(15000, button.destroy)  # destroy popup message after 5 seconds
@@ -57,7 +58,8 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
         ID = StudentID
         pop.destroy()
 
-        svc.create_student(ID, str(name))
+        student = svc.create_student(ID, str(name))
+        cv2.imshow('profile',student.profile)
         svc.log_into_account(StudentID)
         message = "Hello " + name
         popup_message(message, window)
@@ -72,6 +74,7 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     pop.geometry("+%d+%d" % (x + 130, y + 70))
     pop.minsize(80, 30)
     prompt = Entry(pop, width=35, borderwidth=2)
+    capstone = Radiobutton(pop, text = 'Capstone', )
     prompt.insert(0, "Enter your name: ")
     prompt.bind('<ButtonPress>', delete_entry)
 
@@ -87,11 +90,12 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
 
 
 def main_login_student_operation(window, master):  # login/out student if in mongo
-    def login(event: object = None):
+    def login(*args, **kwargs):
         StudentID = entry.get()
         entry.delete(0, END)
         entry.insert(0, "Enter your ID: ")
-        if not ((((len(StudentID) == 8)|(len(StudentID) == 6)) and isint(StudentID))): # check input is 6 or 8 digit number
+        if not (((len(StudentID) == 8) | (len(StudentID) == 6)) and isint(StudentID)):  # check input is 6 or 8 digit
+            # number
             return
         else:
             message, loggedIn = log_into_account(StudentID)
@@ -104,7 +108,7 @@ def main_login_student_operation(window, master):  # login/out student if in mon
                     student = svc.find_student_by_studentID(StudentID)
                     popup_message(message, window)
 
-    def delete_entry(event=None):
+    def delete_entry(*args):
         entry.delete(0, END)
 
     instruction = Label(window, text="Enter Student ID")
@@ -116,11 +120,8 @@ def main_login_student_operation(window, master):  # login/out student if in mon
     entry.pack()
 
 
-
-
-
 def admin_duties(admin, tabStructure, master):  # admin operation
-    def whos_in_the_shop(event=None):
+    def whos_in_the_shop(*args):
         messages = asv.whos_in_the_shop()
         text.delete('1.0', END)
 
@@ -133,17 +134,17 @@ def admin_duties(admin, tabStructure, master):  # admin operation
     def logout_all_users(event: object = None):
         Are_you_sure()
 
-    def edit_training(event=None):
+    def edit_training(*args2):
 
-        def training(event=None):
+        def training(*args0):
             Student = asv.edit_training_level(prompt.get(), train.get())
             if Student:
                 pop.destroy()
 
-        def delete_name_entry(Event=None):
+        def delete_name_entry(*args1):
             prompt.delete(0, END)
 
-        def delete_train_entry(event=None):
+        def delete_train_entry(*args):
             train.delete(0, END)
 
         pop = Toplevel()
@@ -191,17 +192,17 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         DateField.bind('<Return>', get_date)
         prompt.grid(column=0, row=6)
 
-    def add_tool(event=None):
+    def add_tool(*args, **kwargs4):
 
-        def adding_tool(event=None):
+        def adding_tool(*args2, **kwargs3):
             svc.CreateTool(number.get(), name.get())
             pop.destroy()
             build_tools_tab(tabStructure)
 
-        def delete_name_entry(event=None):
+        def delete_name_entry(*args3, **kwargs2):
             name.delete(0, END)
 
-        def delete_number_entry(event=None):
+        def delete_number_entry(*args4, **kwargs1):
             number.delete(0, END)
 
         pop = Toplevel()
@@ -283,7 +284,7 @@ class ToolButton:
 
     def __init__(self, master, x, y, number):
         def Onclick():
-            tool = Tool.objects(keyNumber = number).first()
+            tool = Tool.objects(keyNumber=number).first()
             print(tool.name)
 
         if svc.tool_exists(number):
@@ -293,7 +294,6 @@ class ToolButton:
 
 def build_tools_tab(tabStructure):
     def tool_key(number, event=None):
-
         pass
 
     tools = ttk.Frame(tabStructure)
@@ -306,9 +306,9 @@ def Tool_Buttons_list_function(tools):
     number = 1
     for y in range(1, 7):
         for x in range(1, 7):
+            # noinspection PyTypeChecker
             ToolButton.__init__(ToolButton, tools, x, y, number)
             number += 1
-
 
 
 def build_all_the_tabs_admin(master):
@@ -319,9 +319,6 @@ def build_all_the_tabs_admin(master):
     build_tools_tab(tabStructure)
 
     tabStructure.pack(expand=1, fill='both')
-
-
-
 
 
 class app:  # constructor for GUI
@@ -338,8 +335,6 @@ class app:  # constructor for GUI
 
         def send_weekly_report():
             send.send_weekly_report()
-
-
 
         master.title("Shop Activity Monitor")
         master.geometry("500x320")

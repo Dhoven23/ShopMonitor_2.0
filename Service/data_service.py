@@ -10,14 +10,14 @@ from Data.day import Day
 
 
 
-def create_student(studentID: str, name: str):
+def create_student(studentID: str, name: str) -> Student:
     student = Student()
     student.name = name
     student.studentID = studentID
-
+    student.add_profile_image()
     student.save()
 
-    return student.name
+    return student
 
 def CreateTool(keyNumber: int, name: str):
     tool = Tool()
