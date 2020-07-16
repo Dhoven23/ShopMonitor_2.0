@@ -181,7 +181,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
             text.delete('1.0', END)
             if messages:
                 for message in messages:
-                    text.insert(END, message[0:24] + (35 - len(message)) * '.' + message[25:(len(message) + 1)])
+                    text.insert(END, message[0:24] + (45 - len(message)) * '.' + message[25:(len(message) + 1)])
             else:
                 text.insert(END,
                             f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
@@ -288,6 +288,7 @@ def checkout_tool(keyNumber):
         for number in student.keys_trained:
             if int(number) == int(keyNumber):
                 print("You're good to go")
+                checkout.destroy()
                 return
         print('NONONONo')
 
