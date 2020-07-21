@@ -93,7 +93,7 @@ def main_login_student_operation(window, master):  # login/out student if in mon
     def login(*args, **kwargs):
         StudentID = entry.get()
         entry.delete(0, END)
-        entry.insert(0, "Enter your ID: ")
+
         if not (((len(StudentID) == 8) | (len(StudentID) == 6)) and isint(StudentID)):  # check input is 6 or 8 digit
             # number
             return
@@ -114,7 +114,7 @@ def main_login_student_operation(window, master):  # login/out student if in mon
     instruction = Label(window, text="Enter Student ID")
     instruction.pack()
     entry = Entry(window, width=75, borderwidth=2)
-    entry.insert(0, "Enter your ID: ")
+
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
     entry.pack()
@@ -357,7 +357,7 @@ class app:  # constructor for GUI
             send.send_weekly_report()
 
         master.title("Shop Activity Monitor")
-        master.geometry("500x320")
+        master.geometry("550x320")
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 
