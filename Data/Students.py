@@ -24,9 +24,11 @@ class Student(mongoengine.Document):
         self.Is_signedIn = not self.Is_signedIn
         self.save()
     def train(self, key):
-
-        self.keys_trained.append(key)
-        self.save()
+        if key not in self.keys_trained:
+            self.keys_trained.append(key)
+            self.save()
+        else:
+            pass
     def add_profile_image(self):
         pass
         #self.profile = cv2.imread('3.png')
