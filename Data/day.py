@@ -52,18 +52,18 @@ class Day(mongoengine.Document):
     def hourly_entry_rmv(self):
         hour = int(datetime.datetime.now().hour - self.Begin)
 
+        if self.hourly:
+            last = self.hourly[-1]
 
-        last = self.hourly[-1]
+            if hour == len(self.hourly) - 1:
+                self.hourly[-1] = str(int(self.hourly[-1]) - 1)
 
-        if hour == len(self.hourly) - 1:
-            self.hourly[-1] = str(int(self.hourly[-1]) - 1)
+            if hour > len(self.hourly) - 1:
+                while hour > len(self.hourly) - 1:
+                    self.hourly.append(last)
+                self.hourly[-1] = str(int(self.hourly[-1]) - 1)
 
-        if hour > len(self.hourly) - 1:
-            while hour > len(self.hourly) - 1:
-                self.hourly.append(last)
-            self.hourly[-1] = str(int(self.hourly[-1]) - 1)
-
-        self.save()
+            self.save()
 
     meta = {
         'db_alias': 'core',

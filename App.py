@@ -67,35 +67,40 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     def delete_entry(event=None):
         prompt.delete(0, END)
 
+    def Capstone():
+        pass
+        #CapstoneID = Entry(pop, width=35,borderwidth=2).grid(row=3,column=0)
+        #Label(pop,text="Capstone\nnumber").grid(row=3,column=1)
+        #CapstoneID.bind('<Return>',delete_entry)
+
     pop = Toplevel()
     x = master.winfo_x()
     y = master.winfo_y()
-
+    v = IntVar()
     pop.geometry("+%d+%d" % (x + 130, y + 70))
     pop.minsize(80, 30)
     prompt = Entry(pop, width=35, borderwidth=2)
-    capstone = Radiobutton(pop, text='Capstone', )
+    capstone = Button(pop, text='Capstone',command=Capstone).grid(row=2,column=1)
     prompt.insert(0, "Enter your name: ")
     prompt.bind('<ButtonPress>', delete_entry)
 
     prompt.bind('<Return>', student_create)
+
 
     pop.wm_title("New Student")
     warning = Label(pop, text='Student not in database')
     warning.grid(row=0, column=0)
     prompt.grid(row=2, column=0)
 
-    proceed = Button(pop, text="Acknowledge", command=pop.destroy)
-    proceed.grid(row=1, column=0)
 
 
-def main_login_student_operation(window, master):  # login/out student if in mongo
+
+def main_login_student_operation(window, master):
     def login(*args, **kwargs):
         StudentID = entry.get()
         entry.delete(0, END)
 
-        if not (((len(StudentID) == 8) | (len(StudentID) == 6)) and isint(StudentID)):  # check input is 6 or 8 digit
-            # number
+        if not (((len(StudentID) == 8) | (len(StudentID) == 6)) and isint(StudentID)):
             return
         else:
             message, loggedIn = log_into_account(StudentID)
@@ -197,6 +202,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         def adding_tool(*args2, **kwargs3):
             svc.CreateTool(number.get(), name.get())
             pop.destroy()
+
             build_tools_tab(tabStructure)
 
         def delete_name_entry(*args3, **kwargs2):
@@ -321,6 +327,7 @@ def build_tools_tab(tabStructure):
     Tool_Buttons_list_function(tools)
 
     tabStructure.add(tools, text="Tools")
+
 
 
 def Tool_Buttons_list_function(tools):
