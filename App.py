@@ -9,10 +9,10 @@
 #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 #
-#   Author: Daniel Hoven (github @Dhoven23),
+#   Author: Daniel Hoven (github @Dhoven23/ShopSignIn),
 #   email: Daniel.Hoven@gcu.edu
-#   Version 0.0.3
-#   Date of commit: 7/15/2020
+#   Version 1.0.0
+#   Date edited: 8/4/2020
 #
 ###############################################################################################
 
