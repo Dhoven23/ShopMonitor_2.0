@@ -26,7 +26,6 @@ import Service.Reports.generate_report as gen
 import Service.Reports.send_email as send
 import datetime
 from Data.tool import Tool
-import cv2
 
 
 def isint(s):  # universal check for integer
@@ -56,22 +55,25 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     def student_create(event: object = None):
         name = prompt.get()
         ID = StudentID
-        pop.destroy()
 
-        student = svc.create_student(ID, str(name))
+        if isint(name) == False:
+            student = svc.create_student(ID, str(name))
+            svc.log_into_account(StudentID)
+            message = "Hello " + name
+            popup_message(message, window)
+            pop.destroy()
 
-        svc.log_into_account(StudentID)
-        message = "Hello " + name
-        popup_message(message, window)
+
+
 
     def delete_entry(event=None):
         prompt.delete(0, END)
 
     def Capstone():
         pass
-        #CapstoneID = Entry(pop, width=35,borderwidth=2).grid(row=3,column=0)
-        #Label(pop,text="Capstone\nnumber").grid(row=3,column=1)
-        #CapstoneID.bind('<Return>',delete_entry)
+        # CapstoneID = Entry(pop, width=35,borderwidth=2).grid(row=3,column=0)
+        # Label(pop,text="Capstone\nnumber").grid(row=3,column=1)
+        # CapstoneID.bind('<Return>',delete_entry)
 
     pop = Toplevel()
     x = master.winfo_x()
@@ -80,19 +82,16 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     pop.geometry("+%d+%d" % (x + 130, y + 70))
     pop.minsize(80, 30)
     prompt = Entry(pop, width=35, borderwidth=2)
-    capstone = Button(pop, text='Capstone',command=Capstone).grid(row=2,column=1)
+    capstone = Button(pop, text='Capstone', command=Capstone).grid(row=2, column=1)
     prompt.insert(0, "Enter your name: ")
     prompt.bind('<ButtonPress>', delete_entry)
 
     prompt.bind('<Return>', student_create)
 
-
     pop.wm_title("New Student")
     warning = Label(pop, text='Student not in database')
     warning.grid(row=0, column=0)
     prompt.grid(row=2, column=0)
-
-
 
 
 def main_login_student_operation(window, master):
@@ -305,8 +304,6 @@ def checkout_tool(keyNumber):
     ID.pack()
 
 
-
-
 class ToolButton:
 
     def __init__(self, master, x, y, number):
@@ -327,7 +324,6 @@ def build_tools_tab(tabStructure):
     Tool_Buttons_list_function(tools)
 
     tabStructure.add(tools, text="Tools")
-
 
 
 def Tool_Buttons_list_function(tools):
@@ -352,7 +348,6 @@ def build_all_the_tabs_admin(master):
 class app:  # constructor for GUI
     def __init__(self, master):
         self.master = master
-
 
         def onExit():
             master.quit()
@@ -389,16 +384,14 @@ class app:  # constructor for GUI
 
 
 def main():  # run the app
-
+    mongo.global_init()
     date = 'Today is: ' + svc.print_day() + ", time: %s:%s" % (
         datetime.datetime.now().hour, datetime.datetime.now().minute)
     root = Tk()
-    root.iconbitmap('app.ico')
+    
     app(root)
 
     root.mainloop()
 
 
-if __name__ == '__main__':
-    mongo.global_init()  # always include this function call to connect to mongoDB
-    main()
+
