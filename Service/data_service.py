@@ -1,7 +1,7 @@
 import datetime
 from datetime import date
 
-from Data.tool import Tool
+from Data.key import Key
 from Data.Students import Student
 from Data.signins import Signin
 from Data.day import Day
@@ -20,7 +20,7 @@ def create_student(studentID: str, name: str) -> Student:
     return student
 
 def CreateTool(keyNumber: int, name: str):
-    tool = Tool()
+    tool = Key()
     tool.name = name
     tool.keyNumber = keyNumber
     tool.save()
@@ -42,7 +42,7 @@ def log_into_account(studentID: str):
         if SignedIn == False:
             message = f"Hello {student.name}, you are cleared to use:\n"
             for number in student.keys_trained:
-                tool = Tool.objects(keyNumber=number).first()
+                tool = Key.objects(keyNumber=number).first()
                 addition = tool.name
                 message = message + '-> ' + addition + '\n'
 
@@ -113,7 +113,7 @@ def day_logout(studentID: str):
 
 
 def tool_exists(number):
-    if Tool.objects(keyNumber=number):
+    if Key.objects(keyNumber=number):
         return True
     else:
         return False

@@ -985,7 +985,7 @@
    'PYMODULE'),
   ('App', 'C:\\Python_programs\\ShopSignInSystem\\App.py', 'PYMODULE'),
   ('Data.tool',
-   'C:\\Python_programs\\ShopSignInSystem\\Data\\tool.py',
+   'C:\\Python_programs\\ShopSignInSystem\\Data\\key.py',
    'PYMODULE'),
   ('Data', '-', 'PYMODULE'),
   ('mongoengine',

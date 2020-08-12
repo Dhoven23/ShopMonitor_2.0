@@ -190,7 +190,7 @@ namespace Qt
         Sheet,
         Drawer,
         Popup,
-        Tool,
+        Key,
         ToolTip,
         SplashScreen,
         Desktop,

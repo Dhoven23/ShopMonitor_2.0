@@ -467,7 +467,7 @@ MetaInfo {
         icon: "images/toolbar-icon16.png"
 
         ItemLibraryEntry {
-            name: "Tool Bar"
+            name: "Key Bar"
             category: "Qt Quick - Controls 2"
             libraryIcon: "images/toolbar-icon.png"
             version: "2.0"
@@ -482,13 +482,13 @@ MetaInfo {
         icon: "images/toolbutton-icon16.png"
 
         ItemLibraryEntry {
-            name: "Tool Button"
+            name: "Key Button"
             category: "Qt Quick - Controls 2"
             libraryIcon: "images/toolbutton-icon.png"
             version: "2.0"
             requiredImport: "QtQuick.Controls"
 
-            Property { name: "text"; type: "binding"; value: "qsTr(\"Tool Button\")" }
+            Property { name: "text"; type: "binding"; value: "qsTr(\"Key Button\")" }
         }
     }
 
@@ -497,7 +497,7 @@ MetaInfo {
         icon: "images/toolseparator-icon16.png"
 
         ItemLibraryEntry {
-            name: "Tool Separator"
+            name: "Key Separator"
             category: "Qt Quick - Controls 2"
             libraryIcon: "images/toolseparator-icon.png"
             version: "2.1"

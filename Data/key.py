@@ -9,7 +9,7 @@ import mongoengine
 # ----------------------------------------------------------------------------------------------------
 
 
-class Tool(mongoengine.Document):
+class Key(mongoengine.Document):
     name = mongoengine.StringField(required=True)
     keyNumber = mongoengine.IntField(required=True)
 

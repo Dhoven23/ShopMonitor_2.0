@@ -25,7 +25,7 @@ import Service.admin_svc as asv
 import Service.Reports.generate_report as gen
 import Service.Reports.send_email as send
 import datetime
-from Data.tool import Tool
+from Data.key import Key
 
 
 def isint(s):  # universal check for integer
@@ -162,7 +162,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         prompt.bind('<ButtonPress>', delete_name_entry)
 
         train = Entry(pop, width=35, borderwidth=2)
-        train.insert(0, "Enter Tool Number: ")
+        train.insert(0, "Enter Key Number: ")
         train.bind('<ButtonPress>', delete_train_entry)
 
         train.bind('<Return>', training)
@@ -217,11 +217,11 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         pop.geometry("+%d+%d" % (x + 200, y + 100))
         pop.minsize(80, 30)
         name = Entry(pop, width=35, borderwidth=2)
-        name.insert(0, "Enter Tool Name: ")
+        name.insert(0, "Enter Machine Name: ")
         name.bind('<ButtonPress>', delete_name_entry)
 
         number = Entry(pop, width=35, borderwidth=2)
-        number.insert(0, "Enter Tool Number: ")
+        number.insert(0, "Enter Key Number: ")
         number.bind('<ButtonPress>', delete_number_entry)
 
         number.bind('<Return>', adding_tool)
@@ -239,7 +239,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
     button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
     button3 = Button(admin, text="Blame", width=25, command=who_was_in_the_shop)
     button4 = Button(admin, text="Edit Training", width=25, command=edit_training)
-    button5 = Button(admin, text="Add Tool", width=25, command=add_tool)
+    button5 = Button(admin, text="Add Key", width=25, command=add_tool)
     button1.grid(column=0, row=1)
     button2.grid(column=0, row=2)
     button3.grid(column=0, row=3)
@@ -308,7 +308,7 @@ class ToolButton:
 
     def __init__(self, master, x, y, number):
         def Onclick():
-            tool = Tool.objects(keyNumber=number).first()
+            tool = Key.objects(keyNumber=number).first()
             checkout_tool(tool.keyNumber)
 
         if svc.tool_exists(number):

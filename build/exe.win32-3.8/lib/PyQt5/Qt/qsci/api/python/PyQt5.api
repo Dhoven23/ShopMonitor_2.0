@@ -1215,7 +1215,7 @@ QtCore.Qt.Dialog?10
 QtCore.Qt.Sheet?10
 QtCore.Qt.Drawer?10
 QtCore.Qt.Popup?10
-QtCore.Qt.Tool?10
+QtCore.Qt.Key?10
 QtCore.Qt.ToolTip?10
 QtCore.Qt.SplashScreen?10
 QtCore.Qt.Desktop?10
