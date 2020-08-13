@@ -16,5 +16,5 @@ class Key(mongoengine.Document):
 
     meta = {
         'db_alias': 'core',
-        'collection': 'Tools'
+        'collection': 'Keys'
     }

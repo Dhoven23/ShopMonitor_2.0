@@ -854,8 +854,8 @@ Module {
     }
     Component {
         prototype: "QQuickToolButton"
-        name: "QtQuick.Controls/ToolButton 2.0"
-        exports: ["QtQuick.Controls/ToolButton 2.0"]
+        name: "QtQuick.Controls/KeyButton 2.0"
+        exports: ["QtQuick.Controls/KeyButton 2.0"]
         exportMetaObjectRevisions: [0]
         isComposite: true
         defaultProperty: "data"

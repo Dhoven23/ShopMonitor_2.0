@@ -42,7 +42,7 @@ import QtQuick.Controls 1.2
 import QtQuick.Controls.Private 1.0
 
 /*!
-    \qmltype ToolButton
+    \qmltype KeyButton
     \inqmlmodule QtQuick.Controls
     \since 5.1
     \ingroup controls
@@ -50,7 +50,7 @@ import QtQuick.Controls.Private 1.0
 
     \image toolbar.png
 
-    ToolButton is functionally similar to \l {QtQuick.Controls::}{Button}, but
+    KeyButton is functionally similar to \l {QtQuick.Controls::}{Button}, but
     can provide a look that is more suitable within a \l ToolBar.
 
     \code
@@ -58,13 +58,13 @@ import QtQuick.Controls.Private 1.0
         ...
         toolBar: ToolBar {
             RowLayout {
-                ToolButton {
+                KeyButton {
                     iconSource: "new.png"
                 }
-                ToolButton {
+                KeyButton {
                     iconSource: "open.png"
                 }
-                ToolButton {
+                KeyButton {
                     iconSource: "save-as.png"
                 }
                 Item { Layout.fillWidth: true }
@@ -77,7 +77,7 @@ import QtQuick.Controls.Private 1.0
     }
     \endcode
 
-    You can create a custom appearance for a ToolButton by
+    You can create a custom appearance for a KeyButton by
     assigning a \l {ButtonStyle}.
 */
 

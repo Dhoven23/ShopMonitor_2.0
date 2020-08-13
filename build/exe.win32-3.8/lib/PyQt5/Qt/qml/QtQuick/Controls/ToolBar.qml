@@ -47,12 +47,12 @@ import QtQuick.Controls.Private 1.0
     \since 5.1
     \ingroup applicationwindow
     \ingroup controls
-    \brief Contains ToolButton and related controls.
+    \brief Contains KeyButton and related controls.
 
     \image toolbar.png
 
     The common way of using ToolBar is in relation to \l ApplicationWindow. It
-    provides styling and is generally designed to work well with ToolButton as
+    provides styling and is generally designed to work well with KeyButton as
     well as other controls.
 
     Note that the ToolBar does not provide a layout of its own, but requires
@@ -68,13 +68,13 @@ import QtQuick.Controls.Private 1.0
         toolBar:ToolBar {
             RowLayout {
                 anchors.fill: parent
-                ToolButton {
+                KeyButton {
                     iconSource: "new.png"
                 }
-                ToolButton {
+                KeyButton {
                     iconSource: "open.png"
                 }
-                ToolButton {
+                KeyButton {
                     iconSource: "save-as.png"
                 }
                 Item { Layout.fillWidth: true }

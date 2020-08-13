@@ -48,7 +48,7 @@ import QtQuick.Controls.Private 1.0
     \inqmlmodule QtQuick.Controls.Styles
 */
 Style {
-    readonly property ToolButton control: __control
+    readonly property KeyButton control: __control
     property Component panel: Item {
         id: styleitem
         implicitWidth: (hasIcon ? icon.width : Math.max(label.implicitWidth + frame.border.left + frame.border.right, 36))

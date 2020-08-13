@@ -71,7 +71,7 @@ import QtQuick.Controls.Private 1.0
         toolBar: ToolBar {
             RowLayout {
                 anchors.fill: parent
-                ToolButton {...}
+                KeyButton {...}
             }
         }
 

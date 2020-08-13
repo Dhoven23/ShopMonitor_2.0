@@ -40,7 +40,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.impl 2.12
 import QtQuick.Controls.Universal 2.12
 
-T.ToolButton {
+T.KeyButton {
     id: control
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,

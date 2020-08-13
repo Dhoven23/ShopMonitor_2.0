@@ -20967,7 +20967,7 @@ QtWidgets.QSizePolicy.RadioButton?10
 QtWidgets.QSizePolicy.Slider?10
 QtWidgets.QSizePolicy.SpinBox?10
 QtWidgets.QSizePolicy.TabWidget?10
-QtWidgets.QSizePolicy.ToolButton?10
+QtWidgets.QSizePolicy.KeyButton?10
 QtWidgets.QSizePolicy.Policy?10
 QtWidgets.QSizePolicy.Fixed?10
 QtWidgets.QSizePolicy.Minimum?10

@@ -2724,7 +2724,7 @@ Module {
         name: "QQuickToolButton"
         defaultProperty: "data"
         prototype: "QQuickButton"
-        exports: ["QtQuick.Templates/ToolButton 2.0"]
+        exports: ["QtQuick.Templates/KeyButton 2.0"]
         exportMetaObjectRevisions: [0]
     }
     Component {

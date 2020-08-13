@@ -202,7 +202,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
             svc.CreateTool(number.get(), name.get())
             pop.destroy()
 
-            build_tools_tab(tabStructure)
+            build_keys_tab(tabStructure)
 
         def delete_name_entry(*args3, **kwargs2):
             name.delete(0, END)
@@ -304,7 +304,7 @@ def checkout_tool(keyNumber):
     ID.pack()
 
 
-class ToolButton:
+class KeyButton:
 
     def __init__(self, master, x, y, number):
         def Onclick():
@@ -316,23 +316,39 @@ class ToolButton:
             self.button.grid(column=x, row=y)
 
 
-def build_tools_tab(tabStructure):
-    def tool_key(number, event=None):
-        pass
+def build_keys_tab(tabStructure):
+    keys = ttk.Frame(tabStructure)
+    Key_Buttons_list_function(keys)
 
-    tools = ttk.Frame(tabStructure)
-    Tool_Buttons_list_function(tools)
-
-    tabStructure.add(tools, text="Tools")
+    tabStructure.add(keys, text="Keys")
 
 
-def Tool_Buttons_list_function(tools):
+def Key_Buttons_list_function(tools):
     number = 1
     for y in range(1, 7):
         for x in range(1, 7):
             # noinspection PyTypeChecker
-            ToolButton.__init__(ToolButton, tools, x, y, number)
+            KeyButton.__init__(KeyButton, tools, x, y, number)
             number += 1
+
+
+def tools_tab_functions(tools, tabStructure, master):
+    def printing(event=None):
+        text = toolName.get()
+        print(text.lower())
+    instruction = Label(tools,text='Name of Tool').pack()
+    toolName = Entry(tools, width=50,borderwidth=2)
+    toolName.bind('<Return>',printing)
+    toolName.pack()
+
+
+
+
+def buils_tools_tab(tabStructure, master):
+    tools = ttk.Frame(tabStructure)
+    tabStructure.add(tools, text="Tools")
+    tools_tab_functions(tools, tabStructure, master)
+    pass
 
 
 def build_all_the_tabs_admin(master):
@@ -340,7 +356,8 @@ def build_all_the_tabs_admin(master):
 
     build_login_tab(tabStructure, master)
     build_admin_tab(tabStructure, master)
-    build_tools_tab(tabStructure)
+    build_keys_tab(tabStructure)
+    buils_tools_tab(tabStructure, master)
 
     tabStructure.pack(expand=1, fill='both')
 

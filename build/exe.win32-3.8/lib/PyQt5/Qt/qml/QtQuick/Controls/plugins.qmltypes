@@ -3065,8 +3065,8 @@ Module {
     }
     Component {
         prototype: "QQuickFocusScope"
-        name: "QtQuick.Controls/ToolButton 1.0"
-        exports: ["QtQuick.Controls/ToolButton 1.0"]
+        name: "QtQuick.Controls/KeyButton 1.0"
+        exports: ["QtQuick.Controls/KeyButton 1.0"]
         exportMetaObjectRevisions: [0]
         isComposite: true
         defaultProperty: "data"

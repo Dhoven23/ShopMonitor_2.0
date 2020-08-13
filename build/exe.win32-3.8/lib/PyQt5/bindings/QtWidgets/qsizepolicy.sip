@@ -90,7 +90,7 @@ public:
         Slider,
         SpinBox,
         TabWidget,
-        ToolButton,
+        KeyButton,
     };
 
     typedef QFlags<QSizePolicy::ControlType> ControlTypes;

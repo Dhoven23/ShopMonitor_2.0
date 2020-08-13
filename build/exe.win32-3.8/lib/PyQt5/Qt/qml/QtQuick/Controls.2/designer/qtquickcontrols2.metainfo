@@ -478,7 +478,7 @@ MetaInfo {
     }
 
     Type {
-        name: "QtQuick.Controls.ToolButton"
+        name: "QtQuick.Controls.KeyButton"
         icon: "images/toolbutton-icon16.png"
 
         ItemLibraryEntry {

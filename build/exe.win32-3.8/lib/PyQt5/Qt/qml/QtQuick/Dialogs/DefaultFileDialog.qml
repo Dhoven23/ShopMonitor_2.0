@@ -410,7 +410,7 @@ AbstractFileDialog {
             id: titleBar
             RowLayout {
                 anchors.fill: parent
-                ToolButton {
+                KeyButton {
                     action: dirUpAction
                     style: IconButtonStyle { }
                     Layout.maximumWidth: height * 1.5
