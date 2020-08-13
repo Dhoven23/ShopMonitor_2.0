@@ -385,13 +385,8 @@ class app:  # constructor for GUI
 
 def main():  # run the app
     mongo.global_init()
-    date = 'Today is: ' + svc.print_day() + ", time: %s:%s" % (
-        datetime.datetime.now().hour, datetime.datetime.now().minute)
     root = Tk()
     
     app(root)
 
     root.mainloop()
-
-
-
