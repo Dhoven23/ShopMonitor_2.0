@@ -16,16 +16,18 @@
 #
 ###############################################################################################
 
+import datetime
+import os
 from tkinter import *
 from tkinter import ttk
+import sys
 import Data.mongo_setup as mongo
-import Service.data_service as svc
-from Service.data_service import log_into_account
-import Service.admin_svc as asv
 import Service.Reports.generate_report as gen
 import Service.Reports.send_email as send
-import datetime
+import Service.admin_svc as asv
+import Service.data_service as svc
 from Data.key import Key
+from Service.data_service import log_into_account
 
 
 def isint(s):  # universal check for integer
@@ -62,9 +64,6 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
             message = "Hello " + name
             popup_message(message, window)
             pop.destroy()
-
-
-
 
     def delete_entry(event=None):
         prompt.delete(0, END)
@@ -185,7 +184,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
             text.delete('1.0', END)
             if messages:
                 for message in messages:
-                    text.insert(END, message[0:24] + (45 - len(message)) * '.' + message[25:(len(message) + 1)])
+                    text.insert(END, message[0:23] + (50 - len(message)) * '.' + message[23:(len(message) + 1)])
             else:
                 text.insert(END,
                             f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
@@ -233,7 +232,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         proceed = Button(pop, text="Cancel", fg='red', command=pop.destroy)
         proceed.grid(row=1, column=0)
 
-    text = Text(admin, height=15, width=45)
+    text = Text(admin, height=15, width=55)
     DateField = Entry(admin, width=25, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=25, command=whos_in_the_shop)
     button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
@@ -336,12 +335,11 @@ def tools_tab_functions(tools, tabStructure, master):
     def printing(event=None):
         text = toolName.get()
         print(text.lower())
-    instruction = Label(tools,text='Name of Tool').pack()
-    toolName = Entry(tools, width=50,borderwidth=2)
-    toolName.bind('<Return>',printing)
+
+    instruction = Label(tools, text='Name of Tool').pack()
+    toolName = Entry(tools, width=50, borderwidth=2)
+    toolName.bind('<Return>', printing)
     toolName.pack()
-
-
 
 
 def buils_tools_tab(tabStructure, master):
@@ -376,7 +374,7 @@ class app:  # constructor for GUI
             send.send_weekly_report()
 
         master.title("Shop Activity Monitor")
-        master.geometry("550x320")
+        master.geometry("600x320")
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 
@@ -400,10 +398,62 @@ class app:  # constructor for GUI
         self.statusbar.after(1000, self.update)
 
 
-def main():  # run the app
-    mongo.global_init()
-    root = Tk()
-    
-    app(root)
+def login():
+    def check(*args):
+        os.environ['USER'] = user_entry.get()
+        os.environ['PASSWORD'] = password_entry.get()
+        mongo.global_init(os.environ.get('USER'), os.environ.get('PASSWORD'))
+        log.destroy()
 
+    log = Tk()
+    log.title("User Login")
+    log.geometry("280x140")
+    instruction = Label(log, text='Please enter your database credentials', font='Helvetica').grid(row=0, column=0,
+                                                                                                   columnspan=2)
+    user_entry = Entry(log, width=25, borderwidth=1)
+    user_entry.grid(row=1, column=1)
+    user_instruction = Label(log, text='Username')
+    user_instruction.grid(row=1, column=0)
+    password_entry = Entry(log, width=25, borderwidth=1)
+    password_entry.grid(row=2, column=1)
+    password_instruction = Label(log, text='Password')
+    password_instruction.grid(row=2, column=0)
+    attempt = Button(log, text='GO', font='Helvetica', width=15, command=check)
+    attempt.grid(row=3, column=0, columnspan=2)
+    log.mainloop()
+
+
+def login_error():
+    def ok():
+        error.destroy()
+        login()
+
+    def cancel():
+        error.quit()
+        sys.exit()
+
+    error = Tk()
+    error.geometry("260x100")
+    Label(error, text='Invalid Login\n Please try again', font='Helvetica', fg='red').pack()
+    Button(error, text='Ok', width=15, command=ok, fg='green').pack()
+    Button(error, text='Cancel', width=15, command=cancel, fg='red').pack()
+    error.mainloop()
+
+
+def main():  # run the app
+
+    login()
+
+    while True:
+        try:
+            svc.print_day()
+        except:
+            mongo.global_disconnect()
+            login_error()
+
+        else:
+            break
+
+    root = Tk()
+    app(root)
     root.mainloop()
