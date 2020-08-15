@@ -18,6 +18,7 @@
 
 import datetime
 import os
+import time
 from tkinter import *
 from tkinter import ttk
 import sys
@@ -291,13 +292,26 @@ def checkout_tool(keyNumber):
 
         for number in student.keys_trained:
             if int(number) == int(keyNumber):
-                print("You're good to go")
+                alert = Toplevel()
+                alert.geometry("230x80")
+                alert.wm_title("Checkout Successful")
+                confirm = Label(alert,text="You're good to go!", font = 'Helvetica 14 bold', fg='green')
+                confirm.pack(anchor = CENTER)
+                Button(alert,text='Confirm',command=alert.destroy).pack()
                 checkout.destroy()
                 return
-        print('NONONONo')
+        
+        alert = Toplevel()
+        alert.geometry("230x80")
+        alert.wm_title("Checkout Unsuccessful")
+        confirm = Label(alert,text="You are not cleared \nto use this key", font = 'Helvetica 14 bold', fg='red')
+        confirm.pack(anchor = CENTER)
+        Button(alert,text='Confirm',command=alert.destroy).pack()
+        checkout.destroy()
+        return                   
 
     checkout = Toplevel()
-    Instruction = Label(checkout, text='Please Enter you StudentID').pack(side=TOP)
+    Instruction = Label(checkout, text='Please Enter your StudentID').pack(side=TOP)
     ID = Entry(checkout, width=35, borderwidth=2)
     ID.bind('<Return>', check_training)
     ID.pack()
