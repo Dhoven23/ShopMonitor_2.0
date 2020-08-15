@@ -116,7 +116,7 @@ def main_login_student_operation(window, master):
 
     instruction = Label(window, text="Enter Student ID")
     instruction.pack()
-    entry = Entry(window, width=75, borderwidth=2)
+    entry = Entry(window, width=55, borderwidth=2)
 
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
@@ -232,7 +232,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         proceed = Button(pop, text="Cancel", fg='red', command=pop.destroy)
         proceed.grid(row=1, column=0)
 
-    text = Text(admin, height=15, width=55)
+    text = Text(admin, height=15, width=50)
     DateField = Entry(admin, width=25, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=25, command=whos_in_the_shop)
     button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
@@ -374,7 +374,7 @@ class app:  # constructor for GUI
             send.send_weekly_report()
 
         master.title("Shop Activity Monitor")
-        master.geometry("600x320")
+        master.geometry("640x320")
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 
