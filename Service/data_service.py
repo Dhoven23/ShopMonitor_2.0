@@ -14,7 +14,6 @@ def create_student(studentID: str, name: str) -> Student:
     student = Student()
     student.name = name
     student.studentID = studentID
-    student.add_profile_image()
     student.save()
 
     return student
