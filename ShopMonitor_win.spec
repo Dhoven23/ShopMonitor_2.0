@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['cli.py'],
-             pathex=['C:\\Python_programs\\ShopMonitor\\source'],
+             pathex=['C:\\Users\\Administrator\\Desktop\\Finished Shop App\\venv\\source'],
              binaries=[],
              datas=[],
              hiddenimports=[],
