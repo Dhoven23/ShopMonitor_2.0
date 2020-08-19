@@ -126,8 +126,9 @@ def Create_Tool(name, size) -> Tool:
     return tool
 
 def find_tool(name, size):
-    tools = Tool.objects(name=name.lower)
+    tools = Tool.objects(name=name)
     for tool in tools:
+        print(tool.size)
         if tool.size == size:
             return tool
         else:
@@ -147,6 +148,7 @@ def lookup_tool(text):
     name = re.compile(f'.*{text}.*', re.IGNORECASE)
     tools = Tool.objects(name=name)
     for tool in tools:
+
         message.append(tool.name + ' ' + tool.size)
 
     return message

@@ -295,20 +295,20 @@ def checkout_tool(keyNumber):
                 alert = Toplevel()
                 alert.geometry("230x80")
                 alert.wm_title("Checkout Successful")
-                confirm = Label(alert,text="You're good to go!", font = 'Helvetica 14 bold', fg='green')
-                confirm.pack(anchor = CENTER)
-                Button(alert,text='Confirm',command=alert.destroy).pack()
+                confirm = Label(alert, text="You're good to go!", font='Helvetica 14 bold', fg='green')
+                confirm.pack(anchor=CENTER)
+                Button(alert, text='Confirm', command=alert.destroy).pack()
                 checkout.destroy()
                 return
-        
+
         alert = Toplevel()
         alert.geometry("230x80")
         alert.wm_title("Checkout Unsuccessful")
-        confirm = Label(alert,text="You are not cleared \nto use this key", font = 'Helvetica 14 bold', fg='red')
-        confirm.pack(anchor = CENTER)
-        Button(alert,text='Confirm',command=alert.destroy).pack()
+        confirm = Label(alert, text="You are not cleared \nto use this key", font='Helvetica 14 bold', fg='red')
+        confirm.pack(anchor=CENTER)
+        Button(alert, text='Confirm', command=alert.destroy).pack()
         checkout.destroy()
-        return                   
+        return
 
     checkout = Toplevel()
     Instruction = Label(checkout, text='Please Enter your StudentID').pack(side=TOP)
@@ -345,10 +345,39 @@ def Key_Buttons_list_function(tools):
             number += 1
 
 
+class ToolLabel:
+    def __init__(self, master, message):
+        out = message.split(' ')
+
+        def checkout(event=None):
+
+            tool = svc.find_tool(out[0], out[1])
+            if tool:
+                print(tool.name)
+
+        def green_text(event=None):
+            self.label.config(fg='green')
+
+        def black_text(event=None):
+            self.label.config(fg='black')
+
+        def cleer(event=None):
+            self.label.destroy()
+
+        self.label = Label(master, text=message)
+        self.label.pack()
+        self.label.bind("<Button-1>", checkout)
+        self.label.bind("<Enter>", green_text)
+        self.label.bind("<Leave>", black_text)
+
+
 def tools_tab_functions(tools, tabStructure, master):
     def printing(event=None):
         text = toolName.get()
-        svc.lookup_tool(text)
+        messages = svc.lookup_tool(text)
+
+        for message in messages:
+            ToolLabel.__init__(ToolLabel,tools, message)
 
     instruction = Label(tools, text='Name of Tool').pack()
     toolName = Entry(tools, width=50, borderwidth=2)
