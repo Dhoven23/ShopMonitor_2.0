@@ -324,7 +324,7 @@ class KeyButton:
             tool = Key.objects(keyNumber=number).first()
             checkout_tool(tool.keyNumber)
 
-        if svc.tool_exists(number):
+        if svc.key_exists(number):
             self.button = Button(master, text=str(number), bg='green', width=10, height=2, command=Onclick)
             self.button.grid(column=x, row=y)
 
@@ -348,7 +348,7 @@ def Key_Buttons_list_function(tools):
 def tools_tab_functions(tools, tabStructure, master):
     def printing(event=None):
         text = toolName.get()
-        print(text.lower())
+        svc.lookup_tool(text)
 
     instruction = Label(tools, text='Name of Tool').pack()
     toolName = Entry(tools, width=50, borderwidth=2)

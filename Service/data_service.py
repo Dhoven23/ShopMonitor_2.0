@@ -1,9 +1,11 @@
 import datetime
 from datetime import date
-
+import re
 from Data.key import Key
 from Data.Students import Student
 from Data.signins import Signin
+from Data.tool import Tool
+from Data.usages import Usage
 from Data.day import Day
 
 
@@ -111,8 +113,47 @@ def day_logout(studentID: str):
     model.save()
 
 
-def tool_exists(number):
+def key_exists(number):
     if Key.objects(keyNumber=number):
         return True
     else:
         return False
+def Create_Tool(name, size) -> Tool:
+    tool = Tool()
+    tool.name = name.lower()
+    tool.size = size
+    tool.save()
+    return tool
+
+def find_tool(name, size):
+    tools = Tool.objects(name=name.lower)
+    for tool in tools:
+        if tool.size == size:
+            return tool
+        else:
+            return False
+
+
+
+def Checkout_tool(toole, ID):
+    new_usage = Usage()
+    new_usage.checkout_ID = ID
+    new_usage.checkout_time = str(datetime.datetime.now())
+    toole.usages.append(new_usage)
+    toole.save()
+
+def lookup_tool(text):
+    message = []
+    name = re.compile(f'.*{text}.*', re.IGNORECASE)
+    tools = Tool.objects(name=name)
+    for tool in tools:
+        message.append(tool.name + ' ' + tool.size)
+
+    return message
+
+
+def Return(toole, ID):
+    for use in toole.usages:
+        if use.checkout_ID == ID:
+            use.return_time = str(datetime.datetime.now())
+    toole.save()

@@ -6,9 +6,6 @@ class Tool(mongoengine.Document):
     name = mongoengine.StringField(required=True)
     size = mongoengine.StringField(required=True)
     usages = mongoengine.EmbeddedDocumentListField(Usage)
-    def checkout(self, name):
-        self.name = name
-        self.save()
 
 
     meta = {

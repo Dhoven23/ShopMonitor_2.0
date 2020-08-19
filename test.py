@@ -1,21 +1,26 @@
-from tkinter import *
-import os
+try:
+    import tkinter as tk
+except ImportError:
+    import Tkinter as tk
 
+def change_case(event=None):
+    new_text = str.swapcase(lab["text"])
+    lab.config(text=new_text)
 
-root = Tk()
-root.title("User Login")
-root.geometry("280x140")
-instruction = Label(root, text='Please enter your database credentials',font='Helvetica').grid(row=0,column=0, columnspan=2)
-user_entry = Entry(root, width = 25, borderwidth=1).grid(row=1,column=1)
-user_instruction = Label(root, text='Username').grid(row=1,column=0)
-password_entry = Entry(root, width = 25, borderwidth=1).grid(row=2,column=1)
-password_instruction = Label(root, text='Password').grid(row=2,column=0)
+def red_text(event=None):
+    lab.config(fg="red")
+
+def black_text(event=None):
+    lab.config(fg="black")
+
+root = tk.Tk()
+
+lab = tk.Label(root,text="this is a test")
+
+lab.bind("<Button-1>",change_case)
+lab.bind("<Enter>",red_text)
+lab.bind("<Leave>",black_text)
+
+lab.grid()
 root.mainloop()
-
-user = input('Enter your Username \n->')
-os.environ['USER'] = user
-password = input('Enter your Password\n->')
-os.environ['PASSWORD'] = password
-print(os.environ.get('USER'))
-print(os.environ.get('PASSWORD'))
 
