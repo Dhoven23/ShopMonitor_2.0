@@ -118,14 +118,20 @@ def key_exists(number):
         return True
     else:
         return False
-def Create_Tool(name, size) -> Tool:
+def Create_Tool(toolname) -> Tool:
+    toolname = toolname.split(' ')
+    name = toolname[0]
+    size = toolname[1]
     tool = Tool()
     tool.name = name.lower()
     tool.size = size
     tool.save()
     return tool
 
-def find_tool(name, size):
+def find_tool(toolname):
+    toolname = toolname.split(' ')
+    name = toolname[0]
+    size = toolname[1]
     tools = Tool.objects(name=name)
     for tool in tools:
         print(tool.size)

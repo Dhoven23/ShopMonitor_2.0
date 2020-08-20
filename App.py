@@ -21,6 +21,7 @@ import os
 import time
 from tkinter import *
 from tkinter import ttk
+import tkinter as tk
 import sys
 import Data.mongo_setup as mongo
 import Service.Reports.generate_report as gen
@@ -115,9 +116,9 @@ def main_login_student_operation(window, master):
     def delete_entry(*args):
         entry.delete(0, END)
 
-    instruction = Label(window, text="Enter Student ID")
+    instruction = Label(window, text="Enter Student ID", font='Helvetica 12 bold')
     instruction.pack()
-    entry = Entry(window, width=55, borderwidth=2)
+    entry = Entry(window, width=35, borderwidth=2, font='Helvetica 16')
 
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
@@ -321,8 +322,8 @@ class KeyButton:
 
     def __init__(self, master, x, y, number):
         def Onclick():
-            tool = Key.objects(keyNumber=number).first()
-            checkout_tool(tool.keyNumber)
+            key = Key.objects(keyNumber=number).first()
+            checkout_tool(key.keyNumber)
 
         if svc.key_exists(number):
             self.button = Button(master, text=str(number), bg='green', width=10, height=2, command=Onclick)
@@ -347,11 +348,10 @@ def Key_Buttons_list_function(tools):
 
 class ToolLabel:
     def __init__(self, master, message):
-        out = message.split(' ')
 
         def checkout(event=None):
 
-            tool = svc.find_tool(out[0], out[1])
+            tool = svc.find_tool(message)
             if tool:
                 print(tool.name)
 
@@ -380,6 +380,8 @@ def tools_tab_functions(tools, tabStructure, master):
             ToolLabel.__init__(ToolLabel,tools, message)
 
     instruction = Label(tools, text='Name of Tool').pack()
+    butt = ttk.Button(tools, text = 'test', style='flat.TButton')
+    butt.pack()
     toolName = Entry(tools, width=50, borderwidth=2)
     toolName.bind('<Return>', printing)
     toolName.pack()
@@ -418,6 +420,9 @@ class app:  # constructor for GUI
 
         master.title("Shop Activity Monitor")
         master.geometry("640x320")
+        styles = ttk.Style(master)
+        styles.theme_use('clam')
+        styles.configure('flat.TButton', borderwidth=0)
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 
@@ -497,6 +502,8 @@ def main():  # run the app
         else:
             break
 
-    root = Tk()
+    root = tk.Tk()
+    global defaultBG
+    defaultBG = root.cget('bg')
     app(root)
     root.mainloop()

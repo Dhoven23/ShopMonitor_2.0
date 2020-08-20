@@ -1,26 +1,18 @@
-try:
-    import tkinter as tk
-except ImportError:
-    import Tkinter as tk
-
-def change_case(event=None):
-    new_text = str.swapcase(lab["text"])
-    lab.config(text=new_text)
-
-def red_text(event=None):
-    lab.config(fg="red")
-
-def black_text(event=None):
-    lab.config(fg="black")
+import tkinter as tk
+from tkinter import ttk
 
 root = tk.Tk()
 
-lab = tk.Label(root,text="this is a test")
+b1 = tk.Button(root, text='tk.Button', borderwidth=0)
+b1.pack()
 
-lab.bind("<Button-1>",change_case)
-lab.bind("<Enter>",red_text)
-lab.bind("<Leave>",black_text)
+s = ttk.Style(root)
+s.theme_use('clam')
+s.configure('flat.TButton', borderwidth=0)
+# s.configure('flat.TButton', relief='flat') gives the same result
 
-lab.grid()
+b2 = ttk.Button(root, style='flat.TButton', text='ttk.Button')
+b2.pack()
+
 root.mainloop()
 
