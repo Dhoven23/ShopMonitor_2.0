@@ -347,50 +347,49 @@ def Key_Buttons_list_function(tools):
 
 
 class ToolLabel:
-    def __init__(self, master, message):
 
-        def checkout(event=None):
-
-            tool = svc.find_tool(message)
+    def __init__(self, master, message,n):
+        #print(message)
+        message = message.split(',')
+        print(message[0])
+        def Onclick(event=None):
+            tool = svc.find_tool(message[0],message[1])
             if tool:
-                print(tool.name)
-
-        def green_text(event=None):
-            self.label.config(fg='green')
-
-        def black_text(event=None):
-            self.label.config(fg='black')
-
-        def cleer(event=None):
-            self.label.destroy()
-
-        self.label = Label(master, text=message)
-        self.label.pack()
-        self.label.bind("<Button-1>", checkout)
-        self.label.bind("<Enter>", green_text)
-        self.label.bind("<Leave>", black_text)
+                print(tool.size)
 
 
-def tools_tab_functions(tools, tabStructure, master):
+        self.button = ttk.Button(master, text=message,command=Onclick, style='flat.TButton')
+
+        self.button.grid(row=n,sticky=W+E)
+
+
+
+
+
+
+
+def tools_tab_functions(tools):
     def printing(event=None):
         text = toolName.get()
         messages = svc.lookup_tool(text)
-
+        n = IntVar()
+        n = 2
         for message in messages:
-            ToolLabel.__init__(ToolLabel,tools, message)
+            ToolLabel.__init__(ToolLabel,tools, message,n)
 
-    instruction = Label(tools, text='Name of Tool').pack()
-    butt = ttk.Button(tools, text = 'test', style='flat.TButton')
-    butt.pack()
+            n+=1
+
+    instruction = Label(tools, text='Name of Tool').grid(row=0,sticky=W+E)
+
     toolName = Entry(tools, width=50, borderwidth=2)
-    toolName.bind('<Return>', printing)
-    toolName.pack()
+    toolName.bind('<Key>', printing)
+    toolName.grid(row=1,sticky=W+E)
 
 
 def buils_tools_tab(tabStructure, master):
     tools = ttk.Frame(tabStructure)
     tabStructure.add(tools, text="Tools")
-    tools_tab_functions(tools, tabStructure, master)
+    tools_tab_functions(tools)
     pass
 
 
@@ -422,7 +421,8 @@ class app:  # constructor for GUI
         master.geometry("640x320")
         styles = ttk.Style(master)
         styles.theme_use('clam')
-        styles.configure('flat.TButton', borderwidth=0)
+        styles.configure('flat.TButton',borderwidth=0)
+        styles.configure('green.TButton',foreground='green', borderwidth=0)
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 

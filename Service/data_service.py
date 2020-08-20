@@ -7,6 +7,7 @@ from Data.signins import Signin
 from Data.tool import Tool
 from Data.usages import Usage
 from Data.day import Day
+from mongoengine.queryset import Q
 
 
 
@@ -119,7 +120,7 @@ def key_exists(number):
     else:
         return False
 def Create_Tool(toolname) -> Tool:
-    toolname = toolname.split(' ')
+    toolname = toolname.split(',')
     name = toolname[0]
     size = toolname[1]
     tool = Tool()
@@ -128,17 +129,13 @@ def Create_Tool(toolname) -> Tool:
     tool.save()
     return tool
 
-def find_tool(toolname):
-    toolname = toolname.split(' ')
-    name = toolname[0]
-    size = toolname[1]
-    tools = Tool.objects(name=name)
-    for tool in tools:
-        print(tool.size)
-        if tool.size == size:
-            return tool
-        else:
-            return False
+def find_tool(name: str,size: str) -> Tool:
+
+    tool = Tool.objects(Q(name=name) & Q(size=size)).first()
+
+    if tool:
+        return tool
+
 
 
 
@@ -155,7 +152,7 @@ def lookup_tool(text):
     tools = Tool.objects(name=name)
     for tool in tools:
 
-        message.append(tool.name + ' ' + tool.size)
+        message.append(tool.name + ',' + tool.size)
 
     return message
 
