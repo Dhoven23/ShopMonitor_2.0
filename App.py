@@ -18,7 +18,7 @@
 
 import datetime
 import os
-import time
+import weakref
 from tkinter import *
 from tkinter import ttk
 import tkinter as tk
@@ -345,51 +345,96 @@ def Key_Buttons_list_function(tools):
             KeyButton.__init__(KeyButton, tools, x, y, number)
             number += 1
 
+def Checkout_tool(x, y, toolname):
+
+    def checkout():
+        ID = e.get()
+        ReturnDate = date.get()
+        svc.Checkout_tool(toolname, ID, ReturnDate)
+        pop.destroy()
+
+    pop = Toplevel()
+    pop.geometry("+%d+%d" % (x+280, y+75))
+    pop.minsize(350,240)
+    pop.title(f'Checkout {toolname.name} {toolname.size}')
+    i = Label(pop, text='Enter Student ID', font = 'Arial 14 bold')
+    e = Entry(pop, font='Helvetica 12', width=25)
+    space = Label(pop, text ='', font = 'Arial 10')
+    i.pack()
+    e.pack()
+    space.pack()
+    date_instruction = Label(pop, text='Return Date', font='Arial 14 bold')
+    date_instruction.pack()
+    date = Entry(pop, font='Helvetica 12', width=25)
+    date.pack()
+    Label(pop, text=' ', font='Arial 10').pack()
+    Button(pop,text='OK', width=20,font='Helvetica 12 bold',fg='green',command =checkout).pack()
+    Button(pop, text='Cancel', width=20, font='Helvetica 12 bold', fg='red', command = lambda: pop.destroy()).pack()
+
 
 class ToolLabel:
 
-    def __init__(self, master, message,n):
-        #print(message)
-        message = message.split(',')
-        print(message[0])
-        def Onclick(event=None):
-            tool = svc.find_tool(message[0],message[1])
-            if tool:
-                print(tool.size)
+    _instances = set()
+    def __init__(self, master, message, n, root):
 
+        message = message.split(',')
+
+
+        def Onclick(*args):
+            x = root.winfo_x()
+            y = root.winfo_y()
+            tool = svc.find_tool(message[0], message[1])
+            self.button.destroy()
+            Checkout_tool(x, y, tool)
 
         self.button = ttk.Button(master, text=message,command=Onclick, style='flat.TButton')
 
-        self.button.grid(row=n,sticky=W+E)
+        self.button.grid(row=n, sticky=W + E)
+        self._instances.add(weakref.ref(self))
+
+    def clear(self,event=None):
+        self.button.destroy()
+
+    @classmethod
+    def getinstances(cls):
+        dead = set()
+        for ref in cls._instances:
+            obj = ref()
+            if obj is not None:
+                yield obj
+            else:
+                dead.add(ref)
+        cls._instances -= dead
 
 
-
-
-
-
-
-def tools_tab_functions(tools):
+def tools_tab_functions(tools, root):
     def printing(event=None):
         text = toolName.get()
         messages = svc.lookup_tool(text)
         n = IntVar()
         n = 2
+        destroy()
         for message in messages:
-            ToolLabel.__init__(ToolLabel,tools, message,n)
+            toolLabel = ToolLabel(tools, message, n, root)
+            n += 1
 
-            n+=1
+    def destroy():
+        for model in ToolLabel.getinstances():
+            model.clear()
 
-    instruction = Label(tools, text='Name of Tool').grid(row=0,sticky=W+E)
 
-    toolName = Entry(tools, width=50, borderwidth=2)
+    instruction = Label(tools, text='Name of Tool', font='Helvetica 14 bold').grid(row=0, sticky=W + E)
+
+    toolName = Entry(tools, width=30, borderwidth=2, font='Arial 12')
     toolName.bind('<Key>', printing)
-    toolName.grid(row=1,sticky=W+E)
+
+    toolName.grid(row=1, sticky=W + E)
 
 
 def buils_tools_tab(tabStructure, master):
     tools = ttk.Frame(tabStructure)
     tabStructure.add(tools, text="Tools")
-    tools_tab_functions(tools)
+    tools_tab_functions(tools, master)
     pass
 
 
@@ -421,8 +466,8 @@ class app:  # constructor for GUI
         master.geometry("640x320")
         styles = ttk.Style(master)
         styles.theme_use('clam')
-        styles.configure('flat.TButton',borderwidth=0)
-        styles.configure('green.TButton',foreground='green', borderwidth=0)
+        styles.configure('flat.TButton', borderwidth=0)
+        styles.configure('green.TButton', foreground='green', borderwidth=0)
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
 
@@ -460,10 +505,12 @@ def login():
                                                                                                    columnspan=2)
     user_entry = Entry(log, width=25, borderwidth=1)
     user_entry.grid(row=1, column=1)
+    user_entry.insert(0,'DHoven')
     user_instruction = Label(log, text='Username')
     user_instruction.grid(row=1, column=0)
     password_entry = Entry(log, width=25, borderwidth=1)
     password_entry.grid(row=2, column=1)
+    password_entry.insert(0, '12345')
     password_instruction = Label(log, text='Password')
     password_instruction.grid(row=2, column=0)
     attempt = Button(log, text='GO', font='Helvetica', width=15, command=check)

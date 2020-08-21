@@ -139,10 +139,11 @@ def find_tool(name: str,size: str) -> Tool:
 
 
 
-def Checkout_tool(toole, ID):
+def Checkout_tool(toole, ID, ReturnDate):
     new_usage = Usage()
     new_usage.checkout_ID = ID
     new_usage.checkout_time = str(datetime.datetime.now())
+    new_usage.ReturnDateExpect = ReturnDate
     toole.usages.append(new_usage)
     toole.save()
 
