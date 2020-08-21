@@ -497,9 +497,9 @@ imports:
  &#8226;   <a href="#datetime">datetime</a>
  &#8226;   <a href="#os">os</a>
  &#8226;   <a href="#sys">sys</a>
- &#8226;   <a href="#time">time</a>
  &#8226;   <a href="#tkinter">tkinter</a>
  &#8226;   <a href="#tkinter.ttk">tkinter.ttk</a>
+ &#8226;   <a href="#weakref">weakref</a>
 
   </div>
   <div class="import">
@@ -520,6 +520,8 @@ imported by:
  &#8226;   <a href="#Data.key">Data.key</a>
  &#8226;   <a href="#Data.mongo_setup">Data.mongo_setup</a>
  &#8226;   <a href="#Data.signins">Data.signins</a>
+ &#8226;   <a href="#Data.tool">Data.tool</a>
+ &#8226;   <a href="#Data.usages">Data.usages</a>
 
   </div>
 
@@ -610,6 +612,42 @@ imports:
   <div class="import">
 imported by:
     <a href="#Data.day">Data.day</a>
+ &#8226;   <a href="#Service.data_service">Service.data_service</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Data.tool"></a>
+  <a target="code" href="///C:/Users/Administrator/Desktop/Finished%20Shop%20App/venv/source/Data/tool.py" type="text/plain"><tt>Data.tool</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Data">Data</a>
+ &#8226;   <a href="#Data.usages">Data.usages</a>
+ &#8226;   <a href="#mongoengine">mongoengine</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Service.data_service">Service.data_service</a>
+
+  </div>
+
+</div>
+
+<div class="node">
+  <a name="Data.usages"></a>
+  <a target="code" href="///C:/Users/Administrator/Desktop/Finished%20Shop%20App/venv/source/Data/usages.py" type="text/plain"><tt>Data.usages</tt></a>
+<span class="moduletype">SourceModule</span>  <div class="import">
+imports:
+    <a href="#Data">Data</a>
+ &#8226;   <a href="#mongoengine">mongoengine</a>
+
+  </div>
+  <div class="import">
+imported by:
+    <a href="#Data.tool">Data.tool</a>
  &#8226;   <a href="#Service.data_service">Service.data_service</a>
 
   </div>
@@ -2561,8 +2599,12 @@ imports:
  &#8226;   <a href="#Data.day">Data.day</a>
  &#8226;   <a href="#Data.key">Data.key</a>
  &#8226;   <a href="#Data.signins">Data.signins</a>
+ &#8226;   <a href="#Data.tool">Data.tool</a>
+ &#8226;   <a href="#Data.usages">Data.usages</a>
  &#8226;   <a href="#Service">Service</a>
  &#8226;   <a href="#datetime">datetime</a>
+ &#8226;   <a href="#mongoengine.queryset">mongoengine.queryset</a>
+ &#8226;   <a href="#re">re</a>
 
   </div>
   <div class="import">
@@ -16864,6 +16906,8 @@ imported by:
  &#8226;   <a href="#Data.key">Data.key</a>
  &#8226;   <a href="#Data.mongo_setup">Data.mongo_setup</a>
  &#8226;   <a href="#Data.signins">Data.signins</a>
+ &#8226;   <a href="#Data.tool">Data.tool</a>
+ &#8226;   <a href="#Data.usages">Data.usages</a>
  &#8226;   <a href="#mongoengine">mongoengine</a>
  &#8226;   <a href="#mongoengine.base">mongoengine.base</a>
  &#8226;   <a href="#mongoengine.base.document">mongoengine.base.document</a>
@@ -17499,7 +17543,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#mongoengine">mongoengine</a>
+    <a href="#Service.data_service">Service.data_service</a>
+ &#8226;   <a href="#mongoengine">mongoengine</a>
  &#8226;   <a href="#mongoengine.base.metaclasses">mongoengine.base.metaclasses</a>
  &#8226;   <a href="#mongoengine.dereference">mongoengine.dereference</a>
  &#8226;   <a href="#mongoengine.document">mongoengine.document</a>
@@ -26154,6 +26199,7 @@ imported by:
  &#8226;   <a href="#PyInstaller.lib.modulegraph.modulegraph">PyInstaller.lib.modulegraph.modulegraph</a>
  &#8226;   <a href="#PyInstaller.lib.modulegraph.util">PyInstaller.lib.modulegraph.util</a>
  &#8226;   <a href="#PyInstaller.utils.hooks.gi">PyInstaller.utils.hooks.gi</a>
+ &#8226;   <a href="#Service.data_service">Service.data_service</a>
  &#8226;   <a href="#__main__">__main__</a>
  &#8226;   <a href="#_markupbase">_markupbase</a>
  &#8226;   <a href="#_osx_support">_osx_support</a>
@@ -29075,8 +29121,7 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#App">App</a>
- &#8226;   <a href="#PIL.PdfImagePlugin">PIL.PdfImagePlugin</a>
+    <a href="#PIL.PdfImagePlugin">PIL.PdfImagePlugin</a>
  &#8226;   <a href="#PIL.PdfParser">PIL.PdfParser</a>
  &#8226;   <a href="#PyInstaller.lib.modulegraph.zipio">PyInstaller.lib.modulegraph.zipio</a>
  &#8226;   <a href="#_datetime">_datetime</a>
@@ -30078,7 +30123,8 @@ imports:
   </div>
   <div class="import">
 imported by:
-    <a href="#PyInstaller.depend.imphook">PyInstaller.depend.imphook</a>
+    <a href="#App">App</a>
+ &#8226;   <a href="#PyInstaller.depend.imphook">PyInstaller.depend.imphook</a>
  &#8226;   <a href="#_threading_local">_threading_local</a>
  &#8226;   <a href="#cli.py">cli.py</a>
  &#8226;   <a href="#concurrent.futures.process">concurrent.futures.process</a>
