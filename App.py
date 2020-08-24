@@ -1,20 +1,20 @@
-###############################################################################################
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#   Welcome! you are viewing the source code of the GCU Engineering Shop Activity Monitor
-#   Clearly you are here because something isn't working, or because you want to know how it works
-#
-#   I've used a functional programming style over a strictly OO method, and have used
-#   intuitive naming instead of comments but as always,
-#   If it ain't broke, feature-creep!
-#
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-#
-#   Author: Daniel Hoven (github @Dhoven23/ShopSignIn),
-#   email: Daniel.Hoven@gcu.edu
-#   Version 1.0.0
-#   Date edited: 8/4/2020
-#
-###############################################################################################
+####################################################################################################
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
+#   Welcome! you are viewing the source code of the GCU Engineering Shop Activity Monitor          #
+#   Clearly you are here because something isn't working, or because you want to know how it works #
+#                                                                                                  #
+#   I've used a functional programming style over a strictly OO method, and have used              #
+#   intuitive naming instead of comments but as always,                                            #
+#   If it ain't broke, feature-creep!                                                              #
+#                                                                                                  #
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
+#                                                                                                  #
+#   Author: Daniel Hoven (github @Dhoven23/ShopSignIn),                                            #
+#   email: Daniel.Hoven@gcu.edu                                                                    #
+#   Version 1.0.0                                                                                  #
+#   Date edited: 8/4/2020                                                                          #
+#                                                                                                  #
+####################################################################################################
 
 import datetime
 import os
@@ -429,6 +429,9 @@ def tools_tab_functions(tools, root):
     toolName.bind('<Key>', printing)
 
     toolName.grid(row=1, sticky=W + E)
+    return_instruction = Label(tools, text='Student_ID')
+    return_ID = Entry(tools, width=30, borderwidth=2, font='Arial 12')
+    return_ID.grid(row=1,column=2)
 
 
 def buils_tools_tab(tabStructure, master):
