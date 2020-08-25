@@ -116,7 +116,7 @@ def main_login_student_operation(window, master):
     def delete_entry(*args):
         entry.delete(0, END)
 
-    instruction = Label(window, text="Enter Student ID", font='Helvetica 12 bold')
+    instruction = Label(window, text="Enter Student ID", font='Helvetica 12 bold', fg='purple4',bg='grey86')
     instruction.pack()
     entry = Entry(window, width=35, borderwidth=2, font='Helvetica 16')
 
@@ -312,7 +312,9 @@ def checkout_tool(keyNumber):
         return
 
     checkout = Toplevel()
-    Instruction = Label(checkout, text='Please Enter your StudentID').pack(side=TOP)
+    checkout.minsize(320,140)
+    checkout.config(bg='purple1')
+    Instruction = Label(checkout, text='Please Enter your StudentID', font='Arial 12 bold', fg='white',bg='purple1').pack(side=TOP)
     ID = Entry(checkout, width=35, borderwidth=2)
     ID.bind('<Return>', check_training)
     ID.pack()
@@ -407,7 +409,7 @@ class ToolLabel:
         cls._instances -= dead
 
 
-def tools_tab_functions(tools, root):
+def tools_tab_functions(tools, root, tabStructure):
     def printing(event=None):
         text = toolName.get()
         messages = svc.lookup_tool(text)
@@ -423,26 +425,35 @@ def tools_tab_functions(tools, root):
             model.clear()
 
 
-    instruction = Label(tools, text='Name of Tool', font='Helvetica 14 bold').grid(row=0, sticky=W + E)
+    instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold', bg='MediumPurple1',fg='white').grid(row=0, sticky=N+S+W+E)
 
     toolName = Entry(tools, width=30, borderwidth=2, font='Arial 12')
     toolName.bind('<Key>', printing)
 
     toolName.grid(row=1, sticky=W + E)
-    return_instruction = Label(tools, text='Student_ID')
+    return_instruction = Label(tools, text='Student_ID\n(For tool return)', font='Helvetica 14 bold', bg='MediumPurple1', fg='white')
     return_ID = Entry(tools, width=30, borderwidth=2, font='Arial 12')
+    return_instruction.grid(row=0,column=2, sticky=W+E)
+    color=root.cget('bg')
+    Label(tools, text='-------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=1)
     return_ID.grid(row=1,column=2)
 
 
 def buils_tools_tab(tabStructure, master):
+
+
     tools = ttk.Frame(tabStructure)
+
     tabStructure.add(tools, text="Tools")
-    tools_tab_functions(tools, master)
+    tools_tab_functions(tools, master, tabStructure)
     pass
 
 
 def build_all_the_tabs_admin(master):
-    tabStructure = ttk.Notebook(master)
+    s = ttk.Style()
+    s.configure('base.TNotebook', background='white')
+    tabStructure = ttk.Notebook(master, style='base.TNotebook')
+
 
     build_login_tab(tabStructure, master)
     build_admin_tab(tabStructure, master)
@@ -466,7 +477,7 @@ class app:  # constructor for GUI
             send.send_weekly_report()
 
         master.title("Shop Activity Monitor")
-        master.geometry("640x320")
+        master.geometry("600x300")
         styles = ttk.Style(master)
         styles.theme_use('clam')
         styles.configure('flat.TButton', borderwidth=0)
@@ -553,7 +564,6 @@ def main():  # run the app
             break
 
     root = tk.Tk()
-    global defaultBG
-    defaultBG = root.cget('bg')
+    root.config(bg='purple1')
     app(root)
     root.mainloop()
