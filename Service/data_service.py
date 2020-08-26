@@ -146,6 +146,10 @@ def Checkout_tool(toole, ID, ReturnDate):
     new_usage.ReturnDateExpect = ReturnDate
     toole.usages.append(new_usage)
     toole.save()
+    student = find_student_by_studentID(str(ID))
+    print(ID)
+    student.checkout(f'{toole.name},{toole.size}')
+
 
 def lookup_tool(text):
     message = []
@@ -163,3 +167,17 @@ def Return(toole, ID):
         if use.checkout_ID == ID:
             use.return_time = str(datetime.datetime.now())
     toole.save()
+    ID = str(ID)
+    student = find_student_by_studentID(ID)
+    student.retern(f'{toole.name},{toole.size}')
+
+
+
+def FindCheckedOutTools(student_ID):
+    print(str(student_ID))
+    student = find_student_by_studentID(str(student_ID))
+    if student:
+        tools = student.checked_out_tools
+        return tools
+    else:
+        return False

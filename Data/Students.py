@@ -17,6 +17,7 @@ class Student(mongoengine.Document):
     studentID = mongoengine.StringField(required=True)
     Is_signedIn = mongoengine.BooleanField(default=False)
     capstoneID = mongoengine.StringField(required=False)
+    checked_out_tools = mongoengine.ListField(required=False)
 
     # switches the signed in status of the student when called. Only call when you really mean to
     def event(self):
@@ -30,6 +31,12 @@ class Student(mongoengine.Document):
             pass
     def capstone(self, number):
         self.capstoneID = number
+        self.save()
+    def checkout(self, toolname):
+        self.checked_out_tools.append(toolname)
+        self.save()
+    def retern(self, toolname):
+        self.checked_out_tools.remove(toolname)
         self.save()
 
 

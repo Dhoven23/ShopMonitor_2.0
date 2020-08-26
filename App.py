@@ -18,6 +18,7 @@
 
 import datetime
 import os
+import time
 import weakref
 from tkinter import *
 from tkinter import ttk
@@ -123,7 +124,7 @@ def main_login_student_operation(window, master):
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
     entry.pack()
-
+    print(f'{round(time.clock(),4)}: - - - - - Login Functions Written')
 
 def admin_duties(admin, tabStructure, master):  # admin operation
     def whos_in_the_shop(*args):
@@ -248,7 +249,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
     button5.grid(column=0, row=5)
     text.grid(column=1, row=1, rowspan=10, columnspan=2)
     DateField.grid(column=0, row=7)
-
+    print(f'{round(time.clock(),4)}: - - - - - Admin functions Written')
 
 def build_login_tab(tabStructure, master):
     login = ttk.Frame(tabStructure)
@@ -286,7 +287,9 @@ def build_admin_tab(tabStructure, master):
     admin_duties(admin, tabStructure, master)
 
 
-def checkout_tool(keyNumber):
+def checkout_tool(keyNumber, root):
+    arg = BooleanVar()
+    arg = True
     def check_training(*args):
         StudentID = ID.get()
         student = svc.find_student_by_studentID(StudentID)
@@ -294,21 +297,23 @@ def checkout_tool(keyNumber):
         for number in student.keys_trained:
             if int(number) == int(keyNumber):
                 alert = Toplevel()
-                alert.geometry("230x80")
+                alert.geometry("+%d+%d" % (X+280, Y+75))
                 alert.wm_title("Checkout Successful")
                 confirm = Label(alert, text="You're good to go!", font='Helvetica 14 bold', fg='green')
                 confirm.pack(anchor=CENTER)
                 Button(alert, text='Confirm', command=alert.destroy).pack()
                 checkout.destroy()
+                arg = True
                 return
 
         alert = Toplevel()
-        alert.geometry("230x80")
+        alert.geometry("+%d+%d" % (X+280, Y+75))
         alert.wm_title("Checkout Unsuccessful")
         confirm = Label(alert, text="You are not cleared \nto use this key", font='Helvetica 14 bold', fg='red')
         confirm.pack(anchor=CENTER)
         Button(alert, text='Confirm', command=alert.destroy).pack()
         checkout.destroy()
+        arg = False
         return
 
     checkout = Toplevel()
@@ -318,33 +323,51 @@ def checkout_tool(keyNumber):
     ID = Entry(checkout, width=35, borderwidth=2)
     ID.bind('<Return>', check_training)
     ID.pack()
+    if arg == True:
+        return 'green'
+    else:
+        return 'red'
+
 
 
 class KeyButton:
 
-    def __init__(self, master, x, y, number):
+    def __init__(self, master, x, y, number, root):
         def Onclick():
-            key = Key.objects(keyNumber=number).first()
-            checkout_tool(key.keyNumber)
+
+            if self.button["bg"] == "MediumPurple1":
+                self.button["bg"] = "grey86"
+                key = Key.objects(keyNumber=number).first()
+                result = checkout_tool(key.keyNumber, root)
+
+            else:
+                self.button["bg"] = "MediumPurple1"
+                pop = Toplevel()
+                Label(pop, text='Key Successfully Returned\n'
+                                'Please Ensure Machine is Clean').pack()
+
+
 
         if svc.key_exists(number):
-            self.button = Button(master, text=str(number), bg='green', width=10, height=2, command=Onclick)
+            self.button = Button(master, text=str(number), bg='MediumPurple1', width=10, height=2, command=Onclick)
             self.button.grid(column=x, row=y)
 
 
-def build_keys_tab(tabStructure):
+def build_keys_tab(tabStructure, root):
+
     keys = ttk.Frame(tabStructure)
-    Key_Buttons_list_function(keys)
+    Key_Buttons_list_function(keys,root)
 
     tabStructure.add(keys, text="Keys")
 
 
-def Key_Buttons_list_function(tools):
+def Key_Buttons_list_function(keys, root):
+
     number = 1
-    for y in range(1, 7):
+    for y in range(1, 2):
         for x in range(1, 7):
             # noinspection PyTypeChecker
-            KeyButton.__init__(KeyButton, tools, x, y, number)
+            KeyButton.__init__(KeyButton, keys, x, y, number, root)
             number += 1
 
 def Checkout_tool(x, y, toolname):
@@ -374,24 +397,60 @@ def Checkout_tool(x, y, toolname):
     Button(pop, text='Cancel', width=20, font='Helvetica 12 bold', fg='red', command = lambda: pop.destroy()).pack()
 
 
+def Return_Tool(x, y, toolname):
+    def retern():
+        ID = E.get()
+        if isint(ID) and (len(ID)==8):
+            print(toolname.name + toolname.size)
+            svc.Return(toolname, ID)
+        pop.destroy()
+
+    pop = Toplevel()
+    pop.geometry("+%d+%d" % (x + 280, y + 75))
+    pop.minsize(220,140)
+    I = Label(pop, text='Confirm Student ID', font='Helvetica 14 bold')
+    I.pack()
+    E = Entry(pop, width=35, borderwidth=2, font='Helvetica 12')
+    E.pack()
+    Label(pop, text='  ', font='Arial 14').pack()
+    B = Button(pop, width=20, text='Return Tool', font='Arial 14 bold', fg = 'green', command=retern).pack()
+
+def Return_tool(x, y, tool):
+    print('Success')
+    pass
+
 class ToolLabel:
 
     _instances = set()
-    def __init__(self, master, message, n, root):
+    def __init__(self, master, message, n, root, col, returner):
 
         message = message.split(',')
 
 
-        def Onclick(*args):
+        def Onclick1(*args):
             x = root.winfo_x()
             y = root.winfo_y()
+
             tool = svc.find_tool(message[0], message[1])
             self.button.destroy()
             Checkout_tool(x, y, tool)
 
-        self.button = ttk.Button(master, text=message,command=Onclick, style='flat.TButton')
+        def Onclick2(*args):
+            x = root.winfo_x()
+            y = root.winfo_y()
+            self.button.destroy()
+            tool = svc.find_tool(message[0], message[1])
+            Return_Tool(x, y, tool)
 
-        self.button.grid(row=n, sticky=W + E)
+
+
+        if returner==False:
+            self.button = ttk.Button(master, text=message, command=Onclick1, style='flat.TButton')
+        else:
+            self.button = ttk.Button(master, text=message, command=Onclick2, style='flat.TButton')
+
+
+        self.button.grid(row=n, column=col,sticky=W + E)
         self._instances.add(weakref.ref(self))
 
     def clear(self,event=None):
@@ -409,16 +468,31 @@ class ToolLabel:
         cls._instances -= dead
 
 
+
 def tools_tab_functions(tools, root, tabStructure):
-    def printing(event=None):
+    def ActiveToolSearch(event=None):
         text = toolName.get()
         messages = svc.lookup_tool(text)
         n = IntVar()
         n = 2
         destroy()
         for message in messages:
-            toolLabel = ToolLabel(tools, message, n, root)
+
+            toolLabel = ToolLabel(tools, message, n, root, 0, False)
             n += 1
+
+    def ActiveToolReturn(event=None):
+        StudentID = return_ID.get()
+
+        message = svc.FindCheckedOutTools(StudentID)
+        n=2
+        destroy()
+        if message:
+            for mess in message:
+                toolLabel = ToolLabel(tools, mess, n, root, 2, True)
+                n+=1
+
+
 
     def destroy():
         for model in ToolLabel.getinstances():
@@ -428,16 +502,17 @@ def tools_tab_functions(tools, root, tabStructure):
     instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold', bg='MediumPurple1',fg='white').grid(row=0, sticky=N+S+W+E)
 
     toolName = Entry(tools, width=30, borderwidth=2, font='Arial 12')
-    toolName.bind('<Key>', printing)
+    toolName.bind('<Key>', ActiveToolSearch)
 
     toolName.grid(row=1, sticky=W + E)
     return_instruction = Label(tools, text='Student_ID\n(For tool return)', font='Helvetica 14 bold', bg='MediumPurple1', fg='white')
     return_ID = Entry(tools, width=30, borderwidth=2, font='Arial 12')
+    return_ID.bind('<Return>', ActiveToolReturn)
     return_instruction.grid(row=0,column=2, sticky=W+E)
     color=root.cget('bg')
     Label(tools, text='-------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=1)
     return_ID.grid(row=1,column=2)
-
+    print(f'{round(time.clock(),4)}: - - - - - Tools tab functions built')
 
 def buils_tools_tab(tabStructure, master):
 
@@ -446,7 +521,7 @@ def buils_tools_tab(tabStructure, master):
 
     tabStructure.add(tools, text="Tools")
     tools_tab_functions(tools, master, tabStructure)
-    pass
+
 
 
 def build_all_the_tabs_admin(master):
@@ -456,11 +531,16 @@ def build_all_the_tabs_admin(master):
 
 
     build_login_tab(tabStructure, master)
+    print(f'{round(time.clock(),4)}: - - - - - Login Tab built')
     build_admin_tab(tabStructure, master)
-    build_keys_tab(tabStructure)
+    print(f'{round(time.clock(),4)}: - - - - - Admin Tab built')
+    build_keys_tab(tabStructure, master)
+    print(f'{round(time.clock(),4)}: - - - - - keys Tab built')
     buils_tools_tab(tabStructure, master)
+    print(f'{round(time.clock(),4)}: - - - - - Tools Tab built')
 
     tabStructure.pack(expand=1, fill='both')
+    print(f'{round(time.clock(),4)}: - - - - - Tabstructure built')
 
 
 class app:  # constructor for GUI
@@ -510,6 +590,7 @@ def login():
         os.environ['USER'] = user_entry.get()
         os.environ['PASSWORD'] = password_entry.get()
         mongo.global_init(os.environ.get('USER'), os.environ.get('PASSWORD'))
+        print(f'{round(time.clock(),4)}: - - - - - Connected to Cloud')
         log.destroy()
 
     log = Tk()
@@ -529,6 +610,7 @@ def login():
     password_instruction.grid(row=2, column=0)
     attempt = Button(log, text='GO', font='Helvetica', width=15, command=check)
     attempt.grid(row=3, column=0, columnspan=2)
+    print(f'{round(time.clock(),4)}: - - - - - Network Login launched')
     log.mainloop()
 
 
@@ -551,7 +633,9 @@ def login_error():
 
 def main():  # run the app
 
+    print(f'{round(time.clock(),4)}: - - - - - Program execution Begin')
     login()
+    print(f'{round(time.clock(),4)}: - - - - - Cloud Login')
 
     while True:
         try:
@@ -564,6 +648,7 @@ def main():  # run the app
             break
 
     root = tk.Tk()
+    print(f'{round(time.clock(),4)}: - - - - - App window launch')
     root.config(bg='purple1')
     app(root)
     root.mainloop()
