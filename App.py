@@ -204,7 +204,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
             svc.CreateTool(number.get(), name.get())
             pop.destroy()
 
-            build_keys_tab(tabStructure)
+            build_keys_tab(tabStructure, master)
 
         def delete_name_entry(*args3, **kwargs2):
             name.delete(0, END)
@@ -290,6 +290,9 @@ def build_admin_tab(tabStructure, master):
 def checkout_tool(keyNumber, root):
     arg = BooleanVar()
     arg = True
+    X = root.winfo_x()
+    Y = root.winfo_y()
+
     def check_training(*args):
         StudentID = ID.get()
         student = svc.find_student_by_studentID(StudentID)
@@ -297,7 +300,7 @@ def checkout_tool(keyNumber, root):
         for number in student.keys_trained:
             if int(number) == int(keyNumber):
                 alert = Toplevel()
-                alert.geometry("+%d+%d" % (X+280, Y+75))
+                alert.geometry("+%d+%d" % (X+225, Y+75))
                 alert.wm_title("Checkout Successful")
                 confirm = Label(alert, text="You're good to go!", font='Helvetica 14 bold', fg='green')
                 confirm.pack(anchor=CENTER)
@@ -307,7 +310,7 @@ def checkout_tool(keyNumber, root):
                 return
 
         alert = Toplevel()
-        alert.geometry("+%d+%d" % (X+280, Y+75))
+        alert.geometry("+%d+%d" % (X+225, Y+75))
         alert.wm_title("Checkout Unsuccessful")
         confirm = Label(alert, text="You are not cleared \nto use this key", font='Helvetica 14 bold', fg='red')
         confirm.pack(anchor=CENTER)
@@ -317,10 +320,11 @@ def checkout_tool(keyNumber, root):
         return
 
     checkout = Toplevel()
+    checkout.geometry("+%d+%d" % (X+150, Y+75))
     checkout.minsize(320,140)
     checkout.config(bg='purple1')
     Instruction = Label(checkout, text='Please Enter your StudentID', font='Arial 12 bold', fg='white',bg='purple1').pack(side=TOP)
-    ID = Entry(checkout, width=35, borderwidth=2)
+    ID = Entry(checkout, width=25, borderwidth=2, font = 'Helvetica 14')
     ID.bind('<Return>', check_training)
     ID.pack()
     if arg == True:
@@ -343,8 +347,11 @@ class KeyButton:
             else:
                 self.button["bg"] = "MediumPurple1"
                 pop = Toplevel()
+                pop.geometry("300x140")
+                pop.minsize(320,140)
                 Label(pop, text='Key Successfully Returned\n'
-                                'Please Ensure Machine is Clean').pack()
+                                'Please Ensure Machine is Clean', font='Arial 14 bold', fg='MediumPurple3').pack()
+                Button(pop, text='Accept', font='Helvetica 16 bold', fg='green',command=pop.destroy).pack()
 
 
 
@@ -414,10 +421,6 @@ def Return_Tool(x, y, toolname):
     E.pack()
     Label(pop, text='  ', font='Arial 14').pack()
     B = Button(pop, width=20, text='Return Tool', font='Arial 14 bold', fg = 'green', command=retern).pack()
-
-def Return_tool(x, y, tool):
-    print('Success')
-    pass
 
 class ToolLabel:
 
