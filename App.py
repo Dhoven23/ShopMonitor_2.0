@@ -123,7 +123,7 @@ def main_login_student_operation(window, master):
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
     entry.pack()
-    print(f'{round(time.clock(),4)}: - - - - - Login Functions Written')
+    #print(f'{round(time.clock(),4)}: - - - - - Login Functions Written')
 
 def admin_duties(admin, tabStructure, master):  # admin operation
     def whos_in_the_shop(*args):
@@ -282,7 +282,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
     Button(admin, text='>', bg='gray50',command=next_day).grid(column=2, row=8, sticky=W + E)
     text.grid(column=3, row=1, rowspan=10, columnspan=2)
     DateField.grid(column=1, row=7)
-    print(f'{round(time.clock(),4)}: - - - - - Admin functions Written')
+    #print(f'{round(time.clock(),4)}: - - - - - Admin functions Written')
 
 def build_login_tab(tabStructure, master):
     login = ttk.Frame(tabStructure)
@@ -548,7 +548,7 @@ def tools_tab_functions(tools, root, tabStructure):
     color=root.cget('bg')
     Label(tools, text='-------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=1)
     return_ID.grid(row=1,column=2)
-    print(f'{round(time.clock(),4)}: - - - - - Tools tab functions built')
+    #print(f'{round(time.clock(),4)}: - - - - - Tools tab functions built')
 
 def buils_tools_tab(tabStructure, master):
 
@@ -567,16 +567,16 @@ def build_all_the_tabs_admin(master):
 
 
     build_login_tab(tabStructure, master)
-    print(f'{round(time.clock(),4)}: - - - - - Login Tab built')
+    #print(f'{round(time.clock(),4)}: - - - - - Login Tab built')
     build_admin_tab(tabStructure, master)
-    print(f'{round(time.clock(),4)}: - - - - - Admin Tab built')
+    #print(f'{round(time.clock(),4)}: - - - - - Admin Tab built')
     build_keys_tab(tabStructure, master)
-    print(f'{round(time.clock(),4)}: - - - - - keys Tab built')
+    #print(f'{round(time.clock(),4)}: - - - - - keys Tab built')
     buils_tools_tab(tabStructure, master)
-    print(f'{round(time.clock(),4)}: - - - - - Tools Tab built')
+    #print(f'{round(time.clock(),4)}: - - - - - Tools Tab built')
 
     tabStructure.pack(expand=1, fill='both')
-    print(f'{round(time.clock(),4)}: - - - - - Tabstructure built')
+    #print(f'{round(time.clock(),4)}: - - - - - Tabstructure built')
 
 
 class app:  # constructor for GUI
@@ -621,7 +621,7 @@ def login():
         os.environ['USER'] = user_entry.get()
         os.environ['PASSWORD'] = password_entry.get()
         mongo.global_init(os.environ.get('USER'), os.environ.get('PASSWORD'))
-        print(f'{round(time.clock(),4)}: - - - - - Connected to Cloud')
+        #print(f'{round(time.clock(),4)}: - - - - - Connected to Cloud')
         log.destroy()
 
     log = Tk()
@@ -641,7 +641,7 @@ def login():
     password_instruction.grid(row=2, column=0)
     attempt = Button(log, text='GO', font='Helvetica', width=15, command=check)
     attempt.grid(row=3, column=0, columnspan=2)
-    print(f'{round(time.clock(),4)}: - - - - - Network Login launched')
+    #print(f'{round(time.clock(),4)}: - - - - - Network Login launched')
     log.mainloop()
 
 
@@ -664,9 +664,9 @@ def login_error():
 
 def main():  # run the app
 
-    print(f'{round(time.clock(),4)}: - - - - - Program execution Begin')
+    #print(f'{round(time.clock(),4)}: - - - - - Program execution Begin')
     login()
-    print(f'{round(time.clock(),4)}: - - - - - Cloud Login')
+    #print(f'{round(time.clock(),4)}: - - - - - Cloud Login')
 
     while True:
         try:
@@ -679,7 +679,7 @@ def main():  # run the app
             break
 
     root = tk.Tk()
-    print(f'{round(time.clock(),4)}: - - - - - App window launch')
+    #print(f'{round(time.clock(),4)}: - - - - - App window launch')
     root.config(bg='purple1')
     app(root)
     root.mainloop()
