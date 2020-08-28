@@ -16,7 +16,7 @@
 #                                                                                                  #
 ####################################################################################################
 
-import datetime
+from datetime import datetime, timedelta
 import os
 import time
 import weakref
@@ -25,8 +25,7 @@ from tkinter import ttk
 import tkinter as tk
 import sys
 import Data.mongo_setup as mongo
-import Service.Reports.generate_report as gen
-import Service.Reports.send_email as send
+
 import Service.admin_svc as asv
 import Service.data_service as svc
 from Data.key import Key
@@ -176,27 +175,32 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         proceed = Button(pop, text="Cancel", fg='red', command=pop.destroy)
         proceed.grid(row=1, column=0)
 
+    def delete_entry(event=None):
+        DateField.delete(0, END)
+
     def who_was_in_the_shop():
-        def delete_entry(event=None):
-            DateField.delete(0, END)
+        get_date_info()
 
-        def get_date(event=None):
-            prompt.destroy()
-            date = DateField.get()
-            messages = asv.who_was_in_the_shop(date)
-            text.delete('1.0', END)
-            if messages:
-                for message in messages:
-                    text.insert(END, message[0:23] + (50 - len(message)) * '.' + message[23:(len(message) + 1)])
-            else:
-                text.insert(END,
-                            f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
+    def get_date(event=None):
 
-        DateField.insert(0, 'YYYY-MM-DD')
+        date = DateField.get()
+        messages = asv.who_was_in_the_shop(date)
+        text.delete('1.0', END)
+        if messages:
+            for message in messages:
+                text.insert(END, message[0:23] + (50 - len(message)) * '.' + message[23:(len(message) + 1)])
+        else:
+            text.insert(END,
+                        f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
+
+    def get_date_info():
+
+
+
         DateField.bind('<ButtonPress>', delete_entry)
-        prompt = Label(admin, text="Please enter the day")
+        prompt = Label(admin, text="Please enter the day", font='bold 8', bg='MediumPurple1')
         DateField.bind('<Return>', get_date)
-        prompt.grid(column=0, row=6)
+        prompt.grid(column=1, row=6)
 
     def add_tool(*args, **kwargs4):
 
@@ -235,20 +239,49 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         proceed = Button(pop, text="Cancel", fg='red', command=pop.destroy)
         proceed.grid(row=1, column=0)
 
+    def Today():
+        today=datetime.now().date()
+        DateField.delete(0,END)
+        DateField.insert(0,str(today))
+        global date_memory
+        date_memory = today
+        get_date()
+
+    def next_day():
+        global date_memory
+        step = timedelta(days=+1)
+        date_memory = date_memory + step
+        DateField.delete(0, END)
+        DateField.insert(0, str(date_memory))
+        get_date()
+
+
+    def prev_day():
+        global date_memory
+        step = timedelta(days=-1)
+        date_memory = date_memory + step
+        DateField.delete(0, END)
+        DateField.insert(0, str(date_memory))
+        get_date()
+
+
     text = Text(admin, height=15, width=50)
-    DateField = Entry(admin, width=25, borderwidth=3)
+    DateField = Entry(admin, width=14, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=25, command=whos_in_the_shop)
     button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
     button3 = Button(admin, text="Blame", width=25, command=who_was_in_the_shop)
     button4 = Button(admin, text="Edit Training", width=25, command=edit_training)
     button5 = Button(admin, text="Add Key", width=25, command=add_tool)
-    button1.grid(column=0, row=1)
-    button2.grid(column=0, row=2)
-    button3.grid(column=0, row=3)
-    button4.grid(column=0, row=4)
-    button5.grid(column=0, row=5)
-    text.grid(column=1, row=1, rowspan=10, columnspan=2)
-    DateField.grid(column=0, row=7)
+    button1.grid(column=0, row=1, columnspan=3)
+    button2.grid(column=0, row=2, columnspan=3)
+    button3.grid(column=0, row=3, columnspan=3)
+    button4.grid(column=0, row=4, columnspan=3)
+    button5.grid(column=0, row=5, columnspan=3)
+    Button(admin, text='<', bg='gray50',command=prev_day).grid(column=0,row=8,sticky=W+E)
+    Button(admin, text='Today',command=Today).grid(column=1,row=8,sticky=W+E)
+    Button(admin, text='>', bg='gray50',command=next_day).grid(column=2, row=8, sticky=W + E)
+    text.grid(column=3, row=1, rowspan=10, columnspan=2)
+    DateField.grid(column=1, row=7)
     print(f'{round(time.clock(),4)}: - - - - - Admin functions Written')
 
 def build_login_tab(tabStructure, master):
@@ -553,11 +586,6 @@ class app:  # constructor for GUI
         def onExit():
             master.quit()
 
-        def generate():
-            gen.generate()
-
-        def send_weekly_report():
-            send.send_weekly_report()
 
         master.title("Shop Activity Monitor")
         master.geometry("600x300")
@@ -572,8 +600,8 @@ class app:  # constructor for GUI
         fileMenu.add_command(label="Exit", command=onExit)
         menubar.add_cascade(label="File", menu=fileMenu)
 
-        fileMenu.add_command(label="Create Report", command=generate)
-        fileMenu.add_command(label="Send last Report", command=send_weekly_report)
+        #fileMenu.add_command(label="Create Report", command=generate)
+        #fileMenu.add_command(label="Send last Report", command=send_weekly_report)
 
         self.statusbar = Label(master, text="", bd=1, relief=SUNKEN, anchor=W)
         self.statusbar.pack(side=BOTTOM, fill=X)
@@ -582,7 +610,7 @@ class app:  # constructor for GUI
 
     def update(self):
         date = 'Today is: ' + svc.print_day() + f", time: " \
-                                                f"{datetime.datetime.now().hour}:{datetime.datetime.now().minute} "
+                                                f"{datetime.now().hour}:{datetime.now().minute} "
 
         self.statusbar.config(text=str(date))
         self.statusbar.after(1000, self.update)
