@@ -187,8 +187,11 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         messages = asv.who_was_in_the_shop(date)
         text.delete('1.0', END)
         if messages:
+
             for message in messages:
-                text.insert(END, message[0:23] + (50 - len(message)) * '.' + message[23:(len(message) + 1)])
+                mess = message.split('|')
+                mess1 = str(mess[0])
+                text.insert(END, mess1[0:23] + (50 - len(mess[0])) * '.' + mess1[23:(len(mess[0]) + 1)] + mess[1])
         else:
             text.insert(END,
                         f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
@@ -403,12 +406,13 @@ def build_keys_tab(tabStructure, root):
 
 def Key_Buttons_list_function(keys, root):
 
-    number = 1
-    for y in range(1, 2):
-        for x in range(1, 7):
-            # noinspection PyTypeChecker
-            KeyButton.__init__(KeyButton, keys, x, y, number, root)
-            number += 1
+    keys.grid()
+    key1 = KeyButton(keys,1,1,1,root)
+    root.grid_columnconfigure(0, weight=1)
+    root.grid_columnconfigure(1, weight=1)
+    root.grid_columnconfigure(2, weight=1)
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_rowconfigure(1, weight=1)
 
 def Checkout_tool(x, y, toolname):
 

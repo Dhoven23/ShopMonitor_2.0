@@ -1,47 +1,47 @@
-from tkinter import *
-from tkinter import ttk
-import tkinter
+import tkinter as tk
+from tkinter.font import Font
 
-window = Tk()
-style = ttk.Style()
-style.theme_create('Cloud', settings={
-    ".": {
-        "configure": {
-            "background": '#aeb0ce', # All colors except for active tab-button
-            "font": 'red'
-        }
-    },
-    "TNotebook": {
-        "configure": {
-            "background":'black', # color behind the notebook
-            "tabmargins": [5, 5, 0, 0], # [left margin, upper margin, right margin, margin beetwen tab and frames]
-        }
-    },
-    "TNotebook.Tab": {
-        "configure": {
-            "background": 'dark blue', # Color of non selected tab-button
-            "padding": [5, 2], # [space beetwen text and horizontal tab-button border, space between text and vertical tab_button border]
-            "font":"white"
-        },
-        "map": {
-            "background": [("selected", '#aeb0ce')], # Color of active tab
-            "expand": [("selected", [1, 1, 1, 0])] # [expanse of text]
-        }
-    }
-})
-style.theme_use('Cloud')
-note = ttk.Notebook(window)
+class Pad(tk.Frame):
 
-window.tab1 = ttk.Frame(note)
-window.tab2 = ttk.Frame(note)
-window.tab3 = ttk.Frame(note)
-window.tab4 = ttk.Frame(note)
+    def __init__(self, parent, *args, **kwargs):
+        tk.Frame.__init__(self, parent, *args, **kwargs)
 
-note.add(window.tab1, text = "Home ")
-note.add(window.tab2, text = "Disconnected ")
-note.add(window.tab3, text = "Alarm ")
-note.add(window.tab4, text = "")
+        self.toolbar = tk.Frame(self, bg="#eee")
+        self.toolbar.pack(side="top", fill="x")
 
-note.pack()
+        self.bold_btn = tk.Button(self.toolbar, text="Bold", command=self.make_bold)
+        self.bold_btn.pack(side="left")
 
-window.mainloop()
+        self.clear_btn = tk.Button(self.toolbar, text="Clear", command=self.clear)
+        self.clear_btn.pack(side="left")
+
+        # Creates a bold font
+        self.bold_font = Font(family="Helvetica", size=14)
+
+        self.text = tk.Text(self)
+        self.text.insert("end", "Select part of text and then click 'Bold'...")
+        self.text.focus()
+        self.text.pack(fill="both", expand=True)
+
+        # configuring a tag called BOLD
+        self.text.tag_configure("BOLD", font=self.bold_font)
+
+    def make_bold(self):
+        # tk.TclError exception is raised if not text is selected
+        try:
+            self.text.tag_add("BOLD", "1")
+        except tk.TclError:
+            pass
+
+    def clear(self):
+        self.text.tag_remove("BOLD",  "1.0", 'end')
+
+
+def demo():
+    root = tk.Tk()
+    Pad(root).pack(expand=1, fill="both")
+    root.mainloop()
+
+
+if __name__ == "__main__":
+    demo()

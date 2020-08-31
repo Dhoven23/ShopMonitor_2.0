@@ -34,8 +34,10 @@ def who_was_in_the_shop(date):
     if day and IDs:
         for id in IDs:
             found = find_student_by_studentID(id)
-
-            message.append('-> ' + found.name + f'......... {day.signins[i].Login[11:16]} to {day.signins[i].Logout[11:16]}\n')
+            tools = '\n'
+            for tool in found.checked_out_tools:
+                tools = tools + f"  * {tool}\n"
+            message.append('-> ' + found.name + f'............ {day.signins[i].Login[11:16]} to {day.signins[i].Logout[11:16]}|' + tools)
             i += 1
     return message
 

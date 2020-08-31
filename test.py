@@ -1,6 +1,6 @@
-from datetime import datetime, timedelta
+string = 'first bit of text | second bit of text'
+string = string.split('|')
 
-now = datetime.now().date()
-tommorow = timedelta(days=+10)
-daynew = now + tommorow
-print(daynew)
+print(string[0] + string[1])
+
+
