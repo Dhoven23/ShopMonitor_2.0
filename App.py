@@ -46,13 +46,13 @@ def popup_message(text, tab):  # universally callable message-display
         button.destroy()
 
     message = text
-    pop = Text(tab, height=7, width=70)
+    pop = Text(tab, height=7, width=55)
     pop.insert(END, text)
-    pop.pack()
+    pop.grid(column=1,row=2)
     button = Button(tab, text="Acknowledge", command=destroy)
-    button.after(15000, button.destroy)  # destroy popup message after 5 seconds
+    button.after(5000, button.destroy)  # destroy popup message after 5 seconds
     pop.after(15000, pop.destroy)
-    button.pack()
+    button.grid(column=1,row=3)
 
 
 def popup_create_student(StudentID, window, master):  # add student to mongo
@@ -117,12 +117,12 @@ def main_login_student_operation(window, master):
         entry.delete(0, END)
 
     instruction = Label(window, text="Enter Student ID", font='Helvetica 12 bold', fg='purple4',bg='grey86')
-    instruction.pack()
+    instruction.grid(column=1,row=0)
     entry = Entry(window, width=35, borderwidth=2, font='Helvetica 16')
-
+    Label(window,text='             ',font='Arial 16 bold',bg='grey86').grid(column=0,row=1)
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
-    entry.pack()
+    entry.grid(column=1,row=1)
     #print(f'{round(time.clock(),4)}: - - - - - Login Functions Written')
 
 def admin_duties(admin, tabStructure, master):  # admin operation

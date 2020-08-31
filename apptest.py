@@ -1,47 +1,16 @@
 import tkinter as tk
-from tkinter.font import Font
 
-class Pad(tk.Frame):
-
-    def __init__(self, parent, *args, **kwargs):
-        tk.Frame.__init__(self, parent, *args, **kwargs)
-
-        self.toolbar = tk.Frame(self, bg="#eee")
-        self.toolbar.pack(side="top", fill="x")
-
-        self.bold_btn = tk.Button(self.toolbar, text="Bold", command=self.make_bold)
-        self.bold_btn.pack(side="left")
-
-        self.clear_btn = tk.Button(self.toolbar, text="Clear", command=self.clear)
-        self.clear_btn.pack(side="left")
-
-        # Creates a bold font
-        self.bold_font = Font(family="Helvetica", size=14)
-
-        self.text = tk.Text(self)
-        self.text.insert("end", "Select part of text and then click 'Bold'...")
-        self.text.focus()
-        self.text.pack(fill="both", expand=True)
-
-        # configuring a tag called BOLD
-        self.text.tag_configure("BOLD", font=self.bold_font)
-
-    def make_bold(self):
-        # tk.TclError exception is raised if not text is selected
-        try:
-            self.text.tag_add("BOLD", "1")
-        except tk.TclError:
-            pass
-
-    def clear(self):
-        self.text.tag_remove("BOLD",  "1.0", 'end')
-
-
-def demo():
-    root = tk.Tk()
-    Pad(root).pack(expand=1, fill="both")
-    root.mainloop()
-
+class Example(tk.Frame):
+    def __init__(self, parent):
+        tk.Frame.__init__(self, parent)
+        label = tk.Label(self, text="This should be centered")
+        label.grid(row=1, column=1)
+        self.grid_rowconfigure(1, weight=1)
+        self.grid_columnconfigure(1, weight=1)
 
 if __name__ == "__main__":
-    demo()
+    root = tk.Tk()
+    Example(root).grid(sticky="nsew")
+    root.grid_rowconfigure(0, weight=1)
+    root.grid_columnconfigure(0, weight=1)
+    root.mainloop()

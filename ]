@@ -1,0 +1,40 @@
+Add date tracker
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch master
+# Your branch is up to date with 'origin/master'.
+#
+# Changes to be committed:
+#	modified:   App.py
+#	modified:   ShopMonitor.spec
+#	new file:   ShopMonitor_win1.1.spec
+#	modified:   __pycache__/App.cpython-37.pyc
+#	modified:   build/ShopMonitor/Analysis-00.toc
+#	modified:   build/ShopMonitor/EXE-00.toc
+#	modified:   build/ShopMonitor/PKG-00.pkg
+#	modified:   build/ShopMonitor/PKG-00.toc
+#	modified:   build/ShopMonitor/PYZ-00.pyz
+#	modified:   build/ShopMonitor/PYZ-00.toc
+#	new file:   build/ShopMonitor/ShopMonitor.exe.manifest
+#	modified:   build/ShopMonitor/Tree-00.toc
+#	modified:   build/ShopMonitor/Tree-01.toc
+#	modified:   build/ShopMonitor/base_library.zip
+#	modified:   build/ShopMonitor/warn-ShopMonitor.txt
+#	modified:   build/ShopMonitor/xref-ShopMonitor.html
+#	new file:   build/ShopMonitor_win1.1/Analysis-00.toc
+#	new file:   build/ShopMonitor_win1.1/EXE-00.toc
+#	new file:   build/ShopMonitor_win1.1/PKG-00.pkg
+#	new file:   build/ShopMonitor_win1.1/PKG-00.toc
+#	new file:   build/ShopMonitor_win1.1/PYZ-00.pyz
+#	new file:   build/ShopMonitor_win1.1/PYZ-00.toc
+#	new file:   build/ShopMonitor_win1.1/ShopMonitor_win1.1.exe.manifest
+#	new file:   build/ShopMonitor_win1.1/Tree-00.toc
+#	new file:   build/ShopMonitor_win1.1/Tree-01.toc
+#	new file:   build/ShopMonitor_win1.1/base_library.zip
+#	new file:   build/ShopMonitor_win1.1/warn-ShopMonitor_win1.1.txt
+#	new file:   build/ShopMonitor_win1.1/xref-ShopMonitor_win1.1.html
+#	new file:   dist/ShopMonitor.exe
+#	new file:   dist/ShopMonitor_win1.1.exe
+#	modified:   test.py
+#
