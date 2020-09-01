@@ -178,8 +178,13 @@ def admin_duties(admin, tabStructure, master):  # admin operation
     def delete_entry(event=None):
         DateField.delete(0, END)
 
-    def who_was_in_the_shop():
-        get_date_info()
+    def tools_past_due(event=None):
+        message = asv.PastDueTools()
+        text.delete('1.0', END)
+        if message:
+            for mess in message:
+                text.insert(END,mess)
+
 
     def get_date(event=None):
 
@@ -272,7 +277,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
     DateField = Entry(admin, width=14, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=25, command=whos_in_the_shop)
     button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
-    button3 = Button(admin, text="Blame", width=25, command=who_was_in_the_shop)
+    button3 = Button(admin, text="Blame", width=25, command=tools_past_due)
     button4 = Button(admin, text="Edit Training", width=25, command=edit_training)
     button5 = Button(admin, text="Add Key", width=25, command=add_tool)
     button1.grid(column=0, row=1, columnspan=3)
