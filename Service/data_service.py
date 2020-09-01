@@ -147,7 +147,7 @@ def Checkout_tool(toole, ID, ReturnDate):
     toole.usages.append(new_usage)
     toole.save()
     student = find_student_by_studentID(str(ID))
-    print(ID)
+
     student.checkout(f'{toole.name},{toole.size}')
 
 
@@ -174,7 +174,7 @@ def Return(toole, ID):
 
 
 def FindCheckedOutTools(student_ID):
-    print(str(student_ID))
+
     student = find_student_by_studentID(str(student_ID))
     if student:
         tools = student.checked_out_tools
