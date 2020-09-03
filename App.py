@@ -377,16 +377,16 @@ def checkout_tool(keyNumber, root):
 
 class KeyButton:
 
-    def __init__(self, master, x, y, number, root):
+    def __init__(self, master, x, y, number, root, name, color):
         def Onclick():
 
-            if self.button["bg"] == "MediumPurple1":
+            if self.button["bg"] == color:
                 self.button["bg"] = "grey86"
                 key = Key.objects(keyNumber=number).first()
                 result = checkout_tool(key.keyNumber, root)
 
             else:
-                self.button["bg"] = "MediumPurple1"
+                self.button["bg"] = color
                 pop = Toplevel()
                 pop.geometry("300x140")
                 pop.minsize(320,140)
@@ -397,7 +397,7 @@ class KeyButton:
 
 
         if svc.key_exists(number):
-            self.button = Button(master, text=str(number), bg='MediumPurple1', width=10, height=2, command=Onclick)
+            self.button = Button(master, text=str(number) + '\n' + name, bg=color, width=15, height=2, command=Onclick)
             self.button.grid(column=x, row=y)
 
 
@@ -410,14 +410,44 @@ def build_keys_tab(tabStructure, root):
 
 
 def Key_Buttons_list_function(keys, root):
+    from Data.KeysList import RM131_keys, RM130_keys, RM132_keys
 
     keys.grid()
-    key1 = KeyButton(keys,1,1,1,root)
-    root.grid_columnconfigure(0, weight=1)
-    root.grid_columnconfigure(1, weight=1)
-    root.grid_columnconfigure(2, weight=1)
-    root.grid_rowconfigure(0, weight=1)
-    root.grid_rowconfigure(1, weight=1)
+    key1 = KeyButton(keys,1,1,1,root,RM130_keys[1], 'MediumPurple1')
+    key2 = KeyButton(keys,2,1,2,root,RM130_keys[2], 'MediumPurple1')
+    key3 = KeyButton(keys,3,1,3,root,RM130_keys[3], 'MediumPurple1')
+    key4 = KeyButton(keys,4,1,4,root,RM130_keys[4], 'MediumPurple1')
+    key5 = KeyButton(keys,5,1,5,root,RM130_keys[5], 'MediumPurple1')
+    key6 = KeyButton(keys,1,2,6,root,RM130_keys[6], 'MediumPurple1')
+    key7 = KeyButton(keys,2,2,7,root,RM130_keys[7], 'MediumPurple1')
+    key8 = KeyButton(keys,3,2,8,root,RM130_keys[8], 'MediumPurple1')
+    key9 = KeyButton(keys,4,2,9,root,RM130_keys[9], 'MediumPurple1')
+    key10 =KeyButton(keys,5,2,10,root,RM130_keys[10],'MediumPurple1')
+    key11 =KeyButton(keys,1,3,11,root,RM130_keys[11],'MediumPurple1')
+    key11 = KeyButton(keys, 2, 3, 12, root, RM130_keys[12], 'MediumPurple1')
+
+    key13 = KeyButton(keys,3,3,13,root,RM132_keys[13],'orange red')
+    key14 = KeyButton(keys,4,3,14,root,RM132_keys[14],'orange red')
+    key15 = KeyButton(keys, 5, 3, 15, root, RM132_keys[15], 'orange red')
+    key16 = KeyButton(keys, 1, 4, 16, root, RM132_keys[16], 'orange red')
+    key17 = KeyButton(keys, 2, 4, 17, root, RM132_keys[17], 'orange red')
+    key18 = KeyButton(keys, 3, 4, 18, root, RM132_keys[18], 'orange red')
+    key19 = KeyButton(keys, 4, 4, 19, root, RM132_keys[19], 'orange red')
+    key20 = KeyButton(keys, 5, 4, 20, root, RM132_keys[20], 'orange red')
+    key21 = KeyButton(keys, 1, 5, 21, root, RM132_keys[21], 'orange red')
+
+    key22 = KeyButton(keys, 2, 5, 22, root, RM131_keys[22], 'bisque')
+    key23 = KeyButton(keys, 3, 5, 23, root, RM131_keys[23], 'bisque')
+    key24 = KeyButton(keys, 4, 5, 24, root, RM131_keys[24], 'bisque')
+    key25 = KeyButton(keys, 5, 5, 25, root, RM131_keys[25], 'bisque')
+    key26 = KeyButton(keys, 1, 6, 26, root, RM131_keys[26], 'bisque')
+
+
+
+
+
+
+
 
 def Checkout_tool(x, y, toolname):
 
