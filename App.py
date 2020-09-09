@@ -25,7 +25,7 @@ from tkinter import ttk
 import tkinter as tk
 import sys
 import Data.mongo_setup as mongo
-
+from Plotting.activity import plotins
 import Service.admin_svc as asv
 import Service.data_service as svc
 from Data.key import Key
@@ -210,42 +210,9 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         DateField.bind('<Return>', get_date)
         prompt.grid(column=1, row=6)
 
-    def add_tool(*args, **kwargs4):
+    def plot_graphs(*args, **kwargs4):
+        plotins()
 
-        def adding_tool(*args2, **kwargs3):
-            svc.CreateTool(number.get(), name.get())
-            pop.destroy()
-
-            build_keys_tab(tabStructure, master)
-
-        def delete_name_entry(*args3, **kwargs2):
-            name.delete(0, END)
-
-        def delete_number_entry(*args4, **kwargs1):
-            number.delete(0, END)
-
-        pop = Toplevel()
-        x = master.winfo_x()
-        y = master.winfo_y()
-
-        pop.geometry("+%d+%d" % (x + 200, y + 100))
-        pop.minsize(80, 30)
-        name = Entry(pop, width=35, borderwidth=2)
-        name.insert(0, "Enter Machine Name: ")
-        name.bind('<ButtonPress>', delete_name_entry)
-
-        number = Entry(pop, width=35, borderwidth=2)
-        number.insert(0, "Enter Key Number: ")
-        number.bind('<ButtonPress>', delete_number_entry)
-
-        number.bind('<Return>', adding_tool)
-
-        pop.wm_title("Tools")
-
-        name.grid(row=2, column=0)
-        number.grid(row=3, column=0)
-        proceed = Button(pop, text="Cancel", fg='red', command=pop.destroy)
-        proceed.grid(row=1, column=0)
 
     def Today():
         today=datetime.now().date()
@@ -279,7 +246,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
     button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
     button3 = Button(admin, text="Blame", width=25, command=tools_past_due)
     button4 = Button(admin, text="Edit Training", width=25, command=edit_training)
-    button5 = Button(admin, text="Add Key", width=25, command=add_tool)
+    button5 = Button(admin, text="Plot Graphs", width=25, command=plot_graphs)
     button1.grid(column=0, row=1, columnspan=3)
     button2.grid(column=0, row=2, columnspan=3)
     button3.grid(column=0, row=3, columnspan=3)
@@ -397,7 +364,7 @@ class KeyButton:
 
 
         if svc.key_exists(number):
-            self.button = Button(master, text=str(number) + '\n' + name, bg=color, width=15, height=2, command=Onclick)
+            self.button = Button(master, text=str(number) + '\n' + name, bg=color,width=15, height=2, command=Onclick)
             self.button.grid(column=x, row=y)
 
 
@@ -441,11 +408,6 @@ def Key_Buttons_list_function(keys, root):
     key24 = KeyButton(keys, 4, 5, 24, root, RM131_keys[24], 'bisque')
     key25 = KeyButton(keys, 5, 5, 25, root, RM131_keys[25], 'bisque')
     key26 = KeyButton(keys, 1, 6, 26, root, RM131_keys[26], 'bisque')
-
-
-
-
-
 
 
 
