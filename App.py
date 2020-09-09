@@ -257,6 +257,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         get_date()
 
     def add_capstone_id(event=None):
+
         def add_number():
             ID = str(E.get())
             student = svc.find_student_by_studentID(ID)
@@ -273,6 +274,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         E2 = Entry(pop, width=10, font='Helvetica 14')
         E2.pack()
         B = Button(pop, text='Submit!', font = 'helvetica 14 bold', fg='green', command=add_number).pack()
+
 
 
     text = Text(admin, height=15, width=50)
