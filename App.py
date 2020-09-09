@@ -29,7 +29,7 @@ from Plotting.activity import plotins
 import Service.admin_svc as asv
 import Service.data_service as svc
 from Data.key import Key
-from Service.data_service import log_into_account
+
 
 
 def isint(s):  # universal check for integer
@@ -67,14 +67,31 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
             popup_message(message, window)
             pop.destroy()
 
+
+
     def delete_entry(event=None):
         prompt.delete(0, END)
 
     def Capstone():
-        pass
-        # CapstoneID = Entry(pop, width=35,borderwidth=2).grid(row=3,column=0)
-        # Label(pop,text="Capstone\nnumber").grid(row=3,column=1)
-        # CapstoneID.bind('<Return>',delete_entry)
+        def capstone_student_create(event: object = None):
+            name = prompt.get()
+            ID = StudentID
+
+            if isint(name) == False:
+                C_Number = CapstoneID.get()
+                print(str(C_Number), str(name))
+                student = svc.create_capstone_student(ID, str(name), str(C_Number))
+                svc.log_into_account_capstone(StudentID)
+                pop.destroy()
+
+
+        CapstoneID = Entry(pop, width=35,borderwidth=2)
+        CapstoneID.grid(row=3,column=0)
+        Label(pop,text="Capstone\nnumber").grid(row=3,column=1)
+
+        Bo = Button(pop,text='Create new\nCapstone Student',command=capstone_student_create)
+        Bo.grid(row=4,column=0,columnspan=2)
+
 
     pop = Toplevel()
     x = master.winfo_x()
@@ -103,7 +120,7 @@ def main_login_student_operation(window, master):
         if not (((len(StudentID) == 8) | (len(StudentID) == 6)) and isint(StudentID)):
             return
         else:
-            message, loggedIn = log_into_account(StudentID)
+            message, loggedIn = svc.log_into_account(StudentID)
             if message == f"No student with ID {StudentID}":
                 popup_create_student(str(StudentID), window, master)
             else:
@@ -239,24 +256,45 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         DateField.insert(0, str(date_memory))
         get_date()
 
+    def add_capstone_id(event=None):
+        def add_number():
+            ID = str(E.get())
+            student = svc.find_student_by_studentID(ID)
+            if not student.capstoneID:
+                student.capstoneID = str(E2.get())
+                student.save()
+            pop.destroy()
+        pop = Toplevel()
+        pop.minsize(300,120)
+        Label(pop, text = 'Please Enter Student ID', font = 'Helvetica 14 bold', fg='Purple3').pack()
+        E = Entry(pop, width=10, font = 'Helvetica 14')
+        E.pack()
+        Label(pop, text='Please Enter Capstone ID', font='Helvetica 14 bold', fg='Purple3').pack()
+        E2 = Entry(pop, width=10, font='Helvetica 14')
+        E2.pack()
+        B = Button(pop, text='Submit!', font = 'helvetica 14 bold', fg='green', command=add_number).pack()
+
 
     text = Text(admin, height=15, width=50)
-    DateField = Entry(admin, width=14, borderwidth=3)
+    DateField = Entry(admin, font='Arial 14 bold',width=10, borderwidth=3)
     button1 = Button(admin, text="Who's In the Shop?", width=25, command=whos_in_the_shop)
     button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
     button3 = Button(admin, text="Blame", width=25, command=tools_past_due)
     button4 = Button(admin, text="Edit Training", width=25, command=edit_training)
     button5 = Button(admin, text="Plot Graphs", width=25, command=plot_graphs)
+    button6 = Button(admin, text="Add Capstone ID", width=25, command=add_capstone_id)
     button1.grid(column=0, row=1, columnspan=3)
     button2.grid(column=0, row=2, columnspan=3)
     button3.grid(column=0, row=3, columnspan=3)
     button4.grid(column=0, row=4, columnspan=3)
     button5.grid(column=0, row=5, columnspan=3)
+    button6.grid(column=0, row=6, columnspan=3)
     Button(admin, text='<', bg='gray50',command=prev_day).grid(column=0,row=8,sticky=W+E)
     Button(admin, text='Today',command=Today).grid(column=1,row=8,sticky=W+E)
     Button(admin, text='>', bg='gray50',command=next_day).grid(column=2, row=8, sticky=W + E)
     text.grid(column=3, row=1, rowspan=10, columnspan=2)
     DateField.grid(column=1, row=7)
+    DateField.bind('<Return>',get_date)
     #print(f'{round(time.clock(),4)}: - - - - - Admin functions Written')
 
 def build_login_tab(tabStructure, master):
