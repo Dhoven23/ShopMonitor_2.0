@@ -31,7 +31,6 @@ def CreateTool(keyNumber: int, name: str):
 
 
 
-
 def log_into_account(studentID: str):
         studentID = str(studentID)
         student = find_student_by_studentID(studentID)
@@ -47,11 +46,14 @@ def log_into_account(studentID: str):
                 tool = Key.objects(keyNumber=number).first()
                 addition = tool.name
                 message = message + '-> ' + addition + '\n'
-
-            day_login(studentID)
-            student.event()
-            return message, False
-
+            if not student.capstoneID:
+                day_login(studentID)
+                student.event()
+                return message, False
+            else:
+                day_login_Capstone(studentID)
+                student.event()
+                return message, False
 
 
         if SignedIn == True:
@@ -181,3 +183,59 @@ def FindCheckedOutTools(student_ID):
         return tools
     else:
         return False
+
+
+def create_capstone_student(studentID, name, capstoneID):
+    student = Student()
+    student.name = name
+    student.studentID = studentID
+    student.capstoneID = capstoneID
+    student.save()
+
+    return student
+
+
+def day_login_Capstone(studentID):
+    signin = Signin()
+    signin.StudentID = studentID
+    signin.Login = str(datetime.datetime.now())
+
+    day = find_day(str(date.today()))
+    day.increment_capstone()
+    day.hourly_entry_add()
+    for sign in day.signins:
+        if sign.StudentID == studentID:
+            return
+    day.signins.append(signin)
+
+    day.save()
+
+
+
+
+
+def log_into_account_capstone(studentID):
+    studentID = str(studentID)
+    student = find_student_by_studentID(studentID)
+
+    if not student:
+        message = f"No student with ID {studentID}"
+        return message, False
+
+    SignedIn = student.Is_signedIn
+    if SignedIn == False:
+        message = f"Hello {student.name}, you are cleared to use:\n"
+        for number in student.keys_trained:
+            tool = Key.objects(keyNumber=number).first()
+            addition = tool.name
+            message = message + '-> ' + addition + '\n'
+
+        day_login_Capstone(studentID)
+        student.event()
+        return message, False
+
+    if SignedIn == True:
+        message = f" Goodbye {student.name} "
+        day_logout(studentID)
+        student.event()
+        return message, True
