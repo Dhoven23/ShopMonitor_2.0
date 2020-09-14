@@ -261,9 +261,9 @@ def admin_duties(admin, tabStructure, master):  # admin operation
         def add_number():
             ID = str(E.get())
             student = svc.find_student_by_studentID(ID)
-            if not student.capstoneID:
-                student.capstoneID = str(E2.get())
-                student.save()
+
+            student.capstoneID = str(E2.get())
+            student.save()
             pop.destroy()
         pop = Toplevel()
         pop.minsize(300,120)

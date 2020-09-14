@@ -8,7 +8,7 @@ from Data.tool import Tool
 from Data.usages import Usage
 from Data.day import Day
 from mongoengine.queryset import Q
-
+from Service.Reports.CapstoneProjects import get_group_info
 
 
 
@@ -53,6 +53,8 @@ def log_into_account(studentID: str):
             else:
                 day_login_Capstone(studentID)
                 student.event()
+                message2 = get_group_info(student.capstoneID)
+                message = message + message2
                 return message, False
 
 
