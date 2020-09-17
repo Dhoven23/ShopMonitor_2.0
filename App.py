@@ -218,14 +218,6 @@ def admin_duties(admin, tabStructure, master):  # admin operation
             text.insert(END,
                         f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
 
-    def get_date_info():
-
-
-
-        DateField.bind('<ButtonPress>', delete_entry)
-        prompt = Label(admin, text="Please enter the day", font='bold 8', bg='MediumPurple1')
-        DateField.bind('<Return>', get_date)
-        prompt.grid(column=1, row=6)
 
     def plot_graphs(*args, **kwargs4):
         plotins()
