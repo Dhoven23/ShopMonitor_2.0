@@ -2,7 +2,7 @@
 import xlrd
 
 # Give the location of the file
-loc = ("~/Desktop/Finished Shop App/venv/TempSource/Service/Reports/Capstone Projects 9-2-2020.xlsx")
+loc = ("~/Desktop/FinishedShopApp/venv/TempSource/Service/Reports/Capstone Projects 9-2-2020.xlsx")
 
 
 wb = xlrd.open_workbook(loc)

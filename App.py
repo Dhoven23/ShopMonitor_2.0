@@ -545,6 +545,7 @@ def tools_tab_functions(tools, root, tabStructure):
         n = IntVar()
         n = 2
         destroy()
+        toolName.bind('<Tab>')
         for message in messages:
 
             toolLabel = ToolLabel(tools, message, n, root, 0, False)
