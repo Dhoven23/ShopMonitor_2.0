@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+    {% block content %}
+    {% for student in students %}
+        <article class="media content-section">
+          <div class="media-body">
+            <div class="article-metadata">
+              <a class="mr-2" href="#">{{ student.studentID }}</a>
+                {% for tool in student.keys_trained %}
+                            <small class="text-muted">{{ tool }}</small>
+                {% endfor %}
+            </div>
+            <h2><a class="article-title" href="#">{{ student.name }}</a></h2>
+              {% if student.capstoneID %}
+                <p class="article-content">{{ "Capstone Group: " + student.capstoneID }}</p>
+              {% endif %}
+          </div>
+        </article>
+    {% endfor %}
+{% endblock content %}
