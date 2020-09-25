@@ -18,7 +18,7 @@
 
 from datetime import datetime, timedelta
 import os
-import time
+
 import weakref
 from tkinter import *
 from tkinter import ttk
@@ -73,6 +73,9 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
         prompt.delete(0, END)
 
     def Capstone():
+        def insert_capstoneID():
+            value = int(get_cell_equals(str(prompt.get())))
+            CapstoneID.insert(END, value)
         def capstone_student_create(event: object = None):
             name = prompt.get()
             ID = StudentID
@@ -84,11 +87,13 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
                 svc.log_into_account_capstone(StudentID)
                 pop.destroy()
 
+        from Service.Reports.CapstoneProjects import get_cell_equals
 
         CapstoneID = Entry(pop, width=35,borderwidth=2)
         CapstoneID.grid(row=3,column=0)
         Label(pop,text="Capstone\nnumber").grid(row=3,column=1)
-
+        insert_capstoneID()
+        prompt.bind('<Tab>',insert_capstoneID)
         Bo = Button(pop,text='Create new\nCapstone Student',command=capstone_student_create)
         Bo.grid(row=4,column=0,columnspan=2)
 
