@@ -5,7 +5,7 @@ import xlrd
 loc = ("~/Desktop/FinishedShopApp/venv/TempSource/Service/Reports/Capstone Projects 9-2-2020.xlsx")
 
 
-wb = xlrd.open_workbook(loc)
+wb = xlrd.open_workbook(loc,on_demand=True)
 sheet = wb.sheet_by_index(0)
 def get_group_info(i):
 

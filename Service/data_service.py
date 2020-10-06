@@ -21,10 +21,11 @@ def create_student(studentID: str, name: str) -> Student:
 
     return student
 
-def CreateTool(keyNumber: int, name: str):
+def CreateMachineKey(keyNumber: int, name: str):
     tool = Key()
     tool.name = name
     tool.keyNumber = keyNumber
+
     tool.save()
     return tool.keyNumber
 
@@ -130,6 +131,7 @@ def Create_Tool(toolname) -> Tool:
     tool = Tool()
     tool.name = name.lower()
     tool.size = size
+
     tool.save()
     return tool
 
