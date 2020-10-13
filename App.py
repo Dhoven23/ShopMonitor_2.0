@@ -585,7 +585,7 @@ def tools_tab_functions(tools, root, tabStructure):
         destroy()
         if message:
             for mess in message:
-                toolLabel = ToolLabel(tools, mess, n, root, 2, True)
+                toolLabel = ToolLabel(tools, mess, n, root, 4, True)
                 n+=1
 
 
