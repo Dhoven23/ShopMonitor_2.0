@@ -157,13 +157,21 @@ def Checkout_tool(toole, ID, ReturnDate):
     student.checkout(f'{toole.name},{toole.size}')
 
 
-def lookup_tool(text):
+def lookup_tool(text, size):
     message = []
     name = re.compile(f'.*{text}.*', re.IGNORECASE)
+
     tools = Tool.objects(name=name)
     for tool in tools:
 
         message.append(tool.name + ',' + tool.size)
+    if size:
+
+        tools = Tool.objects(Q(name=name) & Q(size=size))
+        message = []
+        for tool in tools:
+
+            message.append(tool.name + ',' + tool.size)
 
     return message
 

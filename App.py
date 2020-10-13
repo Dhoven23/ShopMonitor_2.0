@@ -332,7 +332,7 @@ def build_admin_tab(tabStructure, master):
     admin_duties(admin, tabStructure, master)
 
 
-def checkout_tool(keyNumber, root):
+def checkout_Machine_Key(keyNumber, root):
     arg = BooleanVar()
     arg = True
     X = root.winfo_x()
@@ -387,7 +387,7 @@ class KeyButton:
             if self.button["bg"] == color:
                 self.button["bg"] = "grey86"
                 key = Key.objects(keyNumber=number).first()
-                result = checkout_tool(key.keyNumber, root)
+                result = checkout_Machine_Key(key.keyNumber, root)
 
             else:
                 self.button["bg"] = color
@@ -546,14 +546,35 @@ class ToolLabel:
 def tools_tab_functions(tools, root, tabStructure):
     def ActiveToolSearch(event=None):
         text = toolName.get()
-        messages = svc.lookup_tool(text)
+        toolname = text.split(',')
+        temp = toolname[0].split(' ')
+        print('Toolname : ',toolname)
+        print('temp : ', temp)
+        text = ''
+        for t in temp:
+            if text:
+                text = text + '-' + t
+            else:
+                text = t
+        name = text
+        size = ''
+        if len(toolname) > 1:
+            size = toolname[1].strip()
+
+
+        messages = svc.lookup_tool(name, size)
         n = IntVar()
         n = 2
         destroy()
         toolName.bind('<Tab>')
+        col = 0
         for message in messages:
-
-            toolLabel = ToolLabel(tools, message, n, root, 0, False)
+            if n > 9:
+                col = col + 1
+                n = 2
+            if col == 3:
+                return
+            toolLabel = ToolLabel(tools, message, n, root, col, False)
             n += 1
 
     def ActiveToolReturn(event=None):
@@ -574,19 +595,19 @@ def tools_tab_functions(tools, root, tabStructure):
             model.clear()
 
 
-    instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold', bg='MediumPurple1',fg='white').grid(row=0, sticky=N+S+W+E)
+    instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold', bg='MediumPurple1',fg='white').grid(row=0,columnspan=3, sticky=N+S+W+E)
 
     toolName = Entry(tools, width=30, borderwidth=2, font='Arial 12')
     toolName.bind('<Key>', ActiveToolSearch)
 
-    toolName.grid(row=1, sticky=W + E)
+    toolName.grid(row=1, columnspan=3,sticky=W + E)
     return_instruction = Label(tools, text='Student_ID\n(For tool return)', font='Helvetica 14 bold', bg='MediumPurple1', fg='white')
     return_ID = Entry(tools, width=30, borderwidth=2, font='Arial 12')
     return_ID.bind('<Return>', ActiveToolReturn)
-    return_instruction.grid(row=0,column=2, sticky=W+E)
+    return_instruction.grid(row=0,column=4, sticky=W+E)
     color=root.cget('bg')
-    Label(tools, text='-------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=1)
-    return_ID.grid(row=1,column=2)
+    Label(tools, text='-------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=3)
+    return_ID.grid(row=1,column=4)
     #print(f'{round(time.clock(),4)}: - - - - - Tools tab functions built')
 
 def buils_tools_tab(tabStructure, master):
@@ -630,7 +651,7 @@ class app:  # constructor for GUI
         master.geometry("600x300")
         styles = ttk.Style(master)
         styles.theme_use('clam')
-        styles.configure('flat.TButton', borderwidth=0)
+        styles.configure('flat.TButton', borderwidth=0,font='Helvetica 8')
         styles.configure('green.TButton', foreground='green', borderwidth=0)
         menubar = Menu(self.master)
         self.master.config(menu=menubar)
