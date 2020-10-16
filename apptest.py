@@ -1,13 +1,7 @@
-text = 'standard wrench box end, 3/4'
-toolname = text.split(',')
-temp = toolname[0].split(' ')
-
-text = ''
-for t in temp:
-    if text:
-        text = text + '-' + t
-    else:
-        text = t
-name = toolname[0]
-size = toolname[1].strip()
-
+import re
+sequence = 'afrykanerskojezyczny'
+queries = [ 'afrykanerskojezycznym', 'afrykanerskojezyczni',
+            'nieafrykanerskojezyczni','afrykanerskojezyczny' ]
+for q in queries:
+    m = re.search(r'(%s){e<=2}'%q, sequence)
+    print('match' if m else 'nomatch')

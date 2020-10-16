@@ -58,6 +58,12 @@ def popup_message(text, tab):  # universally callable message-display
 def popup_create_student(StudentID, window, master):  # add student to mongo
     def student_create(event: object = None):
         name = prompt.get()
+        for n in name:
+            if n.isalnum():
+                pass
+            else:
+                Label(pop,text='Special Characters Not allowed!',fg='red').grid(row=5,column=0)
+                return
         ID = StudentID
 
         if isint(name) == False:
