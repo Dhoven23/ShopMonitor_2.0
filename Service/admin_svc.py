@@ -56,7 +56,12 @@ def edit_training_level(name,value):
     student = Student.objects(name=name).first()
 
     if student:
-        student.train(value)
+        value.strip()
+        value = value.split(',')
+        for val in value:
+            num = val.strip()
+            student.train(num)
+
         return True
     else:
         return False
