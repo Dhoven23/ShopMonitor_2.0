@@ -525,9 +525,9 @@ class ToolLabel:
 
 
         if returner==False:
-            self.button = ttk.Button(master, text=message, command=Onclick1, style='flat.TButton')
+            self.button = ttk.Button(master, text=f"{message[0]}\n{message[1]}", command=Onclick1, style='flat.TButton')
         else:
-            self.button = ttk.Button(master, text=message, command=Onclick2, style='flat.TButton')
+            self.button = ttk.Button(master, text=f"{message[0]}\n{message[1]}", command=Onclick2, style='flat.TButton')
 
 
         self.button.grid(row=n, column=col,sticky=W + E)
