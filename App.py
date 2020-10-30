@@ -656,7 +656,7 @@ class app:  # constructor for GUI
         master.title("Shop Activity Monitor")
         master.geometry("600x300")
         styles = ttk.Style(master)
-        styles.theme_use('clam')
+        styles.theme_use('aqua')
         styles.configure('flat.TButton', borderwidth=0,font='Helvetica 8')
         styles.configure('green.TButton', foreground='green', borderwidth=0)
         menubar = Menu(self.master)

@@ -1,0 +1,9 @@
+matplotlib == 3.2.2
+
+mongoengine
+
+xlrd
+
+dnspython
+
+
