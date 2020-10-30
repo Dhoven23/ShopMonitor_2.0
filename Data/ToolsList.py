@@ -1,7 +1,8 @@
 from Service.data_service import Create_Tool
 from Data.mongo_setup import global_init
+import os
 import xlrd
-loc = ("~/Desktop/FinishedShopApp/venv/TempSource/Service/Reports/ShopToolsList.xlsx")
+loc = (f"{os.getcwd()}/ShopToolsList.xlsx")
 import mongoengine
 from mongoengine import connect
 from mongoengine.connection import _get_db

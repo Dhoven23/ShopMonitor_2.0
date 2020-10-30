@@ -1,8 +1,8 @@
 # Reading an excel file using Python
 import xlrd
-
+import os
 # Give the location of the file
-loc = ("~/Documents/code/Python/work/Service/Reports/Capstone Projects 9-2-2020.xlsx")
+loc = (f"{os.getcwd()}/Capstone Projects 9-2-2020.xlsx")
 
 
 wb = xlrd.open_workbook(loc,on_demand=True)
