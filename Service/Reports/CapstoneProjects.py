@@ -2,7 +2,7 @@
 import xlrd
 import os
 # Give the location of the file
-loc = (f"{os.getcwd()}/Capstone Projects 9-2-2020.xlsx")
+loc = (f"{os.getcwd()}/Data/Capstone Projects 9-2-2020.xlsx")
 
 
 wb = xlrd.open_workbook(loc,on_demand=True)
