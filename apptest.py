@@ -1,5 +1,10 @@
-string = "Daniel Hoven"
+import tkinter as tk
 
-for s in string:
-    if s.isalnum():
-        print(s)
+root = tk.Tk()
+
+prompt = tk.Entry(width = 12)
+prompt.pack()
+
+prompt.bind('<NUMPADENTER>')
+
+root.mainloop()

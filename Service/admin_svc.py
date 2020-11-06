@@ -81,8 +81,8 @@ def PastDueTools():
                 delta = date_time_obj.date() - today
                 if int(delta.days) < 0:
                     out.append(student.name + ': -> ')
-                    out.append(toolname[0] + ' ' + toolname[1] + ' ')
-                    out.append('past due: ' + str(delta.days) + ' days\n')
+                    out.append(toolname)
+                    out.append('\npast due: ' + str(delta.days) + ' days\n')
 
 
 

@@ -1,5 +1,7 @@
 from App import main
 
-if __name__ == '__main__':
+from Data.ToolsList import run
 
+if __name__ == '__main__':
+    run()
     main()
