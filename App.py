@@ -654,7 +654,7 @@ class app:  # constructor for GUI
 
 
         master.title("Shop Activity Monitor")
-        master.geometry("600x300")
+        master.minsize(600,400)
         styles = ttk.Style(master)
         styles.theme_use('clam')
         styles.configure('flat.TButton', borderwidth=0,font='Helvetica 8')
