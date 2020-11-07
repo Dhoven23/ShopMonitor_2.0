@@ -144,10 +144,10 @@ def main_login_student_operation(window, master):
     def delete_entry(*args):
         entry.delete(0, END)
 
-    instruction = Label(window, text="Enter Student ID", font='Helvetica 12 bold', fg='purple4',bg='grey86')
+    instruction = Label(window, text="\nEnter Student ID\n", font='Helvetica 16 bold', fg='purple4',bg='grey86')
     instruction.grid(column=1,row=0)
-    entry = Entry(window, width=35, borderwidth=2, font='Helvetica 16')
-    Label(window,text='             ',font='Arial 16 bold',bg='grey86').grid(column=0,row=1)
+    entry = Entry(window, width=35, borderwidth=2, font='Helvetica 20')
+    Label(window,text='                        ',font='Arial 16 bold',bg='grey86').grid(column=0,row=1)
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
     entry.grid(column=1,row=1)
@@ -280,14 +280,14 @@ def admin_duties(admin, tabStructure, master):  # admin operation
 
 
 
-    text = Text(admin, height=15, width=50)
-    DateField = Entry(admin, font='Arial 14 bold',width=10, borderwidth=3)
-    button1 = Button(admin, text="Who's In the Shop?", width=25, command=whos_in_the_shop)
-    button2 = Button(admin, text="Signout All", width=25, command=logout_all_users)
-    button3 = Button(admin, text="Blame", width=25, command=tools_past_due)
-    button4 = Button(admin, text="Edit Training", width=25, command=edit_training)
-    button5 = Button(admin, text="Plot Graphs", width=25, command=plot_graphs)
-    button6 = Button(admin, text="Add Capstone ID", width=25, command=add_capstone_id)
+    text = Text(admin, height=20, width=70)
+    DateField = Entry(admin, font='Arial 16 bold',width=10, borderwidth=4, relief = 'sunken')
+    button1 = Button(admin, text="Who's In the Shop?", width=20,font = "Helvetica 14 bold", borderwidth = 4,command=whos_in_the_shop)
+    button2 = Button(admin, text="Signout All", width=20,font = "Helvetica 14 bold", borderwidth = 4, command=logout_all_users)
+    button3 = Button(admin, text="Blame",width = 20, font = "Helvetica 14 bold", borderwidth = 4, command=tools_past_due)
+    button4 = Button(admin, text="Edit Training", width=20, font = "Helvetica 14 bold", borderwidth = 4,  command=edit_training)
+    button5 = Button(admin, text="Plot Graphs", width=20, font = "Helvetica 14 bold", borderwidth = 4,  command=plot_graphs)
+    button6 = Button(admin, text="Add Capstone ID", width=20, font = "Helvetica 14 bold", borderwidth = 4, command=add_capstone_id)
     button1.grid(column=0, row=1, columnspan=3)
     button2.grid(column=0, row=2, columnspan=3)
     button3.grid(column=0, row=3, columnspan=3)
@@ -654,7 +654,7 @@ class app:  # constructor for GUI
 
 
         master.title("Shop Activity Monitor")
-        master.minsize(640, 480)
+        master.minsize(800, 400)
         styles = ttk.Style(master)
         styles.theme_use('clam')
         styles.configure('flat.TButton', borderwidth=0,font='Helvetica 8')
