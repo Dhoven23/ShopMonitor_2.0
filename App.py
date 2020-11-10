@@ -147,7 +147,7 @@ def main_login_student_operation(window, master):
     instruction = Label(window, text="\nEnter Student ID\n", font='Helvetica 16 bold', fg='purple4',bg='grey86')
     instruction.grid(column=1,row=0)
     entry = Entry(window, width=35, borderwidth=2, font='Helvetica 20')
-    Label(window,text='                        ',font='Arial 16 bold',bg='grey86').grid(column=0,row=1)
+    Label(window,text='                      ',font='Arial 16 bold',bg='grey86').grid(column=0,row=1)
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
     entry.grid(column=1,row=1)
@@ -224,7 +224,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
             for message in messages:
                 mess = message.split('|')
                 mess1 = str(mess[0])
-                text.insert(END, mess1[0:23] + (50 - len(mess[0])) * '.' + mess1[23:(len(mess[0]) + 1)] + mess[1])
+                text.insert(END, mess1[0:25] + (68 - len(mess[0])) * '.' + mess1[25:(len(mess[0]) + 1)] + mess[1])
         else:
             text.insert(END,
                         f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
@@ -407,8 +407,8 @@ class KeyButton:
 
 
         if svc.key_exists(number):
-            self.button = Button(master, text=str(number) + '\n' + name, bg=color,width=15, height=2, command=Onclick)
-            self.button.grid(column=x, row=y)
+            self.button = Button(master, text=str(number) + '\n' + name, bg=color,width=16, height=3, command=Onclick)
+            self.button.grid(column=x+1, row=y)
 
 
 def build_keys_tab(tabStructure, root):
@@ -451,7 +451,7 @@ def Key_Buttons_list_function(keys, root):
     key24 = KeyButton(keys, 4, 5, 24, root, RM131_keys[24], 'bisque')
     key25 = KeyButton(keys, 5, 5, 25, root, RM131_keys[25], 'bisque')
     key26 = KeyButton(keys, 1, 6, 26, root, RM131_keys[26], 'bisque')
-
+    Label(keys, text="  ", bg='grey86').grid(column=0,rowspan=4)
 
 
 def Checkout_tool(x, y, toolname):
@@ -525,9 +525,9 @@ class ToolLabel:
 
 
         if returner==False:
-            self.button = ttk.Button(master, text=f"{message[0]}\n{message[1]}", command=Onclick1, style='flat.TButton')
+            self.button = ttk.Button(master, text=f"{message[0]}{message[1]}", command=Onclick1, style='flat.TButton')
         else:
-            self.button = ttk.Button(master, text=f"{message[0]}\n{message[1]}", command=Onclick2, style='flat.TButton')
+            self.button = ttk.Button(master, text=f"{message[0]}{message[1]}", command=Onclick2, style='flat.TButton')
 
 
         self.button.grid(row=n, column=col,sticky=W + E)
@@ -554,8 +554,6 @@ def tools_tab_functions(tools, root, tabStructure):
         text = toolName.get()
         toolname = text.split(',')
         temp = toolname[0].split(' ')
-        print('Toolname : ',toolname)
-        print('temp : ', temp)
         text = ''
         for t in temp:
             if text:
@@ -601,13 +599,13 @@ def tools_tab_functions(tools, root, tabStructure):
             model.clear()
 
 
-    instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold', bg='MediumPurple1',fg='white').grid(row=0,columnspan=3, sticky=N+S+W+E)
+    instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold', bg='grey86',fg='white').grid(row=0,columnspan=3, sticky=N+S+W+E)
 
     toolName = Entry(tools, width=30, borderwidth=2, font='Arial 12')
     toolName.bind('<Key>', ActiveToolSearch)
 
     toolName.grid(row=1, columnspan=3,sticky=W + E)
-    return_instruction = Label(tools, text='Student_ID\n(For tool return)', font='Helvetica 14 bold', bg='MediumPurple1', fg='white')
+    return_instruction = Label(tools, text='Student_ID\n(For tool return)', font='Helvetica 14 bold', bg='grey86', fg='white')
     return_ID = Entry(tools, width=30, borderwidth=2, font='Arial 12')
     return_ID.bind('<Return>', ActiveToolReturn)
     return_instruction.grid(row=0,column=4, sticky=W+E)
