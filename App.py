@@ -525,9 +525,9 @@ class ToolLabel:
 
 
         if returner==False:
-            self.button = ttk.Button(master, text=f"{message[0]}{message[1]}", command=Onclick1, style='flat.TButton')
+            self.button = ttk.Button(master, text=f"{message[0]}\n{message[1]}", command=Onclick1, style='flat.TButton')
         else:
-            self.button = ttk.Button(master, text=f"{message[0]}{message[1]}", command=Onclick2, style='flat.TButton')
+            self.button = ttk.Button(master, text=f"{message[0]}\n{message[1]}", command=Onclick2, style='flat.TButton')
 
 
         self.button.grid(row=n, column=col,sticky=W + E)
@@ -599,18 +599,18 @@ def tools_tab_functions(tools, root, tabStructure):
             model.clear()
 
 
-    instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold', bg='grey86',fg='white').grid(row=0,columnspan=3, sticky=N+S+W+E)
+    instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold').grid(row=0,columnspan=3, sticky=N+S)
 
-    toolName = Entry(tools, width=30, borderwidth=2, font='Arial 12')
+    toolName = Entry(tools, width=35, borderwidth=2, font='Arial 20')
     toolName.bind('<Key>', ActiveToolSearch)
 
-    toolName.grid(row=1, columnspan=3,sticky=W + E)
-    return_instruction = Label(tools, text='Student_ID\n(For tool return)', font='Helvetica 14 bold', bg='grey86', fg='white')
-    return_ID = Entry(tools, width=30, borderwidth=2, font='Arial 12')
+    toolName.grid(row=1, columnspan=3)
+    return_instruction = Label(tools, text='Student_ID\n(For tool return)', font='Helvetica 14 bold', bg='grey86')
+    return_ID = Entry(tools, width=14, borderwidth=2, font='Arial 20')
     return_ID.bind('<Return>', ActiveToolReturn)
     return_instruction.grid(row=0,column=4, sticky=W+E)
     color=root.cget('bg')
-    Label(tools, text='-------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=3)
+    Label(tools, text='------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=3)
     return_ID.grid(row=1,column=4)
     #print(f'{round(time.clock(),4)}: - - - - - Tools tab functions built')
 
