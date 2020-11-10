@@ -407,7 +407,7 @@ class KeyButton:
 
 
         if svc.key_exists(number):
-            self.button = Button(master, text=str(number) + '\n' + name, bg=color,width=16, height=3, command=Onclick)
+            self.button = Button(master, text=str(number) + '\n' + name, bg=color,width=16, height=2, command=Onclick)
             self.button.grid(column=x+1, row=y)
 
 
@@ -652,7 +652,7 @@ class app:  # constructor for GUI
 
 
         master.title("Shop Activity Monitor")
-        master.minsize(800, 400)
+        master.minsize(800, 300)
         styles = ttk.Style(master)
         styles.theme_use('clam')
         styles.configure('flat.TButton', borderwidth=0,font='Helvetica 8')
