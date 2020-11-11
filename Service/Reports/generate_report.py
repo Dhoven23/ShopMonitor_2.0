@@ -1,7 +1,7 @@
 from docx import Document
 from docx.shared import Inches
 from datetime import date
-
+import os
 
 def generate():
     document = Document()
@@ -28,7 +28,7 @@ def generate():
         'Proof pictures can be added here', style='List Number'
     )
 
-    document.add_picture('3.png', width=Inches(3.75))
+    document.add_picture('/home/tesla/Desktop/code/Service/Reports/3.PNG', width=Inches(3.75))
 
     records = (
         ('John Doof', '22345678', 'Mill uncleaned'),
@@ -51,5 +51,5 @@ def generate():
 
     document.save(f"Service/Reports/{date.today()}_report.docx")
 
-
+generate()
 

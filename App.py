@@ -610,7 +610,7 @@ def tools_tab_functions(tools, root, tabStructure):
     return_ID.bind('<Return>', ActiveToolReturn)
     return_instruction.grid(row=0,column=4, sticky=W+E)
     color=root.cget('bg')
-    Label(tools, text='------', font='Cambrian 13',fg=color,bg='seashell2').grid(row=1,column=3)
+    Label(tools, text='------', font='Cambrian 13',fg=color,bg='grey86').grid(row=1,column=3)
     return_ID.grid(row=1,column=4)
     #print(f'{round(time.clock(),4)}: - - - - - Tools tab functions built')
 
@@ -744,6 +744,5 @@ def main():  # run the app
 
     root = tk.Tk()
     #print(f'{round(time.clock(),4)}: - - - - - App window launch')
-    root.config(bg='purple1')
     app(root)
     root.mainloop()
