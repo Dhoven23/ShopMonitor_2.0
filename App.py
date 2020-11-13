@@ -549,6 +549,8 @@ class ToolLabel:
 
 
 
+
+
 def tools_tab_functions(tools, root, tabStructure):
     def ActiveToolSearch(event=None):
         text = toolName.get()
@@ -598,6 +600,16 @@ def tools_tab_functions(tools, root, tabStructure):
         for model in ToolLabel.getinstances():
             model.clear()
 
+    def add_tool(event=None):
+
+        pop = Toplevel()
+        pop.minsize(200, 200)
+        Label(pop, text="Hello").pack()
+        b = Button(pop, text="close", command=pop.destroy)
+        b.pack()
+        toolname = Entry(pop, width=20, borderwith=2, font = 'Arial 16')
+        toolname.pack()
+
 
     instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold').grid(row=0,columnspan=3, sticky=N+S)
 
@@ -610,7 +622,8 @@ def tools_tab_functions(tools, root, tabStructure):
     return_ID.bind('<Return>', ActiveToolReturn)
     return_instruction.grid(row=0,column=4, sticky=W+E)
     color=root.cget('bg')
-    Label(tools, text='------', font='Cambrian 13',fg=color,bg='grey86').grid(row=1,column=3)
+    add_tool = Button(tools, text = "Add\ntool", command = add_tool)
+    add_tool.grid(row=1,column=3)
     return_ID.grid(row=1,column=4)
     #print(f'{round(time.clock(),4)}: - - - - - Tools tab functions built')
 
