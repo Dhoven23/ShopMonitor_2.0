@@ -604,7 +604,8 @@ def tools_tab_functions(tools, root, tabStructure):
 
         pop = Toplevel()
         pop.minsize(200, 200)
-        Label(pop, text="Hello").pack()
+        l = Label(pop, text="Hello")
+        l.pack()
         b = Button(pop, text="close", command=pop.destroy)
         b.pack()
         toolname = Entry(pop, width=20, borderwith=2, font = 'Arial 16')
