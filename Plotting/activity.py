@@ -27,11 +27,12 @@ def plotins():
     X = X[-M:]
     Y = Y[-M:]
     t = t[-M:]
+    labels = labels[-M:]
     normal = ax.bar(t1, X, width=0.4, label = 'normal',color='blue')
 
     capstone = ax.bar(t2, Y, width=0.4, label = 'Capstone',color='orange')
     fig = plt.gcf()
-    fig.set_size_inches(8,6)
+    fig.set_size_inches(10,6)
     plt.title('Daily users',fontsize=20)
     plt.xticks(t, labels, rotation=45)
     plt.legend(handles = [capstone, normal])
