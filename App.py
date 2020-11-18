@@ -601,15 +601,36 @@ def tools_tab_functions(tools, root, tabStructure):
             model.clear()
 
     def add_tool(event=None):
+        
+        def insert_tool_in_DB():
+            name = toolname.get()
+
+            size = toolsize.get()
+            full_tool_name = str(name) + ',' + str(size)
+            tool = svc.Create_Tool(full_tool_name)
+            if not tool.name:
+                print("Oops, that didn't work")
+            else:
+                pop.destroy()
+                return
+
 
         pop = Toplevel()
-        pop.minsize(200, 200)
-        l = Label(pop, text="Hello")
-        l.pack()
-        b = Button(pop, text="close", command=pop.destroy)
-        b.pack()
-        toolname = Entry(pop, width=20, borderwith=2, font = 'Arial 16')
+        pop.minsize(150, 300)
+        name_instruction = Label(pop, text ="Enter tool name", font = 'Arial 16 bold').pack() 
+        name_ins_second_line = Label(pop, text = "seperate words with a -\n i.e. 'metric-nut-driver'").pack() 
+        toolname = Entry(pop, width=20, borderwidth=2, font = 'Arial 16')
         toolname.pack()
+        Label(pop,text = "	").pack()
+        size_instruction = Label(pop, text = "Enter tool size", font = 'Arial 16 bold').pack()
+        Label(pop, text = "i.e. '3/4'").pack()
+        toolsize = Entry(pop,  width = 10, borderwidth=2, font = 'Arial 16')
+        toolsize.pack()
+        dewit = Button(pop, text = "Add Tool", font = "Helvetica 16 bold", fg = 'green', 
+command = insert_tool_in_DB)
+
+        dewit.pack()
+        
 
 
     instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold').grid(row=0,columnspan=3, sticky=N+S)

@@ -82,7 +82,7 @@ def PastDueTools():
                 if int(delta.days) < 0:
                     out.append(student.name + ': -> ')
                     out.append(toolname)
-                    out.append('\npast due: ' + str(delta.days) + ' days\n')
+                    out.append('\npast due: ' + str(delta.days * -1) + ' day(s)\n')
 
 
 
