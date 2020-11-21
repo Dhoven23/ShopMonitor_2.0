@@ -66,6 +66,4 @@ def update_keyslist():
         key.RoomNumber = '132'
         key.save()
 
-update_keyslist()
-
 

@@ -436,7 +436,7 @@ def Key_Buttons_list_function(keys, root):
     key9 = KeyButton(keys,4,2,9,root,RM130_keys[9], 'MediumPurple1')
     key10 =KeyButton(keys,5,2,10,root,RM130_keys[10],'MediumPurple1')
     key11 =KeyButton(keys,1,3,11,root,RM130_keys[11],'MediumPurple1')
-    key11 = KeyButton(keys, 2, 3, 12, root, RM130_keys[12], 'MediumPurple1')
+    key12 = KeyButton(keys, 2, 3, 12, root, RM132_keys[12], 'orange red')
 
     key13 = KeyButton(keys,3,3,13,root,RM132_keys[13],'orange red')
     key14 = KeyButton(keys,4,3,14,root,RM132_keys[14],'orange red')
