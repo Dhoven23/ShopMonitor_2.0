@@ -71,6 +71,7 @@ def PastDueTools():
     out = []
     for student in Student.objects():
         if student.checked_out_tools:
+            print(student.name)
             for tool in student.checked_out_tools:
                 toolname = tool.split(',')
                 tool_object = svc.find_tool(toolname[0], toolname[1])
