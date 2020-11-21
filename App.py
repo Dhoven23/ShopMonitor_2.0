@@ -29,6 +29,7 @@ from Plotting.activity import plotins
 import Service.admin_svc as asv
 import Service.data_service as svc
 from Data.key import Key
+from Data import lookupID as LID
 
 
 
@@ -112,13 +113,14 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     pop.minsize(80, 30)
     prompt = Entry(pop, width=35, borderwidth=2)
     capstone = Button(pop, text='Capstone', command=Capstone).grid(row=2, column=1)
-    prompt.insert(0, "Enter your name: ")
+    getname = LID.lookup(StudentID)
+    prompt.insert(0, getname)
     prompt.bind('<ButtonPress>', delete_entry)
 
     prompt.bind('<Return>', student_create)
 
     pop.wm_title("New Student")
-    warning = Label(pop, text='Student not in database')
+    warning = Label(pop, text='Student not in database. Confirm name below')
     warning.grid(row=0, column=0)
     prompt.grid(row=2, column=0)
 
