@@ -102,7 +102,7 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
         insert_capstoneID()
         prompt.bind('<Tab>',insert_capstoneID)
         Bo = Button(pop,text='Create new\nCapstone Student',command=capstone_student_create)
-        Bo.grid(row=4,column=0,columnspan=2)
+        Bo.grid(row=4,column=0)
 
 
     pop = Toplevel()
@@ -110,11 +110,9 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     y = master.winfo_y()
     v = IntVar()
     pop.geometry("+%d+%d" % (x + 130, y + 70))
-    pop.minsize(80, 30)
+    pop.minsize(80, 50)
     prompt = Entry(pop, width=35, borderwidth=2)
     capstone = Button(pop, text='Capstone', command=Capstone).grid(row=2, column=1)
-    getname = LID.lookup(StudentID)
-    prompt.insert(0, getname)
     prompt.bind('<ButtonPress>', delete_entry)
 
     prompt.bind('<Return>', student_create)

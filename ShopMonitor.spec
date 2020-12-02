@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['cli.py'],
-             pathex=['/home/tesla/Desktop/code'],
+             pathex=['/home/pi/Desktop/code'],
              binaries=[],
              datas=[],
              hiddenimports=[],
