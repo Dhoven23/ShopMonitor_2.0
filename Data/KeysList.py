@@ -37,7 +37,10 @@ RM131_keys = {
 
 from Data.mongo_setup import global_init
 
-global_init('DHoven','12345')
+username = str(input("Username?\n"))
+password = str(input("Password?\n"))
+
+global_init(username,password)
 
 
 def update_keyslist():
