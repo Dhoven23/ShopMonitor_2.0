@@ -4,7 +4,7 @@ import os
 # Give the location of the file
 loc = (f"{os.getcwd()}/Data/Capstone Projects 9-2-2020.xlsx")
 
-
+print(loc)
 wb = xlrd.open_workbook(loc,on_demand=True)
 sheet = wb.sheet_by_index(0)
 def get_group_info(i):
