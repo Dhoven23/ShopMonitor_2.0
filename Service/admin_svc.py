@@ -37,7 +37,7 @@ def who_was_in_the_shop(date):
             tools = '\n'
             for tool in found.checked_out_tools:
                 tools = tools + f"  * {tool}\n"
-            message.append('-> ' + found.name + f'............ {day.signins[i].Login[11:16]} to {day.signins[i].Logout[11:16]}|' + tools)
+            message.append('-> ' + found.name + f'......... {day.signins[i].Login[11:16]} to {day.signins[i].Logout[11:16]}|' + tools)
             i += 1
     return message
 

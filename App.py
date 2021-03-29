@@ -118,7 +118,7 @@ def popup_create_student(StudentID, window, master):  # add student to mongo
     prompt.bind('<Return>', student_create)
 
     pop.wm_title("New Student")
-    warning = Label(pop, text='Student not in database. Confirm name below')
+    warning = Label(pop, text='Confirm name below')
     warning.grid(row=0, column=0)
     prompt.grid(row=2, column=0)
 
@@ -132,7 +132,7 @@ def main_login_student_operation(window, master):
             return
         else:
             message, loggedIn = svc.log_into_account(StudentID)
-            if message == f"No student with ID {StudentID}":
+            if message == f"Add name for student #{StudentID}":
                 popup_create_student(str(StudentID), window, master)
             else:
                 if loggedIn:
@@ -146,7 +146,7 @@ def main_login_student_operation(window, master):
 
     instruction = Label(window, text="\nEnter Student ID\n", font='Helvetica 16 bold', fg='purple4',bg='grey86')
     instruction.grid(column=1,row=0)
-    entry = Entry(window, width=35, borderwidth=2, font='Helvetica 20')
+    entry = Entry(window, width=25, borderwidth=2, font='Helvetica 20')
     Label(window,text='                      ',font='Arial 16 bold',bg='grey86').grid(column=0,row=1)
     entry.bind('<Return>', login)
     entry.bind('<ButtonPress>', delete_entry)
@@ -224,7 +224,7 @@ def admin_duties(admin, tabStructure, master):  # admin operation
             for message in messages:
                 mess = message.split('|')
                 mess1 = str(mess[0])
-                text.insert(END, mess1[0:25] + (68 - len(mess[0])) * '.' + mess1[25:(len(mess[0]) + 1)] + mess[1])
+                text.insert(END, mess1[0:25] + (62 - len(mess[0])) * '.' + mess1[25:(len(mess[0]) + 1)] + mess[1])
         else:
             text.insert(END,
                         f"No record exists for {date}, make sure entry \nhas format YYYY-MM-DD. ex: 2020-07-01\n")
@@ -280,14 +280,14 @@ def admin_duties(admin, tabStructure, master):  # admin operation
 
 
 
-    text = Text(admin, height=20, width=70)
+    text = Text(admin, height=20, width=62)
     DateField = Entry(admin, font='Arial 16 bold',width=10, borderwidth=4, relief = 'sunken')
-    button1 = Button(admin, text="Who's In the Shop?", width=20,font = "Helvetica 14 bold", borderwidth = 4,command=whos_in_the_shop)
-    button2 = Button(admin, text="Signout All", width=20,font = "Helvetica 14 bold", borderwidth = 4, command=logout_all_users)
-    button3 = Button(admin, text="Blame",width = 20, font = "Helvetica 14 bold", borderwidth = 4, command=tools_past_due)
-    button4 = Button(admin, text="Edit Training", width=20, font = "Helvetica 14 bold", borderwidth = 4,  command=edit_training)
-    button5 = Button(admin, text="Plot Graphs", width=20, font = "Helvetica 14 bold", borderwidth = 4,  command=plot_graphs)
-    button6 = Button(admin, text="Add Capstone ID", width=20, font = "Helvetica 14 bold", borderwidth = 4, command=add_capstone_id)
+    button1 = Button(admin, text="Who's In the Shop?", width=15,font = "Helvetica 12 bold", borderwidth = 4,command=whos_in_the_shop)
+    button2 = Button(admin, text="Signout All", width=15,font = "Helvetica 12 bold", borderwidth = 4, command=logout_all_users)
+    button3 = Button(admin, text="Blame",width = 15, font = "Helvetica 12 bold", borderwidth = 4, command=tools_past_due)
+    button4 = Button(admin, text="Edit Training", width=15, font = "Helvetica 12 bold", borderwidth = 4,  command=edit_training)
+    button5 = Button(admin, text="Plot Graphs", width=15, font = "Helvetica 12 bold", borderwidth = 4,  command=plot_graphs)
+    button6 = Button(admin, text="Add Capstone ID", width=15, font = "Helvetica 12 bold", borderwidth = 4, command=add_capstone_id)
     button1.grid(column=0, row=1, columnspan=3)
     button2.grid(column=0, row=2, columnspan=3)
     button3.grid(column=0, row=3, columnspan=3)
@@ -621,7 +621,7 @@ def tools_tab_functions(tools, root, tabStructure):
         pop.minsize(200, 300)
         name_instruction = Label(pop, text ="Enter tool name", font = 'Arial 16 bold').pack() 
         name_ins_second_line = Label(pop, text = "seperate words with a -\n i.e. 'metric-nut-driver'").pack() 
-        toolname = Entry(pop, width=20, borderwidth=2, font = 'Arial 16')
+        toolname = Entry(pop, width=12, borderwidth=2, font = 'Arial 16')
         toolname.pack()
         Label(pop,text = "	").pack()
         size_instruction = Label(pop, text = "Enter tool size or number", font = 'Arial 16 bold').pack()
@@ -637,7 +637,7 @@ command = insert_tool_in_DB)
 
     instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold').grid(row=0,columnspan=3, sticky=N+S)
 
-    toolName = Entry(tools, width=35, borderwidth=2, font='Arial 20')
+    toolName = Entry(tools, width=20, borderwidth=2, font='Arial 20')
     toolName.bind('<Key>', ActiveToolSearch)
 
     toolName.grid(row=1, columnspan=3)
@@ -689,7 +689,7 @@ class app:  # constructor for GUI
 
 
         master.title("Shop Activity Monitor")
-        master.minsize(800, 300)
+        master.minsize(720, 300)
         styles = ttk.Style(master)
         styles.theme_use('clam')
         styles.configure('flat.TButton', borderwidth=0,font='Helvetica 8')

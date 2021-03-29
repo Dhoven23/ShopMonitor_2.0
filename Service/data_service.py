@@ -37,7 +37,7 @@ def log_into_account(studentID: str):
         student = find_student_by_studentID(studentID)
 
         if not student:
-            message = f"No student with ID {studentID}"
+            message = f"Add name for student #{studentID}"
             return message, False
 
         SignedIn = student.Is_signedIn
