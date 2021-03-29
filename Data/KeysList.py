@@ -1,4 +1,5 @@
 from Data.key import Key
+import os
 
 RM130_keys = {
     1: "HAAS",
@@ -37,7 +38,10 @@ RM131_keys = {
 
 from Data.mongo_setup import global_init
 
-global_init('DHoven','12345')
+username = str(os.environ.get('USER'))
+password = str(os.environ.get('PASSWORD'))
+
+global_init(username,password)
 
 
 def update_keyslist():

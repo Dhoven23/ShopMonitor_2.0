@@ -9,10 +9,10 @@
 #                                                                                                  #
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
 #                                                                                                  #
-#   Author: Daniel Hoven (github @Dhoven23/ShopSignIn),                                            #
+#   Author: Daniel Hoven (github @Dhoven23/ShopMonitor_2.0),                                            #
 #   email: Daniel.Hoven@gcu.edu                                                                    #
-#   Version 1.0.0                                                                                  #
-#   Date edited: 8/4/2020                                                                          #
+#   Version 2.1.0                                                                                  #
+#   Date edited: 12/20/2020                                                                          #
 #                                                                                                  #
 ####################################################################################################
 
@@ -603,7 +603,7 @@ def tools_tab_functions(tools, root, tabStructure):
             model.clear()
 
     def add_tool(event=None):
-        
+
         def insert_tool_in_DB():
             name = toolname.get()
 
@@ -619,20 +619,26 @@ def tools_tab_functions(tools, root, tabStructure):
 
         pop = Toplevel()
         pop.minsize(200, 300)
+<<<<<<< HEAD
         name_instruction = Label(pop, text ="Enter tool name", font = 'Arial 16 bold').pack() 
         name_ins_second_line = Label(pop, text = "seperate words with a -\n i.e. 'metric-nut-driver'").pack() 
         toolname = Entry(pop, width=12, borderwidth=2, font = 'Arial 16')
+=======
+        name_instruction = Label(pop, text ="Enter tool name", font = 'Arial 16 bold').pack()
+        name_ins_second_line = Label(pop, text = "seperate words with a -\n i.e. 'metric-nut-driver'").pack()
+        toolname = Entry(pop, width=20, borderwidth=2, font = 'Arial 16')
+>>>>>>> 09d3659367e12f58ecfad529f793617d5737ebf9
         toolname.pack()
         Label(pop,text = "	").pack()
         size_instruction = Label(pop, text = "Enter tool size or number", font = 'Arial 16 bold').pack()
         Label(pop, text = "i.e. '3/4'").pack()
         toolsize = Entry(pop,  width = 10, borderwidth=2, font = 'Arial 16')
         toolsize.pack()
-        dewit = Button(pop, text = "Add Tool", font = "Helvetica 16 bold", fg = 'green', 
+        dewit = Button(pop, text = "Add Tool", font = "Helvetica 16 bold", fg = 'green',
 command = insert_tool_in_DB)
 
         dewit.pack()
-        
+
 
 
     instruction = Label(tools, text='Name of Tool\n(For tool checkout)', font='Helvetica 14 bold').grid(row=0,columnspan=3, sticky=N+S)
