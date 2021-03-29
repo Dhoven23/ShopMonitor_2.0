@@ -10,9 +10,7 @@
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -#
 #                                                                                                  #
 #   Author: Daniel Hoven (github @Dhoven23/ShopMonitor_2.0),                                            #
-#   email: Daniel.Hoven@gcu.edu                                                                    #
-#   Version 2.1.0                                                                                  #
-#   Date edited: 12/20/2020                                                                          #
+#   email: Daniel.Hoven@gcu.edu                                                                    #                                                                       #
 #                                                                                                  #
 ####################################################################################################
 
@@ -538,7 +536,7 @@ class ToolLabel:
     def clear(self,event=None):
         self.button.destroy()
 
-    @classmethod
+    @classmethod         # keep track of button objects so they can be destroyed
     def getinstances(cls):
         dead = set()
         for ref in cls._instances:
@@ -619,15 +617,9 @@ def tools_tab_functions(tools, root, tabStructure):
 
         pop = Toplevel()
         pop.minsize(200, 300)
-<<<<<<< HEAD
-        name_instruction = Label(pop, text ="Enter tool name", font = 'Arial 16 bold').pack() 
-        name_ins_second_line = Label(pop, text = "seperate words with a -\n i.e. 'metric-nut-driver'").pack() 
-        toolname = Entry(pop, width=12, borderwidth=2, font = 'Arial 16')
-=======
         name_instruction = Label(pop, text ="Enter tool name", font = 'Arial 16 bold').pack()
         name_ins_second_line = Label(pop, text = "seperate words with a -\n i.e. 'metric-nut-driver'").pack()
         toolname = Entry(pop, width=20, borderwidth=2, font = 'Arial 16')
->>>>>>> 09d3659367e12f58ecfad529f793617d5737ebf9
         toolname.pack()
         Label(pop,text = "	").pack()
         size_instruction = Label(pop, text = "Enter tool size or number", font = 'Arial 16 bold').pack()
@@ -775,7 +767,7 @@ def main():  # run the app
 
     while True:
         try:
-            svc.print_day()
+            svc.print_day() # check that cloud connection is alive
         except:
             mongo.global_disconnect()
             login_error()
